@@ -101,7 +101,7 @@
             this.bRaise.Name = "bRaise";
             this.bRaise.Size = new System.Drawing.Size(124, 62);
             this.bRaise.TabIndex = 4;
-            this.bRaise.Text = "Raise";
+            this.bRaise.Text = "raise";
             this.bRaise.UseVisualStyleBackColor = true;
             this.bRaise.Click += new System.EventHandler(this.bRaise_Click);
             // 
@@ -124,7 +124,7 @@
             this.tbChips.Name = "tbChips";
             this.tbChips.Size = new System.Drawing.Size(163, 23);
             this.tbChips.TabIndex = 6;
-            this.tbChips.Text = "Chips : 0";
+            this.tbChips.Text = "chips : 0";
             // 
             // bAdd
             // 
@@ -153,7 +153,7 @@
             this.tbBotChips5.Name = "tbBotChips5";
             this.tbBotChips5.Size = new System.Drawing.Size(152, 23);
             this.tbBotChips5.TabIndex = 9;
-            this.tbBotChips5.Text = "Chips : 0";
+            this.tbBotChips5.Text = "chips : 0";
             // 
             // tbBotChips4
             // 
@@ -163,7 +163,7 @@
             this.tbBotChips4.Name = "tbBotChips4";
             this.tbBotChips4.Size = new System.Drawing.Size(123, 23);
             this.tbBotChips4.TabIndex = 10;
-            this.tbBotChips4.Text = "Chips : 0";
+            this.tbBotChips4.Text = "chips : 0";
             // 
             // tbBotChips3
             // 
@@ -173,7 +173,7 @@
             this.tbBotChips3.Name = "tbBotChips3";
             this.tbBotChips3.Size = new System.Drawing.Size(125, 23);
             this.tbBotChips3.TabIndex = 11;
-            this.tbBotChips3.Text = "Chips : 0";
+            this.tbBotChips3.Text = "chips : 0";
             // 
             // tbBotChips2
             // 
@@ -182,7 +182,7 @@
             this.tbBotChips2.Name = "tbBotChips2";
             this.tbBotChips2.Size = new System.Drawing.Size(133, 23);
             this.tbBotChips2.TabIndex = 12;
-            this.tbBotChips2.Text = "Chips : 0";
+            this.tbBotChips2.Text = "chips : 0";
             // 
             // tbBotChips1
             // 
@@ -192,7 +192,7 @@
             this.tbBotChips1.Name = "tbBotChips1";
             this.tbBotChips1.Size = new System.Drawing.Size(142, 23);
             this.tbBotChips1.TabIndex = 13;
-            this.tbBotChips1.Text = "Chips : 0";
+            this.tbBotChips1.Text = "chips : 0";
             // 
             // tbPot
             // 
