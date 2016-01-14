@@ -9,3 +9,13 @@ C:\Users\Kolev\Desktop\Github\Cloudberry\Poker\bin\Debug\Poker.exe
 C:\Users\Kolev\Desktop\Github\Cloudberry\Poker\bin\Debug\Poker.pdb
 C:\Users\Kolev\Desktop\Github\Cloudberry\Poker\obj\Debug\Poker.exe
 C:\Users\Kolev\Desktop\Github\Cloudberry\Poker\obj\Debug\Poker.pdb
+C:\Users\etasheva\Documents\Visual Studio 2015\Projects\Fundamental\02.High-Quality Code\TeamWork\Poker-14.01.2016\Cloudberry\Poker\bin\Debug\Poker.exe.config
+C:\Users\etasheva\Documents\Visual Studio 2015\Projects\Fundamental\02.High-Quality Code\TeamWork\Poker-14.01.2016\Cloudberry\Poker\obj\Debug\Poker.exe
+C:\Users\etasheva\Documents\Visual Studio 2015\Projects\Fundamental\02.High-Quality Code\TeamWork\Poker-14.01.2016\Cloudberry\Poker\obj\Debug\Poker.pdb
+C:\Users\etasheva\Documents\Visual Studio 2015\Projects\Fundamental\02.High-Quality Code\TeamWork\Poker-14.01.2016\Cloudberry\Poker\bin\Debug\Poker.exe
+C:\Users\etasheva\Documents\Visual Studio 2015\Projects\Fundamental\02.High-Quality Code\TeamWork\Poker-14.01.2016\Cloudberry\Poker\bin\Debug\Poker.pdb
+C:\Users\etasheva\Documents\Visual Studio 2015\Projects\Fundamental\02.High-Quality Code\TeamWork\Poker-14.01.2016\Cloudberry\Poker\obj\Debug\Poker.csprojResolveAssemblyReference.cache
+C:\Users\etasheva\Documents\Visual Studio 2015\Projects\Fundamental\02.High-Quality Code\TeamWork\Poker-14.01.2016\Cloudberry\Poker\obj\Debug\Poker.AddChips.resources
+C:\Users\etasheva\Documents\Visual Studio 2015\Projects\Fundamental\02.High-Quality Code\TeamWork\Poker-14.01.2016\Cloudberry\Poker\obj\Debug\Poker.Form1.resources
+C:\Users\etasheva\Documents\Visual Studio 2015\Projects\Fundamental\02.High-Quality Code\TeamWork\Poker-14.01.2016\Cloudberry\Poker\obj\Debug\Poker.Properties.Resources.resources
+C:\Users\etasheva\Documents\Visual Studio 2015\Projects\Fundamental\02.High-Quality Code\TeamWork\Poker-14.01.2016\Cloudberry\Poker\obj\Debug\Poker.csproj.GenerateResource.Cache
