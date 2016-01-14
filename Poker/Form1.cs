@@ -100,8 +100,8 @@
         private List<string> CheckWinners = new List<string>();
         private List<int> ints = new List<int>();
 
-        private bool PFturn;
-        private bool Pturn = true;
+        private bool PlayerFoldTturn;
+        private bool Playerturn = true;
         private bool restart;
         private bool raising;
 
@@ -134,7 +134,7 @@
         #endregion
         public Form1()
         {
-            //bools.Add(PFturn); bools.Add(B1Fturn); bools.Add(B2Fturn); bools.Add(B3Fturn); bools.Add(B4Fturn); bools.Add(B5Fturn);
+            //bools.Add(PlayerFoldTturn); bools.Add(B1Fturn); bools.Add(B2Fturn); bools.Add(B3Fturn); bools.Add(B4Fturn); bools.Add(B5Fturn);
             this.call = this.defaultBigBlind;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -178,7 +178,7 @@
         }
         async Task Shuffle()
         {
-            this.bools.Add(PFturn);
+            this.bools.Add(this.PlayerFoldTturn);
             this.bools.Add(B1Fturn);
             this.bools.Add(B2Fturn);
             this.bools.Add(B3Fturn);
@@ -497,18 +497,20 @@
                     this.cardsHolder[2].Visible = false;
                     this.cardsHolder[3].Visible = false;
                 }
-                else
-                {
-                    B1Fturn = false;
-                    if (cardsInGame == 3)
-                    {
-                        if (this.cardsHolder[3] != null)
-                        {
-                            this.cardsHolder[2].Visible = true;
-                            this.cardsHolder[3].Visible = true;
-                        }
-                    }
-                }
+
+                // Valentin:it is unnecessary
+                //else
+                //{
+                //    B1Fturn = false;
+                //    if (cardsInGame == 3)
+                //    {
+                //        if (this.cardsHolder[3] != null)
+                //        {
+                //            this.cardsHolder[2].Visible = true;
+                //            this.cardsHolder[3].Visible = true;
+                //        }
+                //    }
+                //}
 
                 if (this.secondBotChips <= 0)
                 {
@@ -516,18 +518,19 @@
                     this.cardsHolder[4].Visible = false;
                     this.cardsHolder[5].Visible = false;
                 }
-                else
-                {
-                    B2Fturn = false;
-                    if (cardsInGame == 5)
-                    {
-                        if (this.cardsHolder[5] != null)
-                        {
-                            this.cardsHolder[4].Visible = true;
-                            this.cardsHolder[5].Visible = true;
-                        }
-                    }
-                }
+                // Valentin:it is unnecessary
+                //else
+                //{
+                //    B2Fturn = false;
+                //    if (cardsInGame == 5)
+                //    {
+                //        if (this.cardsHolder[5] != null)
+                //        {
+                //            this.cardsHolder[4].Visible = true;
+                //            this.cardsHolder[5].Visible = true;
+                //        }
+                //    }
+                //}
 
                 if (this.thirdBotChips <= 0)
                 {
@@ -535,18 +538,19 @@
                     this.cardsHolder[6].Visible = false;
                     this.cardsHolder[7].Visible = false;
                 }
-                else
-                {
-                    B3Fturn = false;
-                    if (cardsInGame == 7)
-                    {
-                        if (this.cardsHolder[7] != null)
-                        {
-                            this.cardsHolder[6].Visible = true;
-                            this.cardsHolder[7].Visible = true;
-                        }
-                    }
-                }
+                // Valentin:it is unnecessary
+                //else
+                //{
+                //    B3Fturn = false;
+                //    if (cardsInGame == 7)
+                //    {
+                //        if (this.cardsHolder[7] != null)
+                //        {
+                //            this.cardsHolder[6].Visible = true;
+                //            this.cardsHolder[7].Visible = true;
+                //        }
+                //    }
+                //}
 
                 if (this.fourthBotChips <= 0)
                 {
@@ -554,18 +558,19 @@
                     this.cardsHolder[8].Visible = false;
                     this.cardsHolder[9].Visible = false;
                 }
-                else
-                {
-                    B4Fturn = false;
-                    if (cardsInGame == 9)
-                    {
-                        if (this.cardsHolder[9] != null)
-                        {
-                            this.cardsHolder[8].Visible = true;
-                            this.cardsHolder[9].Visible = true;
-                        }
-                    }
-                }
+                // Valentin:it is unnecessary
+                //else
+                //{
+                //    B4Fturn = false;
+                //    if (cardsInGame == 9)
+                //    {
+                //        if (this.cardsHolder[9] != null)
+                //        {
+                //            this.cardsHolder[8].Visible = true;
+                //            this.cardsHolder[9].Visible = true;
+                //        }
+                //    }
+                //}
 
                 if (this.fifthBotChips <= 0)
                 {
@@ -573,19 +578,20 @@
                     this.cardsHolder[10].Visible = false;
                     this.cardsHolder[11].Visible = false;
                 }
-                else
-                {
-                    B5Fturn = false;
+                // Valentin:it is unnecessary
+                //else
+                //{
+                //    B5Fturn = false;
 
-                    if (cardsInGame == 11)
-                    {
-                        if (this.cardsHolder[11] != null)
-                        {
-                            this.cardsHolder[10].Visible = true;
-                            this.cardsHolder[11].Visible = true;
-                        }
-                    }
-                }
+                //    if (cardsInGame == 11)
+                //    {
+                //        if (this.cardsHolder[11] != null)
+                //        {
+                //            this.cardsHolder[10].Visible = true;
+                //            this.cardsHolder[11].Visible = true;
+                //        }
+                //    }
+                //}
 
                 if (cardsInGame == 16)
                 {
@@ -598,7 +604,6 @@
                 }
             }  //elica: end of the second loop
 
-           
             if (this.foldedPlayers == 5)
             {
                 DialogResult dialogResult = MessageBox.Show("Would You Like To Play Again ?", "You Won , Congratulations ! ",
@@ -612,10 +617,10 @@
                     Application.Exit();
                 }
             }
-            else
-            {
-                this.foldedPlayers = 5;
-            }
+            //else
+            //{
+            //    this.foldedPlayers = 5;
+            //}
 
             //elica: it is unnecessary
             //this.globalShit = 17;
@@ -632,31 +637,29 @@
         async Task Turns()
         {
             #region Rotating
-            if (!PFturn)
+            if (!this.PlayerFoldTturn)
             {
-                if (Pturn)
+                if (this.Playerturn)
                 {
                     FixCall(playerStatus, ref this.playerCall, ref this.playerRaise, 1);
                     //MessageBox.Show("Player's turn");
-                    pbTimer.Visible = true;
-                    pbTimer.Value = 1000;
+                    this.pokerBetTimer.Visible = true;
+                    this.pokerBetTimer.Value = 1000;
                     t = 60;
                     up = 10000000;
                     timer.Start();
                     this.buttonRaise.Enabled = true;
                     this.buttonCall.Enabled = true;
-                    this.buttonRaise.Enabled = true;
-                    this.buttonRaise.Enabled = true;
                     this.buttonFold.Enabled = true;
                     turnCount++;
                     FixCall(playerStatus, ref this.playerCall, ref this.playerRaise, 2);
                 }
             }
 
-            if (PFturn || !Pturn)
+            if (this.PlayerFoldTturn || !this.Playerturn)
             {
                 await AllIn();
-                if (PFturn && !this.hasPlayerFolded)
+                if (this.PlayerFoldTturn && !this.hasPlayerFolded)
                 {
                     if (this.buttonCall.Text.Contains("All in") == false || this.buttonRaise.Text.Contains("All in") == false)
                     {
@@ -668,10 +671,8 @@
                 }
 
                 await CheckRaise(0, 0);
-                pbTimer.Visible = false;
-                this.buttonRaise.Enabled = false;
+                this.pokerBetTimer.Visible = false;
                 this.buttonCall.Enabled = false;
-                this.buttonRaise.Enabled = false;
                 this.buttonRaise.Enabled = false;
                 this.buttonFold.Enabled = false;
                 timer.Stop();
@@ -823,10 +824,10 @@
                 if (B5Fturn || !this.isFifthBotTurn)
                 {
                     await CheckRaise(5, 5);
-                    Pturn = true;
+                    this.Playerturn = true;
                 }
 
-                if (PFturn && !this.hasPlayerFolded)
+                if (this.PlayerFoldTturn && !this.hasPlayerFolded)
                 {
                     if (this.buttonCall.Text.Contains("All in") == false || this.buttonRaise.Text.Contains("All in") == false)
                     {
@@ -2206,7 +2207,7 @@
                         call = 0;
                         raisedTurn = 123;
                         rounds++;
-                        if (!PFturn)
+                        if (!this.PlayerFoldTturn)
                         {
                             playerStatus.Text = "";
                         }
@@ -2317,7 +2318,7 @@
                 if (!playerStatus.Text.Contains("Fold"))
                 {
                     fixedLast = "Player";
-                    Rules(0, 1, "Player", ref this.playerType, ref this.playerPower, PFturn);
+                    Rules(0, 1, "Player", ref this.playerType, ref this.playerPower, this.PlayerFoldTturn);
                 }
 
                 if (!this.firstBotStatus.Text.Contains("Fold"))
@@ -2357,8 +2358,8 @@
                 Winner(this.fourthBotType, this.fourthBotPower, "Bot 4", this.fourthBotChips, fixedLast);
                 Winner(this.fifthBotType, this.fifthBotPower, "Bot 5", this.fifthBotChips, fixedLast);
                 restart = true;
-                Pturn = true;
-                PFturn = false;
+                this.Playerturn = true;
+                this.PlayerFoldTturn = false;
                 B1Fturn = false;
                 B2Fturn = false;
                 B3Fturn = false;
@@ -2377,8 +2378,8 @@
                         this.thirdBotChips += f2.a;
                         this.fourthBotChips += f2.a;
                         this.fifthBotChips += f2.a;
-                        PFturn = false;
-                        Pturn = true;
+                        this.PlayerFoldTturn = false;
+                        this.Playerturn = true;
                         this.buttonRaise.Enabled = true;
                         this.buttonFold.Enabled = true;
                         this.buttonCheck.Enabled = true;
@@ -2450,7 +2451,7 @@
             }
         }  
 
-        void FixCall(Label status, ref int cCall, ref int cRaise, int options)
+        void FixCall(Label status, ref int chipsCall, ref int chipsRaise, int options)
         {
             if (rounds != 4)
             {
@@ -2459,35 +2460,35 @@
                     if (status.Text.Contains("raise"))
                     {
                         var changeRaise = status.Text.Substring(6);
-                        cRaise = int.Parse(changeRaise);
+                        chipsRaise = int.Parse(changeRaise);
                     }
 
                     if (status.Text.Contains("Call"))
                     {
                         var changeCall = status.Text.Substring(5);
-                        cCall = int.Parse(changeCall);
+                        chipsCall = int.Parse(changeCall);
                     }
 
                     if (status.Text.Contains("Check"))
                     {
-                        cRaise = 0;
-                        cCall = 0;
+                        chipsRaise = 0;
+                        chipsCall = 0;
                     }
                 }
 
                 if (options == 2)
                 {
-                    if (cRaise != this.raise && cRaise <= this.raise)
+                    if (chipsRaise != this.raise && chipsRaise <= this.raise)
                     {
-                        call = Convert.ToInt32(this.raise) - cRaise;
+                        call = Convert.ToInt32(this.raise) - chipsRaise;
                     }
 
-                    if (cCall != call || cCall <= call)
+                    if (chipsCall != call || chipsCall <= call)
                     {
-                        call = call - cCall;
+                        call = call - chipsCall;
                     }
 
-                    if (cRaise == this.raise && this.raise > 0)
+                    if (chipsRaise == this.raise && this.raise > 0)
                     {
                         call = 0;
                         this.buttonCall.Enabled = false;
@@ -2705,8 +2706,8 @@
             this.hasFourthBotFolded = false;
             this.hasFifthBotFolded = false;
 
-            PFturn = false;
-            Pturn = true;
+            this.PlayerFoldTturn = false;
+            this.Playerturn = true;
             restart = false;
             raising = false;
 
@@ -2759,8 +2760,8 @@
                     this.thirdBotChips += f2.a;
                     this.fourthBotChips += f2.a;
                     this.fifthBotChips += f2.a;
-                    PFturn = false;
-                    Pturn = true;
+                    this.PlayerFoldTturn = false;
+                    this.Playerturn = true;
                     this.buttonRaise.Enabled = true;
                     this.buttonFold.Enabled = true;
                     this.buttonCheck.Enabled = true;
@@ -2789,7 +2790,7 @@
             if (!this.playerStatus.Text.Contains("Fold"))
             {
                 fixedLast = "Player";
-                this.Rules(0, 1, "Player", ref this.playerType, ref this.playerPower, PFturn);
+                this.Rules(0, 1, "Player", ref this.playerType, ref this.playerPower, this.PlayerFoldTturn);
             }
 
             if (!this.firstBotStatus.Text.Contains("Fold"))
@@ -3300,16 +3301,16 @@
         #region UI
         private async void timer_Tick(object sender, object e)
         {
-            if (pbTimer.Value <= 0)
+            if (this.pokerBetTimer.Value <= 0)
             {
-                PFturn = true;
+                this.PlayerFoldTturn = true;
                 await Turns();
             }
 
             if (t > 0)
             {
                 t--;
-                pbTimer.Value = (t / 6) * 100;
+                this.pokerBetTimer.Value = (t / 6) * 100;
             }
         }
 
@@ -3354,8 +3355,8 @@
 
             if (this.chips <= 0)
             {
-                Pturn = false;
-                PFturn = true;
+                this.Playerturn = false;
+                this.PlayerFoldTturn = true;
                 this.buttonCall.Enabled = false;
                 this.buttonRaise.Enabled = false;
                 this.buttonFold.Enabled = false;
@@ -3416,8 +3417,8 @@
         private async void buttonFold_IsClicked(object sender, EventArgs e)
         {
             playerStatus.Text = "Fold";
-            Pturn = false;
-            PFturn = true;
+            this.Playerturn = false;
+            this.PlayerFoldTturn = true;
             await Turns();
         }
 
@@ -3425,7 +3426,7 @@
         {
             if (call <= 0)
             {
-                Pturn = false;
+                this.Playerturn = false;
                 playerStatus.Text = "Check";
             }
             else
@@ -3439,7 +3440,7 @@
 
         private async void buttonCall_IsClicked(object sender, EventArgs e)
         {
-            Rules(0, 1, "Player", ref this.playerType, ref this.playerPower, PFturn);
+            Rules(0, 1, "Player", ref this.playerType, ref this.playerPower, this.PlayerFoldTturn);
             if (this.chips >= call)
             {
                 this.chips -= call;
@@ -3454,7 +3455,7 @@
                     this.textBoxPot.Text = call.ToString();
                 }
 
-                Pturn = false;
+                this.Playerturn = false;
                 playerStatus.Text = "Call " + call;
                 this.playerCall = call;
             }
@@ -3464,7 +3465,7 @@
                 playerStatus.Text = "All in " + this.chips;
                 this.chips = 0;
                 this.textBoxChips.Text = "chips : " + this.chips.ToString();
-                Pturn = false;
+                this.Playerturn = false;
                 this.buttonFold.Enabled = false;
                 this.playerCall = this.chips;
             }
@@ -3473,7 +3474,7 @@
 
         private async void buttonRaise_IsClicked(object sender, EventArgs e)
         {
-            Rules(0, 1, "Player", ref this.playerType, ref this.playerPower, PFturn);
+            Rules(0, 1, "Player", ref this.playerType, ref this.playerPower, this.PlayerFoldTturn);
             int parsedValue;
             if (this.textBoxRaise.Text != "" && int.TryParse(this.textBoxRaise.Text, out parsedValue))
             {
@@ -3518,7 +3519,7 @@
                 MessageBox.Show("This is a number only field");
                 return;
             }
-            Pturn = false;
+            this.Playerturn = false;
             await Turns();
         }
 
