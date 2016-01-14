@@ -19,8 +19,8 @@
         private Panel b3Panel = new Panel();
         private Panel b4Panel = new Panel();
         private Panel b5Panel = new Panel();
-        private int call = 500;         
-        private int foldedPlayers = 5;    
+        private int call = 500;
+        private int foldedPlayers = 5;
         //elica: Chips
         private int Chips = 10000;     //elica: It was a puplic field!!! 
         private int bot1Chips = 10000;
@@ -37,15 +37,15 @@
         private double b4Power;
         private double b5Power;
         private double pPower;
-        private double pType = - 1;
+        private double pType = -1;
         private double Raise;
-        private double b1Type = - 1;
-        private double b2Type = - 1;
-        private double b3Type = - 1;
-        private double b4Type = - 1;
-        private double b5Type = - 1;
+        private double b1Type = -1;
+        private double b2Type = -1;
+        private double b3Type = -1;
+        private double b4Type = -1;
+        private double b5Type = -1;
 
-        private bool B1turn;     
+        private bool B1turn;
         private bool B2turn;
         private bool B3turn;
         private bool B4turn;
@@ -591,7 +591,7 @@
 
             if (foldedPlayers == 5)
             {
-                DialogResult dialogResult = MessageBox.Show("Would You Like To Play Again ?", "You Won , Congratulations ! ", 
+                DialogResult dialogResult = MessageBox.Show("Would You Like To Play Again ?", "You Won , Congratulations ! ",
                     MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
@@ -791,7 +791,7 @@
                     {
                         FixCall(b5Status, ref b5Call, ref b5Raise, 1);
                         FixCall(b5Status, ref b5Call, ref b5Raise, 2);
-                        Rules(11, "Bot 5", ref b5Type, ref b5Power, B5Fturn);
+                        Rules(10, 11, "Bot 5", ref b5Type, ref b5Power, B5Fturn);
                         MessageBox.Show("Bot 5's Turn");
                         AI(10, 11, ref bot5Chips, ref B5turn, ref B5Fturn, b5Status, 4, b5Power, b5Type);
                         turnCount++;
@@ -2313,11 +2313,11 @@
                 b4Panel.Visible = false;
                 b5Panel.Visible = false;
 
-                pCall = 0;  
-                b1Call = 0; 
-                b2Call = 0; 
-                b3Call = 0; 
-                b4Call = 0; 
+                pCall = 0;
+                b1Call = 0;
+                b2Call = 0;
+                b3Call = 0;
+                b4Call = 0;
                 b5Call = 0;
 
                 pRaise = 0;
@@ -2746,7 +2746,7 @@
             Winner(b4Type, b4Power, "Bot 4", bot4Chips, fixedLast);
             Winner(b5Type, b5Power, "Bot 5", bot5Chips, fixedLast);
         }
-        void AI(int c1, int c2, ref int sChips, ref bool sTurn, ref bool sFTurn, 
+        void AI(int c1, int c2, ref int sChips, ref bool sTurn, ref bool sFTurn,
             Label sStatus, int name, double botPower, double botCurrent)
         {
             if (!sFTurn)
