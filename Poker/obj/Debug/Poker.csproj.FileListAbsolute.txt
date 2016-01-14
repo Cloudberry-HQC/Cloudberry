@@ -1,0 +1,2 @@
+C:\Users\Kolev\Desktop\Github\Cloudberry\Poker\bin\Debug\Poker.exe.config
+C:\Users\Kolev\Desktop\Github\ads\Poker\bin\Debug\Poker.exe.config
