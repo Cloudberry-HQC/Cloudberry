@@ -57,7 +57,6 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Launcher.cs" />
-    <Compile Include="Models\Dealer.cs" />
     <Compile Include="Models\Player\Bot.cs" />
     <Compile Include="Models\Player\Human.cs" />
     <Compile Include="Models\Player\Player.cs" />

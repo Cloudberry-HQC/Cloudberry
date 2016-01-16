@@ -235,7 +235,7 @@
                     this.cardsHolder[0].Tag = this.availableCardsInGame[0];
                     this.cardsHolder[cardsInGame].Image = this.cardsImageDeck[cardsInGame];
                     this.cardsHolder[cardsInGame].Anchor = (AnchorStyles.Bottom);
-                    //cardsHolder[globalShit].Dock = DockStyle.Top;
+                    //cardsHolder[cardsInGame].Dock = DockStyle.Top;
                     this.cardsHolder[cardsInGame].Location = new Point(horizontal, vertical);
                     horizontal += this.cardsHolder[cardsInGame].Width;
                     this.Controls.Add(this.playerPanel);
@@ -267,7 +267,7 @@
                         check = true;
                         this.cardsHolder[cardsInGame].Anchor = (AnchorStyles.Bottom | AnchorStyles.Left);
                         this.cardsHolder[cardsInGame].Image = backImage;
-                        //cardsHolder[globalShit].Image = cardsImageDeck[globalShit];
+                        //cardsHolder[cardsInGame].Image = cardsImageDeck[cardsInGame];
                         this.cardsHolder[cardsInGame].Location = new Point(horizontal, vertical);
                         horizontal += this.cardsHolder[cardsInGame].Width;
                         this.cardsHolder[cardsInGame].Visible = true;
@@ -307,7 +307,7 @@
                         check = true;
                         this.cardsHolder[cardsInGame].Anchor = (AnchorStyles.Top | AnchorStyles.Left);
                         this.cardsHolder[cardsInGame].Image = backImage;
-                        //cardsHolder[globalShit].Image = cardsImageDeck[globalShit];
+                        //cardsHolder[cardsInGame].Image = cardsImageDeck[cardsInGame];
                         this.cardsHolder[cardsInGame].Location = new Point(horizontal, vertical);
                         horizontal += this.cardsHolder[cardsInGame].Width;
                         this.cardsHolder[cardsInGame].Visible = true;
@@ -347,7 +347,7 @@
                         check = true;
                         this.cardsHolder[cardsInGame].Anchor = (AnchorStyles.Top);
                         this.cardsHolder[cardsInGame].Image = backImage;
-                        //cardsHolder[globalShit].Image = cardsImageDeck[globalShit];
+                        //cardsHolder[cardsInGame].Image = cardsImageDeck[cardsInGame;
                         this.cardsHolder[cardsInGame].Location = new Point(horizontal, vertical);
                         horizontal += this.cardsHolder[cardsInGame].Width;
                         this.cardsHolder[cardsInGame].Visible = true;
@@ -387,7 +387,7 @@
                         check = true;
                         this.cardsHolder[cardsInGame].Anchor = (AnchorStyles.Top | AnchorStyles.Right);
                         this.cardsHolder[cardsInGame].Image = backImage;
-                        //cardsHolder[globalShit].Image = cardsImageDeck[globalShit];
+                        //cardsHolder[cardsInGame].Image = cardsImageDeck[cardsInGame];
                         this.cardsHolder[cardsInGame].Location = new Point(horizontal, vertical);
                         horizontal += this.cardsHolder[cardsInGame].Width;
                         this.cardsHolder[cardsInGame].Visible = true;
@@ -427,7 +427,7 @@
                         check = true;
                         this.cardsHolder[cardsInGame].Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
                         this.cardsHolder[cardsInGame].Image = backImage;
-                        //cardsHolder[globalShit].Image = cardsImageDeck[globalShit];
+                        //cardsHolder[cardsInGame].Image = cardsImageDeck[cardsInGame];
                         this.cardsHolder[cardsInGame].Location = new Point(horizontal, vertical);
                         horizontal += this.cardsHolder[cardsInGame].Width;
                         this.cardsHolder[cardsInGame].Visible = true;
@@ -484,7 +484,7 @@
                     {
                         this.cardsHolder[cardsInGame].Anchor = AnchorStyles.None;
                         this.cardsHolder[cardsInGame].Image = backImage;
-                        //cardsHolder[globalShit].Image = cardsImageDeck[globalShit];
+                        //cardsHolder[cardsInGame].Image = cardsImageDeck[cardsInGame];
                         this.cardsHolder[cardsInGame].Location = new Point(horizontal, vertical);
                         horizontal += 110;
                     }
@@ -860,23 +860,23 @@
 
                 bool done = false;
                 bool vf = false;
-                int[] Straight1 = new int[5];      // cards on the table
+                int[] cardsOnTable = new int[5];      // cards on the table
                 int[] Straight = new int[7];
                 Straight[0] = this.availableCardsInGame[c1];
                 Straight[1] = this.availableCardsInGame[c2];
-                Straight1[0] = Straight[2] = this.availableCardsInGame[12];
-                Straight1[1] = Straight[3] = this.availableCardsInGame[13];
-                Straight1[2] = Straight[4] = this.availableCardsInGame[14];
-                Straight1[3] = Straight[5] = this.availableCardsInGame[15];
-                Straight1[4] = Straight[6] = this.availableCardsInGame[16];
-                var a = Straight.Where(o => o % 4 == 0).ToArray();
-                var b = Straight.Where(o => o % 4 == 1).ToArray();
-                var c = Straight.Where(o => o % 4 == 2).ToArray();
-                var d = Straight.Where(o => o % 4 == 3).ToArray();
-                var st1 = a.Select(o => o / 4).Distinct().ToArray();
-                var st2 = b.Select(o => o / 4).Distinct().ToArray();
-                var st3 = c.Select(o => o / 4).Distinct().ToArray();
-                var st4 = d.Select(o => o / 4).Distinct().ToArray();
+                cardsOnTable[0] = Straight[2] = this.availableCardsInGame[12];
+                cardsOnTable[1] = Straight[3] = this.availableCardsInGame[13];
+                cardsOnTable[2] = Straight[4] = this.availableCardsInGame[14];
+                cardsOnTable[3] = Straight[5] = this.availableCardsInGame[15];
+                cardsOnTable[4] = Straight[6] = this.availableCardsInGame[16];
+                var clubs = Straight.Where(o => o % 4 == 0).ToArray();         //  clubs
+                var diamonds = Straight.Where(o => o % 4 == 1).ToArray();     //  diamonds
+                var hearts = Straight.Where(o => o % 4 == 2).ToArray();       //  hearts
+                var spades = Straight.Where(o => o % 4 == 3).ToArray();        //  spades
+                var st1 = clubs.Select(o => o / 4).Distinct().ToArray();
+                var st2 = diamonds.Select(o => o / 4).Distinct().ToArray();
+                var st3 = hearts.Select(o => o / 4).Distinct().ToArray();
+                var st4 = spades.Select(o => o / 4).Distinct().ToArray();
                 Array.Sort(Straight);
                 Array.Sort(st1);
                 Array.Sort(st2);
@@ -910,7 +910,7 @@
                         #endregion
 
                         #region Flush current = 5 || 5.5
-                        rFlush(card, ref current, ref Power, ref vf, Straight1);
+                        rFlush(card, ref current, ref Power, ref vf, cardsOnTable);
                         #endregion
 
                         #region Full House current = 6
@@ -1101,16 +1101,17 @@
         {
             if (current >= -1)
             {
-                var f1 = Straight1.Where(o => o % 4 == 0).ToArray();
-                var f2 = Straight1.Where(o => o % 4 == 1).ToArray();
-                var f3 = Straight1.Where(o => o % 4 == 2).ToArray();
-                var f4 = Straight1.Where(o => o % 4 == 3).ToArray();
-                if (f1.Length == 3 || f1.Length == 4)
+                //addition cardsOnDesk = Streight1, f1=clubs, f2=diamonds, f3=hearts, f4=spades
+                var clubs = Straight1.Where(o => o % 4 == 0).ToArray();    //clubs
+                var diamonds = Straight1.Where(o => o % 4 == 1).ToArray();     //diamonds
+                var hearts = Straight1.Where(o => o % 4 == 2).ToArray();      //hearts
+                var spades = Straight1.Where(o => o % 4 == 3).ToArray();      //spades
+                if (clubs.Length == 3 || clubs.Length == 4)
                 {
                     if (this.availableCardsInGame[card] % 4 == this.availableCardsInGame[card + 1] % 4 &&
-                        this.availableCardsInGame[card] % 4 == f1[0] % 4)
+                        this.availableCardsInGame[card] % 4 == clubs[0] % 4)
                     {
-                        if (this.availableCardsInGame[card] / 4 > f1.Max() / 4)
+                        if (this.availableCardsInGame[card] / 4 > clubs.Max() / 4)
                         {
                             current = 5;
                             Power = this.availableCardsInGame[card] + current * 100;
@@ -1119,7 +1120,7 @@
                             vf = true;
                         }
 
-                        if (this.availableCardsInGame[card + 1] / 4 > f1.Max() / 4)
+                        if (this.availableCardsInGame[card + 1] / 4 > clubs.Max() / 4)
                         {
                             current = 5;
                             Power = this.availableCardsInGame[card + 1] + current * 100;
@@ -1127,11 +1128,11 @@
                             sorted = Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                             vf = true;
                         }
-                        else if (this.availableCardsInGame[card] / 4 < f1.Max() / 4 &&
-                            this.availableCardsInGame[card + 1] / 4 < f1.Max() / 4)
+                        else if (this.availableCardsInGame[card] / 4 < clubs.Max() / 4 &&
+                            this.availableCardsInGame[card + 1] / 4 < clubs.Max() / 4)
                         {
                             current = 5;
-                            Power = f1.Max() + current * 100;
+                            Power = clubs.Max() + current * 100;
                             Win.Add(new Type() { Power = Power, Current = 5 });
                             sorted = Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                             vf = true;
@@ -1139,12 +1140,12 @@
                     }
                 }
 
-                if (f1.Length == 4)//different cards in hand
+                if (clubs.Length == 4)//different cards in hand
                 {
                     if (this.availableCardsInGame[card] % 4 != this.availableCardsInGame[card + 1] % 4 &&
-                        this.availableCardsInGame[card] % 4 == f1[0] % 4)
+                        this.availableCardsInGame[card] % 4 == clubs[0] % 4)
                     {
-                        if (this.availableCardsInGame[card] / 4 > f1.Max() / 4)
+                        if (this.availableCardsInGame[card] / 4 > clubs.Max() / 4)
                         {
                             current = 5;
                             Power = this.availableCardsInGame[card] + current * 100;
@@ -1155,7 +1156,7 @@
                         else
                         {
                             current = 5;
-                            Power = f1.Max() + current * 100;
+                            Power = clubs.Max() + current * 100;
                             Win.Add(new Type() { Power = Power, Current = 5 });
                             sorted = Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                             vf = true;
@@ -1163,9 +1164,9 @@
                     }
 
                     if (this.availableCardsInGame[card + 1] % 4 != this.availableCardsInGame[card] % 4 &&
-                        this.availableCardsInGame[card + 1] % 4 == f1[0] % 4)
+                        this.availableCardsInGame[card + 1] % 4 == clubs[0] % 4)
                     {
-                        if (this.availableCardsInGame[card + 1] / 4 > f1.Max() / 4)
+                        if (this.availableCardsInGame[card + 1] / 4 > clubs.Max() / 4)
                         {
                             current = 5;
                             Power = this.availableCardsInGame[card + 1] + current * 100;
@@ -1176,7 +1177,7 @@
                         else
                         {
                             current = 5;
-                            Power = f1.Max() + current * 100;
+                            Power = clubs.Max() + current * 100;
                             Win.Add(new Type() { Power = Power, Current = 5 });
                             sorted = Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                             vf = true;
@@ -1184,10 +1185,10 @@
                     }
                 }
 
-                if (f1.Length == 5)
+                if (clubs.Length == 5)
                 {
-                    if (this.availableCardsInGame[card] % 4 == f1[0] % 4 &&
-                        this.availableCardsInGame[card] / 4 > f1.Min() / 4)
+                    if (this.availableCardsInGame[card] % 4 == clubs[0] % 4 &&
+                        this.availableCardsInGame[card] / 4 > clubs.Min() / 4)
                     {
                         current = 5;
                         Power = this.availableCardsInGame[card] + current * 100;
@@ -1196,8 +1197,8 @@
                         vf = true;
                     }
 
-                    if (this.availableCardsInGame[card + 1] % 4 == f1[0] % 4 &&
-                        this.availableCardsInGame[card + 1] / 4 > f1.Min() / 4)
+                    if (this.availableCardsInGame[card + 1] % 4 == clubs[0] % 4 &&
+                        this.availableCardsInGame[card + 1] / 4 > clubs.Min() / 4)
                     {
                         current = 5;
                         Power = this.availableCardsInGame[card + 1] + current * 100;
@@ -1205,23 +1206,23 @@
                         sorted = Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                         vf = true;
                     }
-                    else if (this.availableCardsInGame[card] / 4 < f1.Min() / 4 &&
-                        this.availableCardsInGame[card + 1] / 4 < f1.Min())
+                    else if (this.availableCardsInGame[card] / 4 < clubs.Min() / 4 &&
+                        this.availableCardsInGame[card + 1] / 4 < clubs.Min())
                     {
                         current = 5;
-                        Power = f1.Max() + current * 100;
+                        Power = clubs.Max() + current * 100;
                         Win.Add(new Type() { Power = Power, Current = 5 });
                         sorted = Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                         vf = true;
                     }
                 }
 
-                if (f2.Length == 3 || f2.Length == 4)
+                if (diamonds.Length == 3 || diamonds.Length == 4)
                 {
                     if (this.availableCardsInGame[card] % 4 == this.availableCardsInGame[card + 1] % 4 &&
-                        this.availableCardsInGame[card] % 4 == f2[0] % 4)
+                        this.availableCardsInGame[card] % 4 == diamonds[0] % 4)
                     {
-                        if (this.availableCardsInGame[card] / 4 > f2.Max() / 4)
+                        if (this.availableCardsInGame[card] / 4 > diamonds.Max() / 4)
                         {
                             current = 5;
                             Power = this.availableCardsInGame[card] + current * 100;
@@ -1230,7 +1231,7 @@
                             vf = true;
                         }
 
-                        if (this.availableCardsInGame[card + 1] / 4 > f2.Max() / 4)
+                        if (this.availableCardsInGame[card + 1] / 4 > diamonds.Max() / 4)
                         {
                             current = 5;
                             Power = this.availableCardsInGame[card + 1] + current * 100;
@@ -1238,11 +1239,11 @@
                             sorted = Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                             vf = true;
                         }
-                        else if (this.availableCardsInGame[card] / 4 < f2.Max() / 4 &&
-                            this.availableCardsInGame[card + 1] / 4 < f2.Max() / 4)
+                        else if (this.availableCardsInGame[card] / 4 < diamonds.Max() / 4 &&
+                            this.availableCardsInGame[card + 1] / 4 < diamonds.Max() / 4)
                         {
                             current = 5;
-                            Power = f2.Max() + current * 100;
+                            Power = diamonds.Max() + current * 100;
                             Win.Add(new Type() { Power = Power, Current = 5 });
                             sorted = Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                             vf = true;
@@ -1250,12 +1251,12 @@
                     }
                 }
 
-                if (f2.Length == 4)//different cards in hand
+                if (diamonds.Length == 4)//different cards in hand
                 {
                     if (this.availableCardsInGame[card] % 4 != this.availableCardsInGame[card + 1] % 4 &&
-                        this.availableCardsInGame[card] % 4 == f2[0] % 4)
+                        this.availableCardsInGame[card] % 4 == diamonds[0] % 4)
                     {
-                        if (this.availableCardsInGame[card] / 4 > f2.Max() / 4)
+                        if (this.availableCardsInGame[card] / 4 > diamonds.Max() / 4)
                         {
                             current = 5;
                             Power = this.availableCardsInGame[card] + current * 100;
@@ -1266,7 +1267,7 @@
                         else
                         {
                             current = 5;
-                            Power = f2.Max() + current * 100;
+                            Power = diamonds.Max() + current * 100;
                             Win.Add(new Type() { Power = Power, Current = 5 });
                             sorted = Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                             vf = true;
@@ -1274,9 +1275,9 @@
                     }
 
                     if (this.availableCardsInGame[card + 1] % 4 != this.availableCardsInGame[card] % 4 &&
-                        this.availableCardsInGame[card + 1] % 4 == f2[0] % 4)
+                        this.availableCardsInGame[card + 1] % 4 == diamonds[0] % 4)
                     {
-                        if (this.availableCardsInGame[card + 1] / 4 > f2.Max() / 4)
+                        if (this.availableCardsInGame[card + 1] / 4 > diamonds.Max() / 4)
                         {
                             current = 5;
                             Power = this.availableCardsInGame[card + 1] + current * 100;
@@ -1287,7 +1288,7 @@
                         else
                         {
                             current = 5;
-                            Power = f2.Max() + current * 100;
+                            Power = diamonds.Max() + current * 100;
                             Win.Add(new Type() { Power = Power, Current = 5 });
                             sorted = Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                             vf = true;
@@ -1295,10 +1296,10 @@
                     }
                 }
 
-                if (f2.Length == 5)
+                if (diamonds.Length == 5)
                 {
-                    if (this.availableCardsInGame[card] % 4 == f2[0] % 4 &&
-                        this.availableCardsInGame[card] / 4 > f2.Min() / 4)
+                    if (this.availableCardsInGame[card] % 4 == diamonds[0] % 4 &&
+                        this.availableCardsInGame[card] / 4 > diamonds.Min() / 4)
                     {
                         current = 5;
                         Power = this.availableCardsInGame[card] + current * 100;
@@ -1307,8 +1308,8 @@
                         vf = true;
                     }
 
-                    if (this.availableCardsInGame[card + 1] % 4 == f2[0] % 4 &&
-                        this.availableCardsInGame[card + 1] / 4 > f2.Min() / 4)
+                    if (this.availableCardsInGame[card + 1] % 4 == diamonds[0] % 4 &&
+                        this.availableCardsInGame[card + 1] / 4 > diamonds.Min() / 4)
                     {
                         current = 5;
                         Power = this.availableCardsInGame[card + 1] + current * 100;
@@ -1316,23 +1317,23 @@
                         sorted = Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                         vf = true;
                     }
-                    else if (this.availableCardsInGame[card] / 4 < f2.Min() / 4 &&
-                        this.availableCardsInGame[card + 1] / 4 < f2.Min())
+                    else if (this.availableCardsInGame[card] / 4 < diamonds.Min() / 4 &&
+                        this.availableCardsInGame[card + 1] / 4 < diamonds.Min())
                     {
                         current = 5;
-                        Power = f2.Max() + current * 100;
+                        Power = diamonds.Max() + current * 100;
                         Win.Add(new Type() { Power = Power, Current = 5 });
                         sorted = Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                         vf = true;
                     }
                 }
 
-                if (f3.Length == 3 || f3.Length == 4)
+                if (hearts.Length == 3 || hearts.Length == 4)
                 {
                     if (this.availableCardsInGame[card] % 4 == this.availableCardsInGame[card + 1] % 4 &&
-                        this.availableCardsInGame[card] % 4 == f3[0] % 4)
+                        this.availableCardsInGame[card] % 4 == hearts[0] % 4)
                     {
-                        if (this.availableCardsInGame[card] / 4 > f3.Max() / 4)
+                        if (this.availableCardsInGame[card] / 4 > hearts.Max() / 4)
                         {
                             current = 5;
                             Power = this.availableCardsInGame[card] + current * 100;
@@ -1341,7 +1342,7 @@
                             vf = true;
                         }
 
-                        if (this.availableCardsInGame[card + 1] / 4 > f3.Max() / 4)
+                        if (this.availableCardsInGame[card + 1] / 4 > hearts.Max() / 4)
                         {
                             current = 5;
                             Power = this.availableCardsInGame[card + 1] + current * 100;
@@ -1349,11 +1350,11 @@
                             sorted = Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                             vf = true;
                         }
-                        else if (this.availableCardsInGame[card] / 4 < f3.Max() / 4 &&
-                            this.availableCardsInGame[card + 1] / 4 < f3.Max() / 4)
+                        else if (this.availableCardsInGame[card] / 4 < hearts.Max() / 4 &&
+                            this.availableCardsInGame[card + 1] / 4 < hearts.Max() / 4)
                         {
                             current = 5;
-                            Power = f3.Max() + current * 100;
+                            Power = hearts.Max() + current * 100;
                             Win.Add(new Type() { Power = Power, Current = 5 });
                             sorted = Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                             vf = true;
@@ -1361,12 +1362,12 @@
                     }
                 }
 
-                if (f3.Length == 4)//different cards in hand
+                if (hearts.Length == 4)//different cards in hand
                 {
                     if (this.availableCardsInGame[card] % 4 != this.availableCardsInGame[card + 1] % 4 &&
-                        this.availableCardsInGame[card] % 4 == f3[0] % 4)
+                        this.availableCardsInGame[card] % 4 == hearts[0] % 4)
                     {
-                        if (this.availableCardsInGame[card] / 4 > f3.Max() / 4)
+                        if (this.availableCardsInGame[card] / 4 > hearts.Max() / 4)
                         {
                             current = 5;
                             Power = this.availableCardsInGame[card] + current * 100;
@@ -1377,7 +1378,7 @@
                         else
                         {
                             current = 5;
-                            Power = f3.Max() + current * 100;
+                            Power = hearts.Max() + current * 100;
                             Win.Add(new Type() { Power = Power, Current = 5 });
                             sorted = Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                             vf = true;
@@ -1385,9 +1386,9 @@
                     }
 
                     if (this.availableCardsInGame[card + 1] % 4 != this.availableCardsInGame[card] % 4 &&
-                        this.availableCardsInGame[card + 1] % 4 == f3[0] % 4)
+                        this.availableCardsInGame[card + 1] % 4 == hearts[0] % 4)
                     {
-                        if (this.availableCardsInGame[card + 1] / 4 > f3.Max() / 4)
+                        if (this.availableCardsInGame[card + 1] / 4 > hearts.Max() / 4)
                         {
                             current = 5;
                             Power = this.availableCardsInGame[card + 1] + current * 100;
@@ -1398,7 +1399,7 @@
                         else
                         {
                             current = 5;
-                            Power = f3.Max() + current * 100;
+                            Power = hearts.Max() + current * 100;
                             Win.Add(new Type() { Power = Power, Current = 5 });
                             sorted = Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                             vf = true;
@@ -1406,10 +1407,10 @@
                     }
                 }
 
-                if (f3.Length == 5)
+                if (hearts.Length == 5)
                 {
-                    if (this.availableCardsInGame[card] % 4 == f3[0] % 4 &&
-                        this.availableCardsInGame[card] / 4 > f3.Min() / 4)
+                    if (this.availableCardsInGame[card] % 4 == hearts[0] % 4 &&
+                        this.availableCardsInGame[card] / 4 > hearts.Min() / 4)
                     {
                         current = 5;
                         Power = this.availableCardsInGame[card] + current * 100;
@@ -1418,8 +1419,8 @@
                         vf = true;
                     }
 
-                    if (this.availableCardsInGame[card + 1] % 4 == f3[0] % 4 &&
-                        this.availableCardsInGame[card + 1] / 4 > f3.Min() / 4)
+                    if (this.availableCardsInGame[card + 1] % 4 == hearts[0] % 4 &&
+                        this.availableCardsInGame[card + 1] / 4 > hearts.Min() / 4)
                     {
                         current = 5;
                         Power = this.availableCardsInGame[card + 1] + current * 100;
@@ -1427,23 +1428,23 @@
                         sorted = Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                         vf = true;
                     }
-                    else if (this.availableCardsInGame[card] / 4 < f3.Min() / 4 &&
-                        this.availableCardsInGame[card + 1] / 4 < f3.Min())
+                    else if (this.availableCardsInGame[card] / 4 < hearts.Min() / 4 &&
+                        this.availableCardsInGame[card + 1] / 4 < hearts.Min())
                     {
                         current = 5;
-                        Power = f3.Max() + current * 100;
+                        Power = hearts.Max() + current * 100;
                         Win.Add(new Type() { Power = Power, Current = 5 });
                         sorted = Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                         vf = true;
                     }
                 }
 
-                if (f4.Length == 3 || f4.Length == 4)
+                if (spades.Length == 3 || spades.Length == 4)
                 {
                     if (this.availableCardsInGame[card] % 4 == this.availableCardsInGame[card + 1] % 4 &&
-                        this.availableCardsInGame[card] % 4 == f4[0] % 4)
+                        this.availableCardsInGame[card] % 4 == spades[0] % 4)
                     {
-                        if (this.availableCardsInGame[card] / 4 > f4.Max() / 4)
+                        if (this.availableCardsInGame[card] / 4 > spades.Max() / 4)
                         {
                             current = 5;
                             Power = this.availableCardsInGame[card] + current * 100;
@@ -1452,7 +1453,7 @@
                             vf = true;
                         }
 
-                        if (this.availableCardsInGame[card + 1] / 4 > f4.Max() / 4)
+                        if (this.availableCardsInGame[card + 1] / 4 > spades.Max() / 4)
                         {
                             current = 5;
                             Power = this.availableCardsInGame[card + 1] + current * 100;
@@ -1460,11 +1461,11 @@
                             sorted = Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                             vf = true;
                         }
-                        else if (this.availableCardsInGame[card] / 4 < f4.Max() / 4 &&
-                            this.availableCardsInGame[card] / 4 < f4.Max() / 4)
+                        else if (this.availableCardsInGame[card] / 4 < spades.Max() / 4 &&
+                            this.availableCardsInGame[card] / 4 < spades.Max() / 4)
                         {
                             current = 5;
-                            Power = f4.Max() + current * 100;
+                            Power = spades.Max() + current * 100;
                             Win.Add(new Type() { Power = Power, Current = 5 });
                             sorted = Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                             vf = true;
@@ -1472,12 +1473,12 @@
                     }
                 }
 
-                if (f4.Length == 4)//different cards in hand
+                if (spades.Length == 4)//different cards in hand
                 {
                     if (this.availableCardsInGame[card] % 4 != this.availableCardsInGame[card + 1] % 4 &&
-                        this.availableCardsInGame[card] % 4 == f4[0] % 4)
+                        this.availableCardsInGame[card] % 4 == spades[0] % 4)
                     {
-                        if (this.availableCardsInGame[card] / 4 > f4.Max() / 4)
+                        if (this.availableCardsInGame[card] / 4 > spades.Max() / 4)
                         {
                             current = 5;
                             Power = this.availableCardsInGame[card] + current * 100;
@@ -1488,7 +1489,7 @@
                         else
                         {
                             current = 5;
-                            Power = f4.Max() + current * 100;
+                            Power = spades.Max() + current * 100;
                             Win.Add(new Type() { Power = Power, Current = 5 });
                             sorted = Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                             vf = true;
@@ -1496,9 +1497,9 @@
                     }
 
                     if (this.availableCardsInGame[card + 1] % 4 != this.availableCardsInGame[card] % 4 &&
-                        this.availableCardsInGame[card + 1] % 4 == f4[0] % 4)
+                        this.availableCardsInGame[card + 1] % 4 == spades[0] % 4)
                     {
-                        if (this.availableCardsInGame[card + 1] / 4 > f4.Max() / 4)
+                        if (this.availableCardsInGame[card + 1] / 4 > spades.Max() / 4)
                         {
                             current = 5;
                             Power = this.availableCardsInGame[card + 1] + current * 100;
@@ -1509,7 +1510,7 @@
                         else
                         {
                             current = 5;
-                            Power = f4.Max() + current * 100;
+                            Power = spades.Max() + current * 100;
                             Win.Add(new Type() { Power = Power, Current = 5 });
                             sorted = Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                             vf = true;
@@ -1517,10 +1518,10 @@
                     }
                 }
 
-                if (f4.Length == 5)
+                if (spades.Length == 5)
                 {
-                    if (this.availableCardsInGame[card] % 4 == f4[0] % 4 &&
-                        this.availableCardsInGame[card] / 4 > f4.Min() / 4)
+                    if (this.availableCardsInGame[card] % 4 == spades[0] % 4 &&
+                        this.availableCardsInGame[card] / 4 > spades.Min() / 4)
                     {
                         current = 5;
                         Power = this.availableCardsInGame[card] + current * 100;
@@ -1529,8 +1530,8 @@
                         vf = true;
                     }
 
-                    if (this.availableCardsInGame[card + 1] % 4 == f4[0] % 4 &&
-                        this.availableCardsInGame[card + 1] / 4 > f4.Min() / 4)
+                    if (this.availableCardsInGame[card + 1] % 4 == spades[0] % 4 &&
+                        this.availableCardsInGame[card + 1] / 4 > spades.Min() / 4)
                     {
                         current = 5;
                         Power = this.availableCardsInGame[card + 1] + current * 100;
@@ -1538,21 +1539,21 @@
                         sorted = Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                         vf = true;
                     }
-                    else if (this.availableCardsInGame[card] / 4 < f4.Min() / 4 &&
-                        this.availableCardsInGame[card + 1] / 4 < f4.Min())
+                    else if (this.availableCardsInGame[card] / 4 < spades.Min() / 4 &&
+                        this.availableCardsInGame[card + 1] / 4 < spades.Min())
                     {
                         current = 5;
-                        Power = f4.Max() + current * 100;
+                        Power = spades.Max() + current * 100;
                         Win.Add(new Type() { Power = Power, Current = 5 });
                         sorted = Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                         vf = true;
                     }
                 }
                 //ace
-                if (f1.Length > 0)
+                if (clubs.Length > 0)
                 {
                     if (this.availableCardsInGame[card] / 4 == 0 &&
-                        this.availableCardsInGame[card] % 4 == f1[0] % 4 && vf && f1.Length > 0)
+                        this.availableCardsInGame[card] % 4 == clubs[0] % 4 && vf && clubs.Length > 0)
                     {
                         current = 5.5;
                         Power = 13 + current * 100;
@@ -1561,7 +1562,7 @@
                     }
 
                     if (this.availableCardsInGame[card + 1] / 4 == 0 &&
-                        this.availableCardsInGame[card + 1] % 4 == f1[0] % 4 && vf && f1.Length > 0)
+                        this.availableCardsInGame[card + 1] % 4 == clubs[0] % 4 && vf && clubs.Length > 0)
                     {
                         current = 5.5;
                         Power = 13 + current * 100;
@@ -1570,10 +1571,10 @@
                     }
                 }
 
-                if (f2.Length > 0)
+                if (diamonds.Length > 0)
                 {
                     if (this.availableCardsInGame[card] / 4 == 0 &&
-                        this.availableCardsInGame[card] % 4 == f2[0] % 4 && vf && f2.Length > 0)
+                        this.availableCardsInGame[card] % 4 == diamonds[0] % 4 && vf && diamonds.Length > 0)
                     {
                         current = 5.5;
                         Power = 13 + current * 100;
@@ -1582,7 +1583,7 @@
                     }
 
                     if (this.availableCardsInGame[card + 1] / 4 == 0 &&
-                        this.availableCardsInGame[card + 1] % 4 == f2[0] % 4 && vf && f2.Length > 0)
+                        this.availableCardsInGame[card + 1] % 4 == diamonds[0] % 4 && vf && diamonds.Length > 0)
                     {
                         current = 5.5;
                         Power = 13 + current * 100;
@@ -1591,10 +1592,10 @@
                     }
                 }
 
-                if (f3.Length > 0)
+                if (hearts.Length > 0)
                 {
                     if (this.availableCardsInGame[card] / 4 == 0 &&
-                        this.availableCardsInGame[card] % 4 == f3[0] % 4 && vf && f3.Length > 0)
+                        this.availableCardsInGame[card] % 4 == hearts[0] % 4 && vf && hearts.Length > 0)
                     {
                         current = 5.5;
                         Power = 13 + current * 100;
@@ -1603,7 +1604,7 @@
                     }
 
                     if (this.availableCardsInGame[card + 1] / 4 == 0 &&
-                        this.availableCardsInGame[card + 1] % 4 == f3[0] % 4 && vf && f3.Length > 0)
+                        this.availableCardsInGame[card + 1] % 4 == hearts[0] % 4 && vf && hearts.Length > 0)
                     {
                         current = 5.5;
                         Power = 13 + current * 100;
@@ -1612,10 +1613,10 @@
                     }
                 }
 
-                if (f4.Length > 0)
+                if (spades.Length > 0)
                 {
                     if (this.availableCardsInGame[card] / 4 == 0 &&
-                        this.availableCardsInGame[card] % 4 == f4[0] % 4 && vf && f4.Length > 0)
+                        this.availableCardsInGame[card] % 4 == spades[0] % 4 && vf && spades.Length > 0)
                     {
                         current = 5.5;
                         Power = 13 + current * 100;
@@ -1624,7 +1625,7 @@
                     }
 
                     if (this.availableCardsInGame[card + 1] / 4 == 0 &&
-                        this.availableCardsInGame[card + 1] % 4 == f4[0] % 4 && vf)
+                        this.availableCardsInGame[card + 1] % 4 == spades[0] % 4 && vf)
                     {
                         current = 5.5;
                         Power = 13 + current * 100;
@@ -3074,6 +3075,17 @@
             return a;
         }
 
+        /// <summary>
+        /// Creates a choice generator for bots.
+        /// This generator is used when bot has only high card or table pair hand.
+        /// </summary>
+        /// <param name="sChips">Bot's chips</param>     //botChips
+        /// <param name="sTurn">Parameter that indicates if it's current player's turn</param>   //botTurn
+        /// <param name="sFTurn">Parameter that indicates if current bot has folded or is all in</param>   //botFoldsTurn
+        /// <param name="sStatus">The status text of the bot</param>    //botStatus
+        /// <param name="botPower">The bot's hand category factor</param>   //botHandRankFactor
+        /// <param name="n">The n parameter</param>
+        /// <param name="n1">The n1 parameter</param>        
         private void HP(ref int sChips, ref bool sTurn, ref bool sFTurn, Label sStatus, double botPower, int n, int n1)
         {
             Random rand = new Random();
@@ -3137,6 +3149,17 @@
             }
         }
 
+        /// <summary>
+        /// Choice maker for bots if they have a hand which is a pair or two pairs.
+        /// Uses BotChoiceFormula formula.
+        /// </summary>
+        /// <param name="sChips">Bot's chips</param>  //botChips
+        /// <param name="sTurn">Parameter that indicates if it's current player's turn</param>   //botTurn
+        /// <param name="sFTurn">Parameter that indicates if current bot has folded or is all in</param>  //botFoldsTurn
+        /// <param name="sStatus">The status text of the bot</param>  //botStatus
+        /// <param name="n">The n parameter</param>
+        /// <param name="n1">The n1 parameter</param>
+        /// <param name="r">The randGenerator parameter</param>   //randGenerator
         private void PH(ref int sChips, ref bool sTurn, ref bool sFTurn, Label sStatus, int n, int n1, int r)
         {
             Random rand = new Random();
@@ -3245,6 +3268,17 @@
             }
         }
 
+        /// <summary>
+        /// Choice maker for bots with a hand three of a kind or higher.
+        /// Uses BotChoiceFormula formula.
+        /// </summary>
+        /// <param name="botChips">Bot's chips</param>
+        /// <param name="botTurn">Parameter that indicates if it's current player's turn</param>
+        /// <param name="botFTurn">Parameter that indicates if current bot has folded or is all in</param>
+        /// <param name="botStatus">The status text of the bot</param>
+        /// <param name="name">The current bot's name</param>   //  botName
+        /// <param name="n">The n parameter</param>
+        /// <param name="r">The randGenerator parameter</param>  //randGenerator       
         void Smooth(ref int botChips, ref bool botTurn, ref bool botFTurn, Label botStatus, int name, int n, int r)
         {
             Random rand = new Random();
