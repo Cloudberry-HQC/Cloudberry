@@ -7,11 +7,10 @@
         private Panel panel;
         private int chips;
 
-        public Player()
+        protected Player()
         {
             this.panel = new Panel();
             this.chips = 100000;
         }
-
     }
 }

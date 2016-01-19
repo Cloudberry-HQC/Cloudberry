@@ -101,7 +101,7 @@
             this.buttonRaise.Name = "buttonRaise";
             this.buttonRaise.Size = new System.Drawing.Size(124, 62);
             this.buttonRaise.TabIndex = 4;
-            this.buttonRaise.Text = "raise";
+            this.buttonRaise.Text = "Raise";
             this.buttonRaise.UseVisualStyleBackColor = true;
             this.buttonRaise.Click += new System.EventHandler(this.buttonRaise_IsClicked);
             // 
@@ -388,9 +388,5 @@
         private System.Windows.Forms.Label secondBotStatus;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBoxRaise;
-
-
-
     }
 }
-
