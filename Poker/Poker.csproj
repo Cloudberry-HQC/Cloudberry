@@ -51,17 +51,23 @@
       <DependentUpon>AddChips.cs</DependentUpon>
     </Compile>
     <Compile Include="Core\DataBase.cs" />
+    <Compile Include="Enums\SuitOfCard.cs" />
+    <Compile Include="Enums\ValueOfCard.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\ICard.cs" />
+    <Compile Include="Interfaces\IPlayer.cs" />
     <Compile Include="Launcher.cs" />
+    <Compile Include="Models\Card\Card.cs" />
     <Compile Include="Models\Player\Bot.cs" />
     <Compile Include="Models\Player\Human.cs" />
     <Compile Include="Models\Player\Player.cs" />
     <Compile Include="Models\PokerManagement\AIMenager.cs" />
+    <Compile Include="Models\PokerManagement\CardHandler.cs" />
     <Compile Include="Models\PokerManagement\PokerTable.cs" />
     <Compile Include="Models\PokerManagement\Rules.cs" />
     <Compile Include="ProgressBars.cs" />
@@ -101,10 +107,7 @@
   <ItemGroup>
     <None Include="Resources\poker-table - Copy.gif" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Enums\" />
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Resources\Assets\Back\Back.png" />
     <Content Include="Resources\Assets\Cards\1.png" />

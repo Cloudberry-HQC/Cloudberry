@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Poker.Core;
+using Poker.Enums;
+using Poker.Interfaces;
 
 
 namespace Poker.Models.PokerManagement
@@ -71,243 +73,358 @@ namespace Poker.Models.PokerManagement
             set { this.sorted = value; }
         }
 
-        public void ApplyTo(Player player)
+        public void CheckForHand(IPlayer player)
         {
-            if (player.Cards[1] == 0 && player.Cards[2] == 1)        //elica: Empty if statement
-            {
-            }
 
-            if (!player.FoldTurn || player.Cards[1] == 0 && player.Cards[2] == 1 && player.Status.Text.Contains("Fold") == false)
+            if (!player.FoldTurn || player.Status.Text.Contains("Fold") == false)
             {
                 #region Variables
 
-                bool done = false;
-                bool vf = false;
-                int[] cardsOnTable = new int[5];      // cards on the table
-                int[] Straight = new int[7];
-                Straight[0] = DataBase.Instace.Table.AvailableCardsInGame[player.Cards[0]];
-                Straight[1] = DataBase.Instace.Table.AvailableCardsInGame[player.Cards[1]];
-                cardsOnTable[0] = Straight[2] = DataBase.Instace.Table.AvailableCardsInGame[12];
-                cardsOnTable[1] = Straight[3] = DataBase.Instace.Table.AvailableCardsInGame[13];
-                cardsOnTable[2] = Straight[4] = DataBase.Instace.Table.AvailableCardsInGame[14];
-                cardsOnTable[3] = Straight[5] = DataBase.Instace.Table.AvailableCardsInGame[15];
-                cardsOnTable[4] = Straight[6] = DataBase.Instace.Table.AvailableCardsInGame[16];
-                var clubs = Straight.Where(o => o % 4 == 0).ToArray();         //  clubs
-                var diamonds = Straight.Where(o => o % 4 == 1).ToArray();     //  diamonds
-                var hearts = Straight.Where(o => o % 4 == 2).ToArray();       //  hearts
-                var spades = Straight.Where(o => o % 4 == 3).ToArray();        //  spades
-                var st1 = clubs.Select(o => o / 4).Distinct().ToArray();
-                var st2 = diamonds.Select(o => o / 4).Distinct().ToArray();
-                var st3 = hearts.Select(o => o / 4).Distinct().ToArray();
-                var st4 = spades.Select(o => o / 4).Distinct().ToArray();
-                Array.Sort(Straight);
-                Array.Sort(st1);
-                Array.Sort(st2);
-                Array.Sort(st3);
-                Array.Sort(st4);
+                bool hasTrips = false;
+                bool hasFlush = false;
+
+                var allSevenCards = new ICard[7];
+                allSevenCards[0] = player.PlayerCards[0];
+                allSevenCards[1] = player.PlayerCards[1];
+                allSevenCards[2] = DataBase.Instace.Table.CardsOnTable[0];
+                allSevenCards[3] = DataBase.Instace.Table.CardsOnTable[1];
+                allSevenCards[4] = DataBase.Instace.Table.CardsOnTable[2];
+                allSevenCards[5] = DataBase.Instace.Table.CardsOnTable[3];
+                allSevenCards[6] = DataBase.Instace.Table.CardsOnTable[4];
+
+                //int[] cardsOnTable = new int[5];      // cards on the table
+                //int[] Straight = new int[7];
+                //Straight[0] = DataBase.Instace.Table.AvailableCardsInGame[player.Cards[0]];
+                //Straight[1] = DataBase.Instace.Table.AvailableCardsInGame[player.Cards[1]];
+                //cardsOnTable[0] = Straight[2] = DataBase.Instace.Table.AvailableCardsInGame[12];
+                //cardsOnTable[1] = Straight[3] = DataBase.Instace.Table.AvailableCardsInGame[13];
+                //cardsOnTable[2] = Straight[4] = DataBase.Instace.Table.AvailableCardsInGame[14];
+                //cardsOnTable[3] = Straight[5] = DataBase.Instace.Table.AvailableCardsInGame[15];
+                //cardsOnTable[4] = Straight[6] = DataBase.Instace.Table.AvailableCardsInGame[16];
+
+                //var clubs = Straight.Where(o => o % 4 == 0).ToArray();         //  clubs
+                //var diamonds = Straight.Where(o => o % 4 == 1).ToArray();     //  diamonds
+                //var hearts = Straight.Where(o => o % 4 == 2).ToArray();       //  hearts
+                //var spades = Straight.Where(o => o % 4 == 3).ToArray();        //  spades
+                //var st1 = clubs.Select(o => o / 4).Distinct().ToArray();
+                //var st2 = diamonds.Select(o => o / 4).Distinct().ToArray();
+                //var st3 = hearts.Select(o => o / 4).Distinct().ToArray();
+                //var st4 = spades.Select(o => o / 4).Distinct().ToArray();
+                //Array.Sort(Straight);
+                //Array.Sort(st1);
+                //Array.Sort(st2);
+                //Array.Sort(st3);
+                //Array.Sort(st4);
+
                 #endregion
 
-                for (int card = 0; card < 16; card++)
-                {
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card] == int.Parse(DataBase.Instace.Table.CardsHolder[player.Cards[0]].Tag.ToString()) &&
-                        DataBase.Instace.Table.AvailableCardsInGame[card + 1] == int.Parse(DataBase.Instace.Table.CardsHolder[player.Cards[1]].Tag.ToString()))
-                    {
-                        //Pair from Hand current = 1
+                //for (int card = 0; card < 16; card++)
+                //{
+                //    if (DataBase.Instace.Table.AvailableCardsInGame[card] == int.Parse(DataBase.Instace.Table.CardsHolder[player.Cards[0]].Tag.ToString()) &&
+                //        DataBase.Instace.Table.AvailableCardsInGame[card + 1] == int.Parse(DataBase.Instace.Table.CardsHolder[player.Cards[1]].Tag.ToString()))
+                //    {
+                //Pair from Hand current = 1
 
-                        rPairFromHand(card, player);
+                rPairFromHand(player); //ready
 
-                        #region Pair or Two Pair from Table current = 2 || 0
-                        rPairTwoPair(card, player);
-                        #endregion
+                #region Pair or Two Pair from Table current = 2 || 0
 
-                        #region Two Pair current = 2
-                        rTwoPair(card, player);
-                        #endregion
+                rPairTwoPair(player); //ready
 
-                        #region Three of a kind current = 3
-                        rThreeOfAKind(player, Straight);
-                        #endregion
+                #endregion
 
-                        #region Straight current = 4
-                        rStraight(player, Straight);
-                        #endregion
+                #region Two Pair current = 2
 
-                        #region Flush current = 5 || 5.5
-                        rFlush(card, player, ref vf, cardsOnTable);
-                        #endregion
+                rTwoPair(player); //ready
 
-                        #region Full House current = 6
-                        rFullHouse(player, ref done, Straight);
-                        #endregion
+                #endregion
 
-                        #region Four of a Kind current = 7
-                        rFourOfAKind(player, Straight);
-                        #endregion
+                #region Three of a kind current = 3
 
-                        #region Straight Flush current = 8 || 9
-                        rStraightFlush(player, st1, st2, st3, st4);
-                        #endregion
+                rThreeOfAKind(player, allSevenCards); //ready
 
-                        #region High Card current = -1
-                        rHighCard(card, player);
-                        #endregion
-                    }
-                }
+                #endregion
+
+                #region Straight current = 4
+
+                rStraight(player, allSevenCards); //ready
+
+                #endregion
+
+                #region Flush current = 5 || 5.5
+
+                rFlush(player, ref hasFlush); //ready
+
+                #endregion
+
+                #region Full House current = 6
+
+                rFullHouse(player, ref hasTrips, allSevenCards); //ready
+
+                #endregion
+
+                #region Four of a Kind current = 7
+
+                rFourOfAKind(player, allSevenCards); //ready 
+
+                #endregion
+
+                #region Straight Flush current = 8 || 9
+
+                rStraightFlush(player, allSevenCards); //ready
+
+                #endregion
+
+                #region High Card current = -1
+
+                rHighCard(player); //ready
+
+                #endregion
+
+                //}
+                //}
             }
         }
 
-        private void rStraightFlush(Player player, int[] st1, int[] st2, int[] st3, int[] st4)
+        private void rStraightFlush(IPlayer player, ICard[] allSeveCards)
         {
-            if (player.Current >= -1)
+            //TODO Check if orderBy work correctly
+            ICard[] clubs = allSeveCards.Where(card => card.Suit == SuitOfCard.Clubs).ToArray(); //  clubs
+            ICard[] diamonds = allSeveCards.Where(card => card.Suit == SuitOfCard.Diamonds).ToArray(); //  diamonds
+            ICard[] hearts = allSeveCards.Where(card => card.Suit == SuitOfCard.Hearts).ToArray(); //  hearts
+            ICard[] spades = allSeveCards.Where(card => card.Suit == SuitOfCard.Spades).ToArray(); //  spades
+            ICard[] distinctValueOfClubs = clubs
+                .GroupBy(c => c.Value)
+                .Select(c => c.First())
+                .OrderBy(c => c.Value)
+                .ToArray(); //st1
+            ICard[] distinctValueOfDiamonds = diamonds
+                .GroupBy(c => c.Value)
+                .Select(c => c.First())
+                .OrderBy(c => c.Value)
+                .ToArray(); //st2
+            ICard[] distinctValueOfHearts = hearts
+                .GroupBy(c => c.Value)
+                .Select(c => c.First())
+                .OrderBy(c => c.Value)
+                .ToArray(); //st3
+            ICard[] distinctValueOfSpades = spades
+                .GroupBy(c => c.Value)
+                .Select(c => c.First())
+                .OrderBy(c => c.Value)
+                .ToArray(); //st4
+
+
+
+            if (player.Current >= - 1)
             {
-                if (st1.Length >= 5)
+                if (distinctValueOfClubs.Length >= 5)
                 {
-                    if (st1[0] + 4 == st1[4])
+                    if (distinctValueOfClubs[0].Value + 4 == distinctValueOfClubs[4].Value)
                     {
                         player.Current = 8;
-                        player.Power = (st1.Max()) / 4 + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 8 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        player.Power = ((int) distinctValueOfClubs.Max(card => card.Value)) + player.Current * 100;
+                        this.Win.Add(new Type() {Power = player.Power, Current = 8});
+                        this.Sorted = this.Win
+                            .OrderByDescending(op1 => op1.Current)
+                            .ThenByDescending(op1 => op1.Power)
+                            .First();
                     }
 
-                    if (st1[0] == 0 && st1[1] == 9 && st1[2] == 10 && st1[3] == 11 && st1[0] + 12 == st1[4])
+                    if (distinctValueOfClubs[0].Value == ValueOfCard.Ace &&
+                        distinctValueOfClubs[1].Value == ValueOfCard.Ten &&
+                        distinctValueOfClubs[2].Value == ValueOfCard.Jack &&
+                        distinctValueOfClubs[3].Value == ValueOfCard.Queen &&
+                        distinctValueOfClubs[4].Value == ValueOfCard.King)
                     {
                         player.Current = 9;
-                        player.Power = (st1.Max()) / 4 + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 9 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        player.Power = ((int) distinctValueOfClubs.Max(card => card.Value)) + player.Current * 100;
+                        this.Win.Add(new Type() {Power = player.Power, Current = 9});
+                        this.Sorted = this.Win
+                            .OrderByDescending(op1 => op1.Current)
+                            .ThenByDescending(op1 => op1.Power)
+                            .First();
                     }
                 }
 
-                if (st2.Length >= 5)
+                if (distinctValueOfDiamonds.Length >= 5)
                 {
-                    if (st2[0] + 4 == st2[4])
+                    if (distinctValueOfDiamonds[0].Value + 4 == distinctValueOfDiamonds[4].Value)
                     {
                         player.Current = 8;
-                        player.Power = (st2.Max()) / 4 + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 8 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        player.Power = ((int) distinctValueOfDiamonds.Max(card => card.Value)) + player.Current * 100;
+                        this.Win.Add(new Type() {Power = player.Power, Current = 8});
+                        this.Sorted = this.Win
+                            .OrderByDescending(op1 => op1.Current)
+                            .ThenByDescending(op1 => op1.Power)
+                            .First();
                     }
 
-                    if (st2[0] == 0 && st2[1] == 9 && st2[2] == 10 && st2[3] == 11 && st2[0] + 12 == st2[4])
+                    if (distinctValueOfDiamonds[0].Value == ValueOfCard.Ace &&
+                        distinctValueOfDiamonds[1].Value == ValueOfCard.Ten &&
+                        distinctValueOfDiamonds[2].Value == ValueOfCard.Jack &&
+                        distinctValueOfDiamonds[3].Value == ValueOfCard.Queen &&
+                        distinctValueOfDiamonds[4].Value == ValueOfCard.King)
                     {
                         player.Current = 9;
-                        player.Power = (st2.Max()) / 4 + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 9 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        player.Power = (int) distinctValueOfDiamonds.Max(card => card.Value) + player.Current * 100;
+                        this.Win.Add(new Type() {Power = player.Power, Current = 9});
+                        this.Sorted = this.Win
+                            .OrderByDescending(op1 => op1.Current)
+                            .ThenByDescending(op1 => op1.Power)
+                            .First();
                     }
                 }
 
-                if (st3.Length >= 5)
+                if (distinctValueOfHearts.Length >= 5)
                 {
-                    if (st3[0] + 4 == st3[4])
+                    if (distinctValueOfHearts[0].Value + 4 == distinctValueOfHearts[4].Value)
                     {
                         player.Current = 8;
-                        player.Power = (st3.Max()) / 4 + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 8 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        player.Power = ((int) distinctValueOfHearts.Max(card => card.Value)) + player.Current * 100;
+                        this.Win.Add(new Type() {Power = player.Power, Current = 8});
+                        this.Sorted = this.Win
+                            .OrderByDescending(op1 => op1.Current)
+                            .ThenByDescending(op1 => op1.Power)
+                            .First();
                     }
 
-                    if (st3[0] == 0 && st3[1] == 9 && st3[2] == 10 && st3[3] == 11 && st3[0] + 12 == st3[4])
+                    if (distinctValueOfHearts[0].Value == ValueOfCard.Ace &&
+                        distinctValueOfHearts[1].Value == ValueOfCard.Ten &&
+                        distinctValueOfHearts[2].Value == ValueOfCard.Jack &&
+                        distinctValueOfHearts[3].Value == ValueOfCard.Queen &&
+                        distinctValueOfHearts[4].Value == ValueOfCard.King)
                     {
                         player.Current = 9;
-                        player.Power = (st3.Max()) / 4 + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 9 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        player.Power = ((int) distinctValueOfHearts.Max(card => card.Value)) + player.Current * 100;
+                        this.Win.Add(new Type() {Power = player.Power, Current = 9});
+                        this.Sorted = this.Win
+                            .OrderByDescending(op1 => op1.Current)
+                            .ThenByDescending(op1 => op1.Power)
+                            .First();
                     }
                 }
 
-                if (st4.Length >= 5)
+                if (distinctValueOfSpades.Length >= 5)
                 {
-                    if (st4[0] + 4 == st4[4])
+                    if (distinctValueOfSpades[0].Value + 4 == distinctValueOfSpades[4].Value)
                     {
                         player.Current = 8;
-                        player.Power = (st4.Max()) / 4 + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 8 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        player.Power = ((int) distinctValueOfSpades.Max(card => card.Value)) + player.Current * 100;
+                        this.Win.Add(new Type() {Power = player.Power, Current = 8});
+                        this.Sorted = this.Win
+                            .OrderByDescending(op1 => op1.Current)
+                            .ThenByDescending(op1 => op1.Power)
+                            .First();
                     }
 
-                    if (st4[0] == 0 && st4[1] == 9 && st4[2] == 10 && st4[3] == 11 && st4[0] + 12 == st4[4])
+                    if (distinctValueOfSpades[0].Value == ValueOfCard.Ace &&
+                        distinctValueOfSpades[1].Value == ValueOfCard.Ten &&
+                        distinctValueOfSpades[2].Value == ValueOfCard.Jack &&
+                        distinctValueOfSpades[3].Value == ValueOfCard.Queen &&
+                        distinctValueOfSpades[4].Value == ValueOfCard.King)
                     {
                         player.Current = 9;
-                        player.Power = (st4.Max()) / 4 + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 9 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        player.Power = ((int) distinctValueOfSpades.Max(card => card.Value)) + player.Current * 100;
+                        this.Win.Add(new Type() {Power = player.Power, Current = 9});
+                        this.Sorted = this.Win
+                            .OrderByDescending(op1 => op1.Current)
+                            .ThenByDescending(op1 => op1.Power)
+                            .First();
                     }
                 }
             }
         }
 
-        private void rFourOfAKind(Player player, int[] Straight)
+        private void rFourOfAKind(IPlayer player, ICard[] allSevenCards)
         {
-            if (player.Current >= -1)
+            if (player.Current >= - 1)
             {
                 for (int j = 0; j <= 3; j++)
                 {
-                    if (Straight[j] / 4 == Straight[j + 1] / 4 && Straight[j] / 4 == Straight[j + 2] / 4 &&
-                        Straight[j] / 4 == Straight[j + 3] / 4)
+                    // Ckeck for four equal cards
+                    if (allSevenCards[j].Value == allSevenCards[j + 1].Value &&
+                        allSevenCards[j].Value == allSevenCards[j + 2].Value &&
+                        allSevenCards[j].Value == allSevenCards[j + 3].Value)
                     {
                         player.Current = 7;
-                        player.Power = (Straight[j] / 4) * 4 + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 7 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        player.Power = ((int) allSevenCards[j].Value) * 4 + player.Current * 100;
+                        this.Win.Add(new Type() {Power = player.Power, Current = 7});
+                        this.Sorted = this.Win
+                            .OrderByDescending(op1 => op1.Current)
+                            .ThenByDescending(op1 => op1.Power)
+                            .First();
                     }
 
-                    if (Straight[j] / 4 == 0 && Straight[j + 1] / 4 == 0 && Straight[j + 2] / 4 == 0 && Straight[j + 3] / 4 == 0)
+                    // Ckeck if all four cards are ace
+                    if (allSevenCards[j].Value == ValueOfCard.Ace &&
+                        allSevenCards[j + 1].Value == ValueOfCard.Ace &&
+                        allSevenCards[j + 2].Value == ValueOfCard.Ace &&
+                        allSevenCards[j + 3].Value == ValueOfCard.Ace)
                     {
                         player.Current = 7;
                         player.Power = 13 * 4 + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 7 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        this.Win.Add(new Type() {Power = player.Power, Current = 7});
+                        this.Sorted = this.Win
+                            .OrderByDescending(op1 => op1.Current)
+                            .ThenByDescending(op1 => op1.Power)
+                            .First();
                     }
                 }
             }
         }
 
-        private void rFullHouse(Player player, ref bool done, int[] Straight)
+        private void rFullHouse(IPlayer player, ref bool hasTrips, ICard[] allSevenCards)
         {
-            if (player.Current >= -1)
+            if (player.Current >= - 1)
             {
                 this.type = player.Power;
+                //loops through value (rank) of cards 0-ace ... king-12
                 for (int j = 0; j <= 12; j++)
                 {
-                    var fh = Straight.Where(o => o / 4 == j).ToArray();
-                    if (fh.Length == 3 || done)
+                    var equalCards = allSevenCards.Where(card => (int) card.Value == j).ToArray();
+                    if (equalCards.Length == 3 || hasTrips)
                     {
-                        if (fh.Length == 2)
+                        if (equalCards.Length == 2)
                         {
-                            if (fh.Max() / 4 == 0)
+                            if (equalCards.Max(card => card.Value) == ValueOfCard.Ace)
                             {
                                 player.Current = 6;
                                 player.Power = 13 * 2 + player.Current * 100;
-                                this.Win.Add(new Type() { Power = player.Power, Current = 6 });
-                                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                                this.Win.Add(new Type() {Power = player.Power, Current = 6});
+                                this.sorted = this.Win
+                                    .OrderByDescending(op1 => op1.Current)
+                                    .ThenByDescending(op1 => op1.Power)
+                                    .First();
                                 break;
                             }
 
-                            if (fh.Max() / 4 > 0)
+                            if (equalCards.Max(card => card.Value) != 0)
                             {
                                 player.Current = 6;
-                                player.Power = fh.Max() / 4 * 2 + player.Current * 100;
-                                this.Win.Add(new Type() { Power = player.Power, Current = 6 });
-                                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                                player.Power = (int) equalCards.Max(card => card.Value) * 2 + player.Current * 100;
+                                this.Win.Add(new Type() {Power = player.Power, Current = 6});
+                                this.sorted = this.Win
+                                    .OrderByDescending(op1 => op1.Current)
+                                    .ThenByDescending(op1 => op1.Power)
+                                    .First();
                                 break;
                             }
                         }
 
-                        if (!done)
+                        if (!hasTrips)
                         {
-                            if (fh.Max() / 4 == 0)
+                            if (equalCards.Max(card => card.Value) == ValueOfCard.Ace)
                             {
                                 player.Power = 13;
-                                done = true;
-                                j = -1;
+                                hasTrips = true;
+                                j = - 1;
                             }
                             else
                             {
-                                player.Power = fh.Max() / 4;
-                                done = true;
-                                j = -1;
+                                player.Power = (int) equalCards.Max(card => card.Value);
+                                hasTrips = true;
+                                j = - 1;
                             }
                         }
                     }
@@ -320,595 +437,767 @@ namespace Poker.Models.PokerManagement
             }
         }
 
-        private void rFlush(int card, Player player, ref bool vf, int[] Straight1)
+        private void rFlush(IPlayer player, ref bool hasFlush)
         {
-            if (player.Current >= -1)
+            if (player.Current >= - 1)
             {
-                //addition cardsOnDesk = Streight1, f1=clubs, f2=diamonds, f3=hearts, f4=spades
-                var clubs = Straight1.Where(o => o % 4 == 0).ToArray();    //clubs
-                var diamonds = Straight1.Where(o => o % 4 == 1).ToArray();     //diamonds
-                var hearts = Straight1.Where(o => o % 4 == 2).ToArray();      //hearts
-                var spades = Straight1.Where(o => o % 4 == 3).ToArray();      //spades
+
+                ICard[] clubs = DataBase.Instace.Table.CardsOnTable
+                    .Where(card => card.Suit == SuitOfCard.Clubs).ToArray();
+                ICard[] diamonds = DataBase.Instace.Table.CardsOnTable
+                    .Where(card => card.Suit == SuitOfCard.Diamonds).ToArray();
+                ICard[] hearts = DataBase.Instace.Table.CardsOnTable
+                    .Where(card => card.Suit == SuitOfCard.Hearts).ToArray();
+                ICard[] spades = DataBase.Instace.Table.CardsOnTable
+                    .Where(card => card.Suit == SuitOfCard.Spades).ToArray();
+
+                //Check for Flush of clubs
                 if (clubs.Length == 3 || clubs.Length == 4)
                 {
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card] % 4 == DataBase.Instace.Table.AvailableCardsInGame[card + 1] % 4 &&
-                        DataBase.Instace.Table.AvailableCardsInGame[card] % 4 == clubs[0] % 4)
+                    //Ckeck if suits are the same --> clubs...first and second card in hand and the one of the table
+                    if (player.PlayerCards[0].Suit == player.PlayerCards[1].Suit &&
+                        player.PlayerCards[0].Suit == clubs[0].Suit)
                     {
-                        if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 > clubs.Max() / 4)
+                        //If value of the first card in hand is bigger than the bigest value on table
+                        if (player.PlayerCards[0].Value > clubs.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = DataBase.Instace.Table.AvailableCardsInGame[card] + player.Current * 100;
-                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                            this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                            vf = true;
+                            player.Power = (int) player.PlayerCards[0].Value + player.Current * 100;
+                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            this.Sorted =
+                                this.Win.OrderByDescending(op1 => op1.Current)
+                                    .ThenByDescending(op1 => op1.Power)
+                                    .First();
+                            hasFlush = true;
                         }
 
-                        if (DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 > clubs.Max() / 4)
+                        //If value of the second card in hand is bigger than the bigest value on table
+                        if (player.PlayerCards[1].Value > clubs.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = DataBase.Instace.Table.AvailableCardsInGame[card + 1] + player.Current * 100;
-                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                            this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                            vf = true;
+                            player.Power = (int) player.PlayerCards[1].Value + player.Current * 100;
+                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            this.Sorted =
+                                this.Win.OrderByDescending(op1 => op1.Current)
+                                    .ThenByDescending(op1 => op1.Power)
+                                    .First();
+                            hasFlush = true;
                         }
-                        else if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 < clubs.Max() / 4 &&
-                            DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 < clubs.Max() / 4)
+                        //If the values of the first and second card are smaller from the biggest value on table
+                        else if (player.PlayerCards[0].Value < clubs.Max(card => card.Value) &&
+                                 player.PlayerCards[1].Value < clubs.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = clubs.Max() + player.Current * 100;
-                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                            this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                            vf = true;
+                            player.Power = (int) clubs.Max(card => card.Value) + player.Current * 100;
+                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            this.Sorted =
+                                this.Win.OrderByDescending(op1 => op1.Current)
+                                    .ThenByDescending(op1 => op1.Power)
+                                    .First();
+                            hasFlush = true;
                         }
                     }
                 }
 
-                if (clubs.Length == 4)//different cards in hand
+                if (clubs.Length == 4)
                 {
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card] % 4 != DataBase.Instace.Table.AvailableCardsInGame[card + 1] % 4 &&
-                        DataBase.Instace.Table.AvailableCardsInGame[card] % 4 == clubs[0] % 4)
+                    //If the suit of the first card is different from the suit of the second card in hand && 
+                    //the suit of the first card is the same as the card on table
+                    if (player.PlayerCards[0].Suit != player.PlayerCards[1].Suit &&
+                        player.PlayerCards[0].Suit == clubs[0].Suit)
                     {
-                        if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 > clubs.Max() / 4)
+                        //if the first card in hand is bigger than the bigest on table
+                        if (player.PlayerCards[0].Value > clubs.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = DataBase.Instace.Table.AvailableCardsInGame[card] + player.Current * 100;
-                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                            this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                            vf = true;
+                            player.Power = (int) player.PlayerCards[0].Value + player.Current * 100;
+                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            this.Sorted =
+                                this.Win.OrderByDescending(op1 => op1.Current)
+                                    .ThenByDescending(op1 => op1.Power)
+                                    .First();
+                            hasFlush = true;
                         }
                         else
                         {
                             player.Current = 5;
-                            player.Power = clubs.Max() + player.Current * 100;
-                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                            this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                            vf = true;
+                            player.Power = (int) clubs.Max(card => card.Value) + player.Current * 100;
+                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            this.Sorted =
+                                this.Win.OrderByDescending(op1 => op1.Current)
+                                    .ThenByDescending(op1 => op1.Power)
+                                    .First();
+                            hasFlush = true;
                         }
                     }
 
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card + 1] % 4 != DataBase.Instace.Table.AvailableCardsInGame[card] % 4 &&
-                        DataBase.Instace.Table.AvailableCardsInGame[card + 1] % 4 == clubs[0] % 4)
+                    //If the suit of the second card is different from the suit of the first card in hand && 
+                    //the suit of the second card is the same as the card on table
+                    if (player.PlayerCards[1].Suit != player.PlayerCards[0].Suit &&
+                        player.PlayerCards[1].Suit == clubs[0].Suit)
                     {
-                        if (DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 > clubs.Max() / 4)
+                        //If the second card is bigger than the bigest card on table
+                        if (player.PlayerCards[1].Value > clubs.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = DataBase.Instace.Table.AvailableCardsInGame[card + 1] + player.Current * 100;
-                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                            this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                            vf = true;
+                            player.Power = (int) player.PlayerCards[1].Value + player.Current * 100;
+                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            this.Sorted =
+                                this.Win.OrderByDescending(op1 => op1.Current)
+                                    .ThenByDescending(op1 => op1.Power)
+                                    .First();
+                            hasFlush = true;
                         }
                         else
                         {
                             player.Current = 5;
-                            player.Power = clubs.Max() + player.Current * 100;
-                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                            this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                            vf = true;
+                            player.Power = (int) clubs.Max(card => card.Value) + player.Current * 100;
+                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            this.Sorted =
+                                this.Win.OrderByDescending(op1 => op1.Current)
+                                    .ThenByDescending(op1 => op1.Power)
+                                    .First();
+                            hasFlush = true;
                         }
                     }
                 }
 
+                //If all 5 cards on table are of the same suit..in this case clubs
                 if (clubs.Length == 5)
                 {
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card] % 4 == clubs[0] % 4 &&
-                        DataBase.Instace.Table.AvailableCardsInGame[card] / 4 > clubs.Min() / 4)
+                    //If the suit of the first card is club and its value is bigger than the smalest value on the table
+                    if (player.PlayerCards[0].Suit == clubs[0].Suit &&
+                        player.PlayerCards[0].Value > clubs.Min(card => card.Value))
                     {
                         player.Current = 5;
-                        player.Power = DataBase.Instace.Table.AvailableCardsInGame[card] + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                        vf = true;
+                        player.Power = (int) player.PlayerCards[0].Value + player.Current * 100;
+                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                        this.Sorted =
+                            this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        hasFlush = true;
                     }
 
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card + 1] % 4 == clubs[0] % 4 &&
-                        DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 > clubs.Min() / 4)
+                    //If the suit of the second card is club and its value is bigger than the smalest value on the table
+                    if (player.PlayerCards[1].Suit == clubs[0].Suit &&
+                        player.PlayerCards[1].Value > clubs.Min(card => card.Value))
                     {
                         player.Current = 5;
-                        player.Power = DataBase.Instace.Table.AvailableCardsInGame[card + 1] + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                        vf = true;
+                        player.Power = (int) player.PlayerCards[1].Value + player.Current * 100;
+                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                        this.Sorted =
+                            this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        hasFlush = true;
                     }
-                    else if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 < clubs.Min() / 4 &&
-                       DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 < clubs.Min())
+                    //If the value of the first card is smaller than the smalest value on the table &&
+                    // the value of the second card is smaller than the smalest value on the table
+                    //TODO In this if statement there was an error
+                    else if (player.PlayerCards[0].Value < clubs.Min(card => card.Value) &&
+                             player.PlayerCards[1].Value < clubs.Min(card => card.Value))
                     {
                         player.Current = 5;
-                        player.Power = clubs.Max() + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                        vf = true;
+                        player.Power = (int) clubs.Max(card => card.Value) + player.Current * 100;
+                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                        this.Sorted =
+                            this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        hasFlush = true;
                     }
                 }
 
+                //Check for Flush of diamonds
                 if (diamonds.Length == 3 || diamonds.Length == 4)
                 {
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card] % 4 == DataBase.Instace.Table.AvailableCardsInGame[card + 1] % 4 &&
-                        DataBase.Instace.Table.AvailableCardsInGame[card] % 4 == diamonds[0] % 4)
+                    if (player.PlayerCards[0].Suit == player.PlayerCards[1].Suit &&
+                        player.PlayerCards[0].Suit == diamonds[0].Suit)
                     {
-                        if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 > diamonds.Max() / 4)
+                        if (player.PlayerCards[0].Value > diamonds.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = DataBase.Instace.Table.AvailableCardsInGame[card] + player.Current * 100;
-                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                            this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                            vf = true;
+                            player.Power = (int) player.PlayerCards[0].Value + player.Current * 100;
+                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            this.Sorted =
+                                this.Win.OrderByDescending(op1 => op1.Current)
+                                    .ThenByDescending(op1 => op1.Power)
+                                    .First();
+                            hasFlush = true;
                         }
 
-                        if (DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 > diamonds.Max() / 4)
+                        if (player.PlayerCards[1].Value > diamonds.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = DataBase.Instace.Table.AvailableCardsInGame[card + 1] + player.Current * 100;
-                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                            this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                            vf = true;
+                            player.Power = (int) player.PlayerCards[1].Value + player.Current * 100;
+                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            this.Sorted =
+                                this.Win.OrderByDescending(op1 => op1.Current)
+                                    .ThenByDescending(op1 => op1.Power)
+                                    .First();
+                            hasFlush = true;
                         }
-                        else if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 < diamonds.Max() / 4 &&
-                            DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 < diamonds.Max() / 4)
+                        else if (player.PlayerCards[0].Value < diamonds.Max(card => card.Value) &&
+                                 player.PlayerCards[1].Value < diamonds.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = diamonds.Max() + player.Current * 100;
-                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                            this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                            vf = true;
+                            player.Power = (int) diamonds.Max(card => card.Value) + player.Current * 100;
+                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            this.Sorted =
+                                this.Win.OrderByDescending(op1 => op1.Current)
+                                    .ThenByDescending(op1 => op1.Power)
+                                    .First();
+                            hasFlush = true;
                         }
                     }
                 }
 
-                if (diamonds.Length == 4)//different cards in hand
+                if (diamonds.Length == 4)
                 {
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card] % 4 != DataBase.Instace.Table.AvailableCardsInGame[card + 1] % 4 &&
-                        DataBase.Instace.Table.AvailableCardsInGame[card] % 4 == diamonds[0] % 4)
+                    if (player.PlayerCards[0].Suit != player.PlayerCards[1].Suit &&
+                        player.PlayerCards[0].Suit == diamonds[0].Suit)
                     {
-                        if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 > diamonds.Max() / 4)
+                        if (player.PlayerCards[0].Value > diamonds.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = DataBase.Instace.Table.AvailableCardsInGame[card] + player.Current * 100;
-                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                            this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                            vf = true;
+                            player.Power = (int) player.PlayerCards[0].Value + player.Current * 100;
+                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            this.Sorted =
+                                this.Win.OrderByDescending(op1 => op1.Current)
+                                    .ThenByDescending(op1 => op1.Power)
+                                    .First();
+                            hasFlush = true;
                         }
                         else
                         {
                             player.Current = 5;
-                            player.Power = diamonds.Max() + player.Current * 100;
-                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                            this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                            vf = true;
+                            player.Power = (int) diamonds.Max(card => card.Value) + player.Current * 100;
+                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            this.Sorted =
+                                this.Win.OrderByDescending(op1 => op1.Current)
+                                    .ThenByDescending(op1 => op1.Power)
+                                    .First();
+                            hasFlush = true;
                         }
                     }
 
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card + 1] % 4 != DataBase.Instace.Table.AvailableCardsInGame[card] % 4 &&
-                        DataBase.Instace.Table.AvailableCardsInGame[card + 1] % 4 == diamonds[0] % 4)
+                    if (player.PlayerCards[1].Suit != player.PlayerCards[0].Suit &&
+                        player.PlayerCards[1].Suit == diamonds[0].Suit)
                     {
-                        if (DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 > diamonds.Max() / 4)
+                        if (player.PlayerCards[1].Value > diamonds.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = DataBase.Instace.Table.AvailableCardsInGame[card + 1] + player.Current * 100;
-                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                            this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                            vf = true;
+                            player.Power = (int) player.PlayerCards[1].Value + player.Current * 100;
+                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            this.Sorted =
+                                this.Win.OrderByDescending(op1 => op1.Current)
+                                    .ThenByDescending(op1 => op1.Power)
+                                    .First();
+                            hasFlush = true;
                         }
                         else
                         {
                             player.Current = 5;
-                            player.Power = diamonds.Max() + player.Current * 100;
-                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                            this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                            vf = true;
+                            player.Power = (int) diamonds.Max(card => card.Value) + player.Current * 100;
+                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            this.Sorted =
+                                this.Win.OrderByDescending(op1 => op1.Current)
+                                    .ThenByDescending(op1 => op1.Power)
+                                    .First();
+                            hasFlush = true;
                         }
                     }
                 }
 
                 if (diamonds.Length == 5)
                 {
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card] % 4 == diamonds[0] % 4 &&
-                        DataBase.Instace.Table.AvailableCardsInGame[card] / 4 > diamonds.Min() / 4)
+                    if (player.PlayerCards[0].Suit == diamonds[0].Suit &&
+                        player.PlayerCards[0].Value > diamonds.Min(card => card.Value))
                     {
                         player.Current = 5;
-                        player.Power = DataBase.Instace.Table.AvailableCardsInGame[card] + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                        vf = true;
+                        player.Power = (int) player.PlayerCards[0].Value + player.Current * 100;
+                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                        this.Sorted =
+                            this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        hasFlush = true;
                     }
 
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card + 1] % 4 == diamonds[0] % 4 &&
-                        DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 > diamonds.Min() / 4)
+                    if (player.PlayerCards[1].Suit == diamonds[0].Suit &&
+                        player.PlayerCards[1].Value > diamonds.Min(card => card.Value))
                     {
                         player.Current = 5;
-                        player.Power = DataBase.Instace.Table.AvailableCardsInGame[card + 1] + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                        vf = true;
+                        player.Power = (int) player.PlayerCards[1].Value + player.Current * 100;
+                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                        this.Sorted =
+                            this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        hasFlush = true;
                     }
-                    else if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 < diamonds.Min() / 4 &&
-                        DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 < diamonds.Min())
+                    //TODO the same error in min 
+                    else if (player.PlayerCards[0].Value < diamonds.Min(card => card.Value) &&
+                             player.PlayerCards[1].Value < diamonds.Min(card => card.Value))
                     {
                         player.Current = 5;
-                        player.Power = diamonds.Max() + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                        vf = true;
+                        player.Power = (int) diamonds.Max(card => card.Value) + player.Current * 100;
+                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                        this.Sorted =
+                            this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        hasFlush = true;
                     }
                 }
 
+                //Check for Flush of hearts
                 if (hearts.Length == 3 || hearts.Length == 4)
                 {
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card] % 4 == DataBase.Instace.Table.AvailableCardsInGame[card + 1] % 4 &&
-                       DataBase.Instace.Table.AvailableCardsInGame[card] % 4 == hearts[0] % 4)
+                    if (player.PlayerCards[0].Suit == player.PlayerCards[1].Suit &&
+                        player.PlayerCards[0].Suit == hearts[0].Suit)
                     {
-                        if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 > hearts.Max() / 4)
+                        if (player.PlayerCards[0].Value > hearts.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = DataBase.Instace.Table.AvailableCardsInGame[card] + player.Current * 100;
-                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                            this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                            vf = true;
+                            player.Power = (int) player.PlayerCards[0].Value + player.Current * 100;
+                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            this.Sorted =
+                                this.Win.OrderByDescending(op1 => op1.Current)
+                                    .ThenByDescending(op1 => op1.Power)
+                                    .First();
+                            hasFlush = true;
                         }
 
-                        if (DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 > hearts.Max() / 4)
+                        if (player.PlayerCards[1].Value > hearts.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = DataBase.Instace.Table.AvailableCardsInGame[card + 1] + player.Current * 100;
-                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                            this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                            vf = true;
+                            player.Power = (int) player.PlayerCards[1].Value + player.Current * 100;
+                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            this.Sorted =
+                                this.Win.OrderByDescending(op1 => op1.Current)
+                                    .ThenByDescending(op1 => op1.Power)
+                                    .First();
+                            hasFlush = true;
                         }
-                        else if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 < hearts.Max() / 4 &&
-                            DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 < hearts.Max() / 4)
+                        else if (player.PlayerCards[0].Value < hearts.Max(card => card.Value) &&
+                                 player.PlayerCards[1].Value < hearts.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = hearts.Max() + player.Current * 100;
-                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                            this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                            vf = true;
+                            player.Power = (int) hearts.Max(card => card.Value) + player.Current * 100;
+                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            this.Sorted =
+                                this.Win.OrderByDescending(op1 => op1.Current)
+                                    .ThenByDescending(op1 => op1.Power)
+                                    .First();
+                            hasFlush = true;
                         }
                     }
                 }
 
-                if (hearts.Length == 4)//different cards in hand
+                if (hearts.Length == 4)
                 {
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card] % 4 != DataBase.Instace.Table.AvailableCardsInGame[card + 1] % 4 &&
-                        DataBase.Instace.Table.AvailableCardsInGame[card] % 4 == hearts[0] % 4)
+                    if (player.PlayerCards[0].Suit != player.PlayerCards[1].Suit &&
+                        player.PlayerCards[0].Suit == hearts[0].Suit)
                     {
-                        if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 > hearts.Max() / 4)
+                        if (player.PlayerCards[0].Value > hearts.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = DataBase.Instace.Table.AvailableCardsInGame[card] + player.Current * 100;
-                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                            this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                            vf = true;
+                            player.Power = (int) player.PlayerCards[0].Value + player.Current * 100;
+                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            this.Sorted =
+                                this.Win.OrderByDescending(op1 => op1.Current)
+                                    .ThenByDescending(op1 => op1.Power)
+                                    .First();
+                            hasFlush = true;
                         }
                         else
                         {
                             player.Current = 5;
-                            player.Power = hearts.Max() + player.Current * 100;
-                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                            this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                            vf = true;
+                            player.Power = (int) hearts.Max(card => card.Value) + player.Current * 100;
+                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            this.Sorted =
+                                this.Win.OrderByDescending(op1 => op1.Current)
+                                    .ThenByDescending(op1 => op1.Power)
+                                    .First();
+                            hasFlush = true;
                         }
                     }
 
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card + 1] % 4 != DataBase.Instace.Table.AvailableCardsInGame[card] % 4 &&
-                       DataBase.Instace.Table.AvailableCardsInGame[card + 1] % 4 == hearts[0] % 4)
+                    if (player.PlayerCards[1].Suit != player.PlayerCards[0].Suit &&
+                        player.PlayerCards[1].Suit == hearts[0].Suit)
                     {
-                        if (DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 > hearts.Max() / 4)
+                        if (player.PlayerCards[1].Value > hearts.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = DataBase.Instace.Table.AvailableCardsInGame[card + 1] + player.Current * 100;
-                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                            this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                            vf = true;
+                            player.Power = (int) player.PlayerCards[1].Value + player.Current * 100;
+                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            this.Sorted =
+                                this.Win.OrderByDescending(op1 => op1.Current)
+                                    .ThenByDescending(op1 => op1.Power)
+                                    .First();
+                            hasFlush = true;
                         }
                         else
                         {
                             player.Current = 5;
-                            player.Power = hearts.Max() + player.Current * 100;
-                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                            this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                            vf = true;
+                            player.Power = (int) hearts.Max(card => card.Value) + player.Current * 100;
+                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            this.Sorted =
+                                this.Win.OrderByDescending(op1 => op1.Current)
+                                    .ThenByDescending(op1 => op1.Power)
+                                    .First();
+                            hasFlush = true;
                         }
                     }
                 }
 
                 if (hearts.Length == 5)
                 {
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card] % 4 == hearts[0] % 4 &&
-                        DataBase.Instace.Table.AvailableCardsInGame[card] / 4 > hearts.Min() / 4)
+                    if (player.PlayerCards[0].Suit == hearts[0].Suit &&
+                        player.PlayerCards[0].Value > hearts.Min(card => card.Value))
                     {
                         player.Current = 5;
-                        player.Power = DataBase.Instace.Table.AvailableCardsInGame[card] + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                        vf = true;
+                        player.Power = (int) player.PlayerCards[0].Value + player.Current * 100;
+                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                        this.Sorted =
+                            this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        hasFlush = true;
                     }
 
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card + 1] % 4 == hearts[0] % 4 &&
-                        DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 > hearts.Min() / 4)
+                    if (player.PlayerCards[1].Suit == hearts[0].Suit &&
+                        player.PlayerCards[1].Value > hearts.Min(card => card.Value))
                     {
                         player.Current = 5;
-                        player.Power = DataBase.Instace.Table.AvailableCardsInGame[card + 1] + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                        vf = true;
+                        player.Power = (int) player.PlayerCards[1].Value + player.Current * 100;
+                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                        this.Sorted =
+                            this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        hasFlush = true;
                     }
-                    else if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 < hearts.Min() / 4 &&
-                        DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 < hearts.Min())
+
+                    //TODO the same error
+                    else if (player.PlayerCards[0].Value < hearts.Min(card => card.Value) &&
+                             player.PlayerCards[1].Value < hearts.Min(card => card.Value))
                     {
                         player.Current = 5;
-                        player.Power = hearts.Max() + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                        vf = true;
+                        player.Power = (int) hearts.Max(card => card.Value) + player.Current * 100;
+                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                        this.Sorted =
+                            this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        hasFlush = true;
                     }
                 }
 
+                //Check for Flush of spades
                 if (spades.Length == 3 || spades.Length == 4)
                 {
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card] % 4 == DataBase.Instace.Table.AvailableCardsInGame[card + 1] % 4 &&
-                        DataBase.Instace.Table.AvailableCardsInGame[card] % 4 == spades[0] % 4)
+                    if (player.PlayerCards[0].Suit == player.PlayerCards[1].Suit &&
+                        player.PlayerCards[0].Suit == spades[0].Suit)
                     {
-                        if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 > spades.Max() / 4)
+                        if (player.PlayerCards[0].Value > spades.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = DataBase.Instace.Table.AvailableCardsInGame[card] + player.Current * 100;
-                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                            this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                            vf = true;
+                            player.Power = (int) player.PlayerCards[0].Value + player.Current * 100;
+                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            this.Sorted =
+                                this.Win.OrderByDescending(op1 => op1.Current)
+                                    .ThenByDescending(op1 => op1.Power)
+                                    .First();
+                            hasFlush = true;
                         }
 
-                        if (DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 > spades.Max() / 4)
+                        if (player.PlayerCards[1].Value > spades.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = DataBase.Instace.Table.AvailableCardsInGame[card + 1] + player.Current * 100;
-                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                            this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                            vf = true;
+                            player.Power = (int) player.PlayerCards[1].Value + player.Current * 100;
+                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            this.Sorted =
+                                this.Win.OrderByDescending(op1 => op1.Current)
+                                    .ThenByDescending(op1 => op1.Power)
+                                    .First();
+                            hasFlush = true;
                         }
-                        else if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 < spades.Max() / 4 &&
-                            DataBase.Instace.Table.AvailableCardsInGame[card] / 4 < spades.Max() / 4)
+
+                        //TODO another error Check the first and the second are smaller than the max value, not just the first
+                        else if (player.PlayerCards[0].Value < spades.Max(card => card.Value) &&
+                                 player.PlayerCards[1].Value < spades.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = spades.Max() + player.Current * 100;
-                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                            this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                            vf = true;
+                            player.Power = (int) spades.Max(card => card.Value) + player.Current * 100;
+                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            this.Sorted =
+                                this.Win.OrderByDescending(op1 => op1.Current)
+                                    .ThenByDescending(op1 => op1.Power)
+                                    .First();
+                            hasFlush = true;
                         }
                     }
                 }
 
-                if (spades.Length == 4)//different cards in hand
+                if (spades.Length == 4)
                 {
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card] % 4 != DataBase.Instace.Table.AvailableCardsInGame[card + 1] % 4 &&
-                        DataBase.Instace.Table.AvailableCardsInGame[card] % 4 == spades[0] % 4)
+                    if (player.PlayerCards[0].Suit != player.PlayerCards[1].Suit &&
+                        player.PlayerCards[0].Suit == spades[0].Suit)
                     {
-                        if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 > spades.Max() / 4)
+                        if (player.PlayerCards[0].Value > spades.Max(card => card.Value))
 
                             player.Current = 5;
-                        player.Power = DataBase.Instace.Table.AvailableCardsInGame[card] + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                        vf = true;
+                        player.Power = (int) player.PlayerCards[0].Value + player.Current * 100;
+                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                        this.Sorted =
+                            this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        hasFlush = true;
                     }
                     else
                     {
                         player.Current = 5;
-                        player.Power = spades.Max() + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                        vf = true;
+                        player.Power = (int) spades.Max(card => card.Value) + player.Current * 100;
+                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                        this.Sorted =
+                            this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        hasFlush = true;
                     }
                 }
 
-                if (DataBase.Instace.Table.AvailableCardsInGame[card + 1] % 4 != DataBase.Instace.Table.AvailableCardsInGame[card] % 4 &&
-                    DataBase.Instace.Table.AvailableCardsInGame[card + 1] % 4 == spades[0] % 4)
+                if (player.PlayerCards[1].Suit != player.PlayerCards[0].Suit &&
+                    player.PlayerCards[1].Suit == spades[0].Suit)
                 {
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 > spades.Max() / 4)
+                    if (player.PlayerCards[1].Value > spades.Max(card => card.Value))
                     {
                         player.Current = 5;
-                        player.Power = DataBase.Instace.Table.AvailableCardsInGame[card + 1] + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                        vf = true;
+                        player.Power = (int) player.PlayerCards[1].Value + player.Current * 100;
+                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                        this.Sorted =
+                            this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        hasFlush = true;
                     }
                     else
                     {
                         player.Current = 5;
-                        player.Power = spades.Max() + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                        vf = true;
+                        player.Power = (int) spades.Max(card => card.Value) + player.Current * 100;
+                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                        this.Sorted =
+                            this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        hasFlush = true;
                     }
                 }
 
 
                 if (spades.Length == 5)
                 {
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card] % 4 == spades[0] % 4 &&
-                        DataBase.Instace.Table.AvailableCardsInGame[card] / 4 > spades.Min() / 4)
+                    if (player.PlayerCards[0].Suit == spades[0].Suit &&
+                        player.PlayerCards[0].Value > spades.Min(card => card.Value))
                     {
                         player.Current = 5;
-                        player.Power = DataBase.Instace.Table.AvailableCardsInGame[card] + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                        vf = true;
+                        player.Power = (int) player.PlayerCards[0].Value + player.Current * 100;
+                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                        this.Sorted =
+                            this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        hasFlush = true;
                     }
 
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card + 1] % 4 == spades[0] % 4 &&
-                        DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 > spades.Min() / 4)
+                    if (player.PlayerCards[1].Suit == spades[0].Suit &&
+                        player.PlayerCards[1].Value > spades.Min(card => card.Value))
                     {
                         player.Current = 5;
-                        player.Power = DataBase.Instace.Table.AvailableCardsInGame[card + 1] + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                        vf = true;
+                        player.Power = (int) player.PlayerCards[1].Value + player.Current * 100;
+                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                        this.Sorted =
+                            this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        hasFlush = true;
                     }
-                    else if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 < spades.Min() / 4 &&
-                       DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 < spades.Min())
+
+                    //TODO the same
+                    else if (player.PlayerCards[0].Value < spades.Min(card => card.Value) &&
+                             player.PlayerCards[1].Value < spades.Min(card => card.Value))
                     {
                         player.Current = 5;
-                        player.Power = spades.Max() + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                        vf = true;
+                        player.Power = (int) spades.Max(card => card.Value) + player.Current * 100;
+                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                        this.Sorted =
+                            this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        hasFlush = true;
                     }
                 }
-                //ace
+                //Check for ace of club
                 if (clubs.Length > 0)
                 {
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 == 0 &&
-                        DataBase.Instace.Table.AvailableCardsInGame[card] % 4 == clubs[0] % 4 && vf && clubs.Length > 0)
+                    if (player.PlayerCards[0].Value == ValueOfCard.Ace &&
+                        player.PlayerCards[0].Suit == clubs[0].Suit && hasFlush)
                     {
                         player.Current = 5.5;
                         player.Power = 13 + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 5.5 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        this.Win.Add(new Type() {Power = player.Power, Current = 5.5});
+                        this.Sorted = this.Win
+                            .OrderByDescending(op1 => op1.Current)
+                            .ThenByDescending(op1 => op1.Power)
+                            .First();
                     }
 
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 == 0 &&
-                        DataBase.Instace.Table.AvailableCardsInGame[card + 1] % 4 == clubs[0] % 4 && vf && clubs.Length > 0)
+                    if (player.PlayerCards[1].Value == ValueOfCard.Ace &&
+                        player.PlayerCards[1].Suit == clubs[0].Suit && hasFlush)
                     {
                         player.Current = 5.5;
                         player.Power = 13 + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 5.5 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        this.Win.Add(new Type() {Power = player.Power, Current = 5.5});
+                        this.Sorted = this.Win
+                            .OrderByDescending(op1 => op1.Current)
+                            .ThenByDescending(op1 => op1.Power)
+                            .First();
                     }
                 }
 
                 if (diamonds.Length > 0)
                 {
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 == 0 &&
-                        DataBase.Instace.Table.AvailableCardsInGame[card] % 4 == diamonds[0] % 4 && vf && diamonds.Length > 0)
+                    if (player.PlayerCards[0].Value == ValueOfCard.Ace &&
+                        player.PlayerCards[0].Suit == diamonds[0].Suit && hasFlush)
                     {
                         player.Current = 5.5;
                         player.Power = 13 + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 5.5 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        this.Win.Add(new Type() {Power = player.Power, Current = 5.5});
+                        this.Sorted = this.Win
+                            .OrderByDescending(op1 => op1.Current)
+                            .ThenByDescending(op1 => op1.Power)
+                            .First();
                     }
 
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 == 0 &&
-                        DataBase.Instace.Table.AvailableCardsInGame[card + 1] % 4 == diamonds[0] % 4 && vf && diamonds.Length > 0)
+                    if (player.PlayerCards[1].Value == ValueOfCard.Ace &&
+                        player.PlayerCards[1].Suit == diamonds[0].Suit && hasFlush)
                     {
                         player.Current = 5.5;
                         player.Power = 13 + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 5.5 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        this.Win.Add(new Type() {Power = player.Power, Current = 5.5});
+                        this.Sorted = this.Win
+                            .OrderByDescending(op1 => op1.Current)
+                            .ThenByDescending(op1 => op1.Power)
+                            .First();
                     }
                 }
 
                 if (hearts.Length > 0)
                 {
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 == 0 &&
-                        DataBase.Instace.Table.AvailableCardsInGame[card] % 4 == hearts[0] % 4 && vf && hearts.Length > 0)
+                    if (player.PlayerCards[0].Value == ValueOfCard.Ace &&
+                        player.PlayerCards[0].Suit == hearts[0].Suit && hasFlush)
                     {
                         player.Current = 5.5;
                         player.Power = 13 + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 5.5 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        this.Win.Add(new Type() {Power = player.Power, Current = 5.5});
+                        this.Sorted = this.Win
+                            .OrderByDescending(op1 => op1.Current)
+                            .ThenByDescending(op1 => op1.Power)
+                            .First();
                     }
 
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 == 0 &&
-                        DataBase.Instace.Table.AvailableCardsInGame[card + 1] % 4 == hearts[0] % 4 && vf && hearts.Length > 0)
+                    if (player.PlayerCards[1].Value == ValueOfCard.Ace &&
+                        player.PlayerCards[1].Suit == hearts[0].Suit && hasFlush)
                     {
                         player.Current = 5.5;
                         player.Power = 13 + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 5.5 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        this.Win.Add(new Type() {Power = player.Power, Current = 5.5});
+                        this.Sorted = this.Win
+                            .OrderByDescending(op1 => op1.Current)
+                            .ThenByDescending(op1 => op1.Power)
+                            .First();
                     }
                 }
 
                 if (spades.Length > 0)
                 {
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 == 0 &&
-                        DataBase.Instace.Table.AvailableCardsInGame[card] % 4 == spades[0] % 4 && vf && spades.Length > 0)
+                    if (player.PlayerCards[0].Value == ValueOfCard.Ace &&
+                        player.PlayerCards[0].Suit == spades[0].Suit && hasFlush)
                     {
                         player.Current = 5.5;
                         player.Power = 13 + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 5.5 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        this.Win.Add(new Type() {Power = player.Power, Current = 5.5});
+                        this.Sorted = this.Win
+                            .OrderByDescending(op1 => op1.Current)
+                            .ThenByDescending(op1 => op1.Power)
+                            .First();
                     }
 
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 == 0 &&
-                        DataBase.Instace.Table.AvailableCardsInGame[card + 1] % 4 == spades[0] % 4 && vf)
+                    if (player.PlayerCards[1].Value == ValueOfCard.Ace &&
+                        player.PlayerCards[1].Suit == spades[0].Suit && hasFlush)
                     {
                         player.Current = 5.5;
                         player.Power = 13 + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 5.5 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        this.Win.Add(new Type() {Power = player.Power, Current = 5.5});
+                        this.Sorted = this.Win
+                            .OrderByDescending(op1 => op1.Current)
+                            .ThenByDescending(op1 => op1.Power)
+                            .First();
                     }
                 }
             }
         }
 
-        private void rStraight(Player player, int[] Straight)
+        private void rStraight(IPlayer player, ICard[] allSevenCards)
         {
-            if (player.Current >= -1)
+            if (player.Current >= - 1)
             {
-                var op = Straight.Select(o => o / 4).Distinct().ToArray();
-                for (int j = 0; j < op.Length - 4; j++)
+                //ICard[] distinctCards = allSevenCards.Select(card => card.Value).Distinct().ToArray(); //op
+                //List<ICard> distinctCards = new List<ICard>();
+                //foreach (ICard card in allSevenCards)
+                //{
+                //    if (!distinctCards.Exists(c=>c.Value==card.Value))
+                //    {
+                //        distinctCards.Add(card);
+                //    }
+                //}
+                //TODO Check if this works as expected
+                ICard[] distinctCards = allSevenCards.GroupBy(card => card.Value).Select(c => c.First()).ToArray();
+
+                for (int j = 0; j < distinctCards.Length - 4; j++)
                 {
-                    if (op[j] + 4 == op[j + 4])
+                    if (distinctCards[j].Value + 4 == distinctCards[j + 4].Value)
                     {
-                        if (op.Max() - 4 == op[j])
+                        if ((int) distinctCards.Max(card => card.Value) - 4 == (int) distinctCards[j].Value)
                         {
                             player.Current = 4;
-                            player.Power = op.Max() + player.Current * 100;
-                            this.Win.Add(new Type() { Power = player.Power, Current = 4 });
-                            this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                            player.Power = (int) distinctCards.Max(card => card.Value) + player.Current * 100;
+                            this.Win.Add(new Type() {Power = player.Power, Current = 4});
+                            this.Sorted = this.Win
+                                .OrderByDescending(op1 => op1.Current)
+                                .ThenByDescending(op1 => op1.Power)
+                                .First();
                         }
                         else
                         {
                             player.Current = 4;
-                            player.Power = op[j + 4] + player.Current * 100;
-                            this.Win.Add(new Type() { Power = player.Power, Current = 4 });
-                            this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                            player.Power = (int) distinctCards[j + 4].Value + player.Current * 100;
+                            this.Win.Add(new Type() {Power = player.Power, Current = 4});
+                            this.Sorted = this.Win
+                                .OrderByDescending(op1 => op1.Current)
+                                .ThenByDescending(op1 => op1.Power)
+                                .First();
                         }
                     }
 
-                    if (op[j] == 0 && op[j + 1] == 9 && op[j + 2] == 10 && op[j + 3] == 11 && op[j + 4] == 12)
+                    if (distinctCards[j].Value == ValueOfCard.Ace &&
+                        distinctCards[j + 1].Value == ValueOfCard.Ten &&
+                        distinctCards[j + 2].Value == ValueOfCard.Jack &&
+                        distinctCards[j + 3].Value == ValueOfCard.Queen &&
+                        distinctCards[j + 4].Value == ValueOfCard.King)
                     {
                         player.Current = 4;
                         player.Power = 13 + player.Current * 100;
-                        this.Win.Add(new Type() { Power = player.Power, Current = 4 });
-                        this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                        this.Win.Add(new Type() {Power = player.Power, Current = 4});
+                        this.Sorted = this.Win
+                            .OrderByDescending(op1 => op1.Current)
+                            .ThenByDescending(op1 => op1.Power)
+                            .First();
                     }
                 }
             }
         }
 
-        private void rThreeOfAKind(Player player, int[] Straight)
+        private void rThreeOfAKind(IPlayer player, ICard[] allSevenCards)
         {
-            if (player.Current >= -1)
+            if (player.Current >= - 1)
             {
                 for (int j = 0; j <= 12; j++)
                 {
-                    var fh = Straight.Where(o => o / 4 == j).ToArray();
-                    if (fh.Length == 3)
+
+                    ICard[] equalCards = allSevenCards.Where(card => (int) card.Value == j).ToArray();
+                    if (equalCards.Length == 3)
                     {
-                        if (fh.Max() / 4 == 0)
+
+                        //TODO Check if this works as expected
+                        //if the bigger card is ace
+                        if (equalCards.Max(card => card.Value) == ValueOfCard.Ace)
                         {
                             player.Current = 3;
                             player.Power = 13 * 3 + player.Current * 100;
-                            this.Win.Add(new Type() { Power = player.Power, Current = 3 });
+                            this.Win.Add(new Type() {Power = player.Power, Current = 3});
                             this.Sorted = this.Win
                                 .OrderByDescending(op => op.Current)
                                 .ThenByDescending(op => op.Power)
@@ -917,62 +1206,85 @@ namespace Poker.Models.PokerManagement
                         else
                         {
                             player.Current = 3;
-                            player.Power = fh[0] / 4 + fh[1] / 4 + fh[2] / 4 + player.Current * 100;
-                            this.Win.Add(new Type() { Power = player.Power, Current = 3 });
-                            this.Sorted = this.Win.OrderByDescending(op => op.Current).ThenByDescending(op => op.Power).First();
+                            player.Power = (int) equalCards[0].Value + (int) equalCards[1].Value +
+                                           (int) equalCards[2].Value + player.Current * 100;
+                            this.Win.Add(new Type() {Power = player.Power, Current = 3});
+                            this.Sorted = this.Win
+                                .OrderByDescending(op => op.Current)
+                                .ThenByDescending(op => op.Power)
+                                .First();
                         }
                     }
                 }
             }
         }
 
-        private void rTwoPair(int card, Player player)
+        private void rTwoPair(IPlayer player)
         {
-            if (player.Current >= -1)
+            if (player.Current >= - 1)
             {
                 bool msgbox = false;
-                for (int tc = 16; tc >= 12; tc--)
+                for (int tableCard = 4; tableCard >= 0; tableCard--)
                 {
-                    int max = tc - 12;
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 != DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4)
+                    int max = tableCard - 0;
+
+                    //Check if cards on hand have not equal values
+                    if (player.PlayerCards[0].Value != player.PlayerCards[1].Value)
                     {
                         for (int k = 1; k <= max; k++)
                         {
-                            if (tc - k < 12)
+                            if (tableCard - k < 0)
                             {
                                 max--;
                             }
-                            if (tc - k >= 12)
+                            if (tableCard - k >= 0)
                             {
-                                if ((DataBase.Instace.Table.AvailableCardsInGame[card] / 4 == DataBase.Instace.Table.AvailableCardsInGame[tc] / 4 &&
-                                    DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 == DataBase.Instace.Table.AvailableCardsInGame[tc - k] / 4) ||
-                                    (DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 == DataBase.Instace.Table.AvailableCardsInGame[tc] / 4 &&
-                                    DataBase.Instace.Table.AvailableCardsInGame[card] / 4 == DataBase.Instace.Table.AvailableCardsInGame[tc - k] / 4))
+                                //check for pair among all seven cards
+                                if ((player.PlayerCards[0].Value == DataBase.Instace.Table.CardsOnTable[tableCard].Value &&
+                                     player.PlayerCards[1].Value ==
+                                     DataBase.Instace.Table.CardsOnTable[tableCard - k].Value) ||
+                                    (player.PlayerCards[1].Value == DataBase.Instace.Table.CardsOnTable[tableCard].Value &&
+                                     player.PlayerCards[0].Value ==
+                                     DataBase.Instace.Table.CardsOnTable[tableCard - k].Value))
                                 {
                                     if (!msgbox)
                                     {
-                                        if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 == 0)
+                                        if (player.PlayerCards[0].Value == ValueOfCard.Ace)
                                         {
                                             player.Current = 2;
-                                            player.Power = 13 * 4 + (DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4) * 2 + player.Current * 100;
-                                            this.Win.Add(new Type() { Power = player.Power, Current = 2 });
-                                            this.Sorted = this.Win.OrderByDescending(op => op.Current).ThenByDescending(op => op.Power).First();
+                                            player.Power = 13 * 4 + ((int) player.PlayerCards[1].Value) * 2 +
+                                                           player.Current * 100;
+                                            this.Win.Add(new Type() {Power = player.Power, Current = 2});
+                                            this.Sorted = this.Win
+                                                .OrderByDescending(op => op.Current)
+                                                .ThenByDescending(op => op.Power)
+                                                .First();
                                         }
 
-                                        if (DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 == 0)
+                                        if (player.PlayerCards[1].Value == ValueOfCard.Ace)
                                         {
                                             player.Current = 2;
-                                            player.Power = 13 * 4 + (DataBase.Instace.Table.AvailableCardsInGame[card] / 4) * 2 + player.Current * 100;
-                                            this.Win.Add(new Type() { Power = player.Power, Current = 2 });
-                                            this.Sorted = this.Win.OrderByDescending(op => op.Current).ThenByDescending(op => op.Power).First();
+                                            player.Power = 13 * 4 + ((int) player.PlayerCards[0].Value) * 2 +
+                                                           player.Current * 100;
+                                            this.Win.Add(new Type() {Power = player.Power, Current = 2});
+                                            this.Sorted = this.Win
+                                                .OrderByDescending(op => op.Current)
+                                                .ThenByDescending(op => op.Power)
+                                                .First();
                                         }
 
-                                        if (DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 != 0 && DataBase.Instace.Table.AvailableCardsInGame[card] / 4 != 0)
+                                        if (player.PlayerCards[1].Value != ValueOfCard.Ace &&
+                                            player.PlayerCards[0].Value != ValueOfCard.Ace)
                                         {
                                             player.Current = 2;
-                                            player.Power = (DataBase.Instace.Table.AvailableCardsInGame[card] / 4) * 2 + (DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4) * 2 + player.Current * 100;
-                                            this.Win.Add(new Type() { Power = player.Power, Current = 2 });
-                                            this.Sorted = this.Win.OrderByDescending(op => op.Current).ThenByDescending(op => op.Power).First();
+                                            player.Power = ((int) player.PlayerCards[0].Value) * 2 +
+                                                           ((int) player.PlayerCards[1].Value) * 2 +
+                                                           player.Current * 100;
+                                            this.Win.Add(new Type() {Power = player.Power, Current = 2});
+                                            this.Sorted = this.Win
+                                                .OrderByDescending(op => op.Current)
+                                                .ThenByDescending(op => op.Power)
+                                                .First();
                                         }
                                     }
                                     msgbox = true;
@@ -984,69 +1296,81 @@ namespace Poker.Models.PokerManagement
             }
         }
 
-        private void rPairTwoPair(int card, Player player)
+        private void rPairTwoPair(IPlayer player)
         {
-            if (player.Current >= -1)
+            if (player.Current >= - 1)
             {
                 bool msgbox = false;
                 bool msgbox1 = false;
-                for (int tc = 16; tc >= 12; tc--)
+                for (int tableCard = 4; tableCard >= 0; tableCard--)
                 {
-                    int max = tc - 12;
+                    int max = tableCard - 0;
                     for (int k = 1; k <= max; k++)
                     {
-                        if (tc - k < 12)
+                        if (tableCard - k < 0)
                         {
                             max--;
                         }
 
-                        if (tc - k >= 12)
+                        if (tableCard - k >= 0)
                         {
-                            if (DataBase.Instace.Table.AvailableCardsInGame[tc] / 4 == DataBase.Instace.Table.AvailableCardsInGame[tc - k] / 4)
+                            //Check if some of the cards on table have an equal values (for example D and D), 
+                            if (DataBase.Instace.Table.CardsOnTable[tableCard].Value ==
+                                DataBase.Instace.Table.CardsOnTable[tableCard - k].Value)
                             {
-                                if (DataBase.Instace.Table.AvailableCardsInGame[tc] / 4 != DataBase.Instace.Table.AvailableCardsInGame[card] / 4 &&
-                                    DataBase.Instace.Table.AvailableCardsInGame[tc] / 4 != DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 && player.Current == 1)
+                                //Check if some of the cards on table are not equal to the values in hand of bot
+                                if (DataBase.Instace.Table.CardsOnTable[tableCard].Value != player.PlayerCards[0].Value &&
+                                    DataBase.Instace.Table.CardsOnTable[tableCard].Value != player.PlayerCards[1].Value &&
+                                    player.Current == 1)
                                 {
                                     if (!msgbox)
                                     {
-                                        if (DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 == 0)
+                                        if (player.PlayerCards[1].Value == ValueOfCard.Ace)
                                         {
                                             player.Current = 2;
-                                            player.Power = (DataBase.Instace.Table.AvailableCardsInGame[card] / 4) * 2 + 13 * 4 + player.Current * 100;
-                                            this.Win.Add(new Type() { Power = player.Power, Current = 2 });
+                                            player.Power = ((int) player.PlayerCards[0].Value) * 2 + 13 * 4 +
+                                                           player.Current * 100;
+                                            this.Win.Add(new Type() {Power = player.Power, Current = 2});
                                             this.Sorted = this.Win
                                                 .OrderByDescending(op => op.Current)
                                                 .ThenByDescending(op => op.Power)
                                                 .First();
                                         }
 
-                                        if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 == 0)
+                                        if (player.PlayerCards[0].Value == ValueOfCard.Ace)
                                         {
                                             player.Current = 2;
-                                            player.Power = (DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4) * 2 + 13 * 4 + player.Current * 100;
-                                            this.Win.Add(new Type() { Power = player.Power, Current = 2 });
+                                            player.Power = ((int) player.PlayerCards[1].Value) * 2 + 13 * 4 +
+                                                           player.Current * 100;
+                                            this.Win.Add(new Type() {Power = player.Power, Current = 2});
                                             this.Sorted = this.Win
                                                 .OrderByDescending(op => op.Current)
                                                 .ThenByDescending(op => op.Power)
                                                 .First();
                                         }
 
-                                        if (DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 != 0)
+                                        if (player.PlayerCards[1].Value != ValueOfCard.Ace)
                                         {
                                             player.Current = 2;
-                                            player.Power = (DataBase.Instace.Table.AvailableCardsInGame[tc] / 4) * 2 + (DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4) * 2 + player.Current * 100;
-                                            this.Win.Add(new Type() { Power = player.Power, Current = 2 });
+                                            player.Power = ((int) DataBase.Instace.Table.CardsOnTable[tableCard].Value) *
+                                                           2 +
+                                                           ((int) player.PlayerCards[1].Value) * 2 +
+                                                           player.Current * 100;
+                                            this.Win.Add(new Type() {Power = player.Power, Current = 2});
                                             this.Sorted = this.Win
                                                 .OrderByDescending(op => op.Current)
                                                 .ThenByDescending(op => op.Power)
                                                 .First();
                                         }
 
-                                        if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 != 0)
+                                        if (player.PlayerCards[0].Value != ValueOfCard.Ace)
                                         {
                                             player.Current = 2;
-                                            player.Power = (DataBase.Instace.Table.AvailableCardsInGame[tc] / 4) * 2 + (DataBase.Instace.Table.AvailableCardsInGame[card] / 4) * 2 + player.Current * 100;
-                                            this.Win.Add(new Type() { Power = player.Power, Current = 2 });
+                                            player.Power = ((int) DataBase.Instace.Table.CardsOnTable[tableCard].Value) *
+                                                           2 +
+                                                           ((int) player.PlayerCards[0].Value) * 2 +
+                                                           player.Current * 100;
+                                            this.Win.Add(new Type() {Power = player.Power, Current = 2});
                                             this.Sorted = this.Win
                                                 .OrderByDescending(op => op.Current)
                                                 .ThenByDescending(op => op.Power)
@@ -1056,17 +1380,19 @@ namespace Poker.Models.PokerManagement
                                     msgbox = true;
                                 }
 
-                                if (player.Current == -1)
+                                if (player.Current == - 1)
                                 {
                                     if (!msgbox1)
                                     {
-                                        if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 > DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4)
+                                        // Ckeck for bigger value of the card in hand of player
+                                        if (player.PlayerCards[0].Value > player.PlayerCards[1].Value)
                                         {
-                                            if (DataBase.Instace.Table.AvailableCardsInGame[tc] / 4 == 0)
+                                            if (DataBase.Instace.Table.CardsOnTable[tableCard].Value == ValueOfCard.Ace)
                                             {
                                                 player.Current = 0;
-                                                player.Power = 13 + DataBase.Instace.Table.AvailableCardsInGame[card] / 4 + player.Current * 100;
-                                                this.Win.Add(new Type() { Power = player.Power, Current = 1 });
+                                                player.Power = 13 + (int) player.PlayerCards[0].Value +
+                                                               player.Current * 100;
+                                                this.Win.Add(new Type() {Power = player.Power, Current = 1});
                                                 this.Sorted = this.Win
                                                     .OrderByDescending(op => op.Current)
                                                     .ThenByDescending(op => op.Power)
@@ -1075,8 +1401,10 @@ namespace Poker.Models.PokerManagement
                                             else
                                             {
                                                 player.Current = 0;
-                                                player.Power = DataBase.Instace.Table.AvailableCardsInGame[tc] / 4 + DataBase.Instace.Table.AvailableCardsInGame[card] / 4 + player.Current * 100;
-                                                this.Win.Add(new Type() { Power = player.Power, Current = 1 });
+                                                player.Power =
+                                                    (int) DataBase.Instace.Table.CardsOnTable[tableCard].Value +
+                                                    (int) player.PlayerCards[0].Value + player.Current * 100;
+                                                this.Win.Add(new Type() {Power = player.Power, Current = 1});
                                                 this.Sorted = this.Win
                                                     .OrderByDescending(op => op.Current)
                                                     .ThenByDescending(op => op.Power)
@@ -1085,11 +1413,12 @@ namespace Poker.Models.PokerManagement
                                         }
                                         else
                                         {
-                                            if (DataBase.Instace.Table.AvailableCardsInGame[tc] / 4 == 0)
+                                            if (DataBase.Instace.Table.CardsOnTable[tableCard].Value == ValueOfCard.Ace)
                                             {
                                                 player.Current = 0;
-                                                player.Power = 13 + DataBase.Instace.Table.AvailableCardsInGame[card + 1] + player.Current * 100;
-                                                this.Win.Add(new Type() { Power = player.Power, Current = 1 });
+                                                player.Power = 13 + (int) player.PlayerCards[1].Value +
+                                                               player.Current * 100;
+                                                this.Win.Add(new Type() {Power = player.Power, Current = 1});
                                                 this.Sorted = this.Win
                                                     .OrderByDescending(op => op.Current)
                                                     .ThenByDescending(op => op.Power)
@@ -1098,8 +1427,10 @@ namespace Poker.Models.PokerManagement
                                             else
                                             {
                                                 player.Current = 0;
-                                                player.Power = DataBase.Instace.Table.AvailableCardsInGame[tc] / 4 + DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 + player.Current * 100;
-                                                this.Win.Add(new Type() { Power = player.Power, Current = 1 });
+                                                player.Power =
+                                                    (int) DataBase.Instace.Table.CardsOnTable[tableCard].Value +
+                                                    (int) player.PlayerCards[1].Value + player.Current * 100;
+                                                this.Win.Add(new Type() {Power = player.Power, Current = 1});
                                                 this.Sorted = this.Win
                                                     .OrderByDescending(op => op.Current)
                                                     .ThenByDescending(op => op.Power)
@@ -1116,20 +1447,22 @@ namespace Poker.Models.PokerManagement
             }
         }
 
-        private void rPairFromHand(int card, Player player)
+        private void rPairFromHand(IPlayer player)
         {
-            if (player.Current >= -1)
+            if (player.Current >= - 1)
             {
                 bool msgbox = false;
-                if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 == DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4)
+
+                //Check for the rank from cards in hand....if value of the cards are equal (for example 5 and 5)
+                if (player.PlayerCards[0].Value == player.PlayerCards[1].Value)
                 {
                     if (!msgbox)
                     {
-                        if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 == 0)
+                        if (player.PlayerCards[0].Value == ValueOfCard.Ace)
                         {
                             player.Current = 1;
                             player.Power = 13 * 4 + player.Current * 100;
-                            this.Win.Add(new Type() { Power = player.Power, Current = 1 });
+                            this.Win.Add(new Type() {Power = player.Power, Current = 1});
                             this.Sorted = this.Win
                                 .OrderByDescending(op => op.Current)
                                 .ThenByDescending(op => op.Power)
@@ -1138,8 +1471,8 @@ namespace Poker.Models.PokerManagement
                         else
                         {
                             player.Current = 1;
-                            player.Power = (DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4) * 4 + player.Current * 100;
-                            this.Win.Add(new Type() { Power = player.Power, Current = 1 });
+                            player.Power = ((int) player.PlayerCards[1].Value) * 4 + player.Current * 100;
+                            this.Win.Add(new Type() {Power = player.Power, Current = 1});
                             this.Sorted = this.Win
                                 .OrderByDescending(op => op.Current)
                                 .ThenByDescending(op => op.Power)
@@ -1149,17 +1482,19 @@ namespace Poker.Models.PokerManagement
                     msgbox = true;
                 }
 
-                for (int tc = 16; tc >= 12; tc--)
+                //Check if some cards on table are equal to the first card in hand of bot --> tc turns cards from table
+                for (int tableCard = 4; tableCard >= 0; tableCard--)
                 {
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 == DataBase.Instace.Table.AvailableCardsInGame[tc] / 4)
+                    //Check if the first card is equal to some card on table
+                    if (player.PlayerCards[1].Value == DataBase.Instace.Table.CardsOnTable[tableCard].Value)
                     {
                         if (!msgbox)
                         {
-                            if (DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 == 0)
+                            if (player.PlayerCards[1].Value == ValueOfCard.Ace)
                             {
                                 player.Current = 1;
-                                player.Power = 13 * 4 + DataBase.Instace.Table.AvailableCardsInGame[card] / 4 + player.Current * 100;
-                                this.Win.Add(new Type() { Power = player.Power, Current = 1 });
+                                player.Power = 13 * 4 + (int) player.PlayerCards[0].Value + player.Current * 100;
+                                this.Win.Add(new Type() {Power = player.Power, Current = 1});
                                 this.Sorted = this.Win
                                     .OrderByDescending(op => op.Current)
                                     .ThenByDescending(op => op.Power)
@@ -1168,8 +1503,9 @@ namespace Poker.Models.PokerManagement
                             else
                             {
                                 player.Current = 1;
-                                player.Power = (DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4) * 4 + DataBase.Instace.Table.AvailableCardsInGame[card] / 4 + player.Current * 100;
-                                this.Win.Add(new Type() { Power = player.Power, Current = 1 });
+                                player.Power = ((int) player.PlayerCards[1].Value) * 4 +
+                                               (int) player.PlayerCards[0].Value + player.Current * 100;
+                                this.Win.Add(new Type() {Power = player.Power, Current = 1});
                                 this.Sorted = this.Win
                                     .OrderByDescending(op => op.Current)
                                     .ThenByDescending(op => op.Power)
@@ -1178,16 +1514,16 @@ namespace Poker.Models.PokerManagement
                         }
                         msgbox = true;
                     }
-
-                    if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 == DataBase.Instace.Table.AvailableCardsInGame[tc] / 4)
+                    //Check if some cards on table are equal to the second card in hand of bot --> tc turns cards from table
+                    if (player.PlayerCards[0].Value == DataBase.Instace.Table.CardsOnTable[tableCard].Value)
                     {
                         if (!msgbox)
                         {
-                            if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 == 0)
+                            if (player.PlayerCards[0].Value == ValueOfCard.Ace)
                             {
                                 player.Current = 1;
-                                player.Power = 13 * 4 + DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 + player.Current * 100;
-                                this.Win.Add(new Type() { Power = player.Power, Current = 1 });
+                                player.Power = 13 * 4 + (int) player.PlayerCards[1].Value + player.Current * 100;
+                                this.Win.Add(new Type() {Power = player.Power, Current = 1});
                                 this.Sorted = this.Win
                                     .OrderByDescending(op => op.Current)
                                     .ThenByDescending(op => op.Power)
@@ -1196,9 +1532,13 @@ namespace Poker.Models.PokerManagement
                             else
                             {
                                 player.Current = 1;
-                                player.Power = (DataBase.Instace.Table.AvailableCardsInGame[tc] / 4) * 4 + DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 + player.Current * 100;
-                                this.Win.Add(new Type() { Power = player.Power, Current = 1 });
-                                this.Sorted = this.Win.OrderByDescending(op => op.Current).ThenByDescending(op => op.Power).First();
+                                player.Power = ((int) DataBase.Instace.Table.CardsOnTable[tableCard].Value) * 4 +
+                                               (int) player.PlayerCards[1].Value + player.Current * 100;
+                                this.Win.Add(new Type() {Power = player.Power, Current = 1});
+                                this.Sorted = this.Win
+                                    .OrderByDescending(op => op.Current)
+                                    .ThenByDescending(op => op.Power)
+                                    .First();
                             }
                         }
                         msgbox = true;
@@ -1207,159 +1547,171 @@ namespace Poker.Models.PokerManagement
             }
         }
 
-        private void rHighCard(int card, Player player)
+        private void rHighCard(IPlayer player)
         {
-            if (player.Current == -1)
+            if (player.Current == - 1)
             {
-                if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 > DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4)
+                //Check for bigger value from cards in hand
+
+                if (player.PlayerCards[0].Value > player.PlayerCards[1].Value)
                 {
-                    player.Current = -1;
-                    player.Power = DataBase.Instace.Table.AvailableCardsInGame[card] / 4;
-                    this.Win.Add(new Type() { Power = player.Power, Current = -1 });
-                    this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                    player.Current = - 1;
+                    player.Power = (int) player.PlayerCards[0].Value;
+                    this.Win.Add(new Type() {Power = player.Power, Current = - 1});
+                    this.Sorted = this.Win
+                        .OrderByDescending(op1 => op1.Current)
+                        .ThenByDescending(op1 => op1.Power)
+                        .First();
                 }
                 else
                 {
-                    player.Current = -1;
-                    player.Power = DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4;
-                    this.Win.Add(new Type() { Power = player.Power, Current = -1 });
-                    this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                    player.Current = - 1;
+                    player.Power = (int) player.PlayerCards[1].Value;
+                    this.Win.Add(new Type() {Power = player.Power, Current = - 1});
+                    this.Sorted = this.Win
+                        .OrderByDescending(op1 => op1.Current)
+                        .ThenByDescending(op1 => op1.Power)
+                        .First();
                 }
 
-                if (DataBase.Instace.Table.AvailableCardsInGame[card] / 4 == 0 || DataBase.Instace.Table.AvailableCardsInGame[card + 1] / 4 == 0)
+                if (player.PlayerCards[0].Value == ValueOfCard.Ace || player.PlayerCards[1].Value == ValueOfCard.Ace)
                 {
-                    player.Current = -1;
+                    player.Current = - 1;
                     player.Power = 13;
-                    this.Win.Add(new Type() { Power = player.Power, Current = -1 });
-                    this.Sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                    this.Win.Add(new Type() {Power = player.Power, Current = - 1});
+                    this.Sorted = this.Win
+                        .OrderByDescending(op1 => op1.Current)
+                        .ThenByDescending(op1 => op1.Power)
+                        .First();
                 }
             }
         }
 
-        public void FixWinners()
-        {
-            this.Win.Clear();
-            this.sorted.Current = 0;
-            this.sorted.Power = 0;
-            string fixedLast = "qwerty";
 
-            foreach (var player in DataBase.Instace.Players)
-            {
-                if (!player.Status.Text.Contains("Fold"))
-                {
-                    fixedLast = player.Name;
-                    this.ApplyTo(player);
-                    Winner(player, fixedLast);
-                }
-            }
-        }
+        //public void FixWinners()
+        //{
+        //    this.Win.Clear();
+        //    this.sorted.Current = 0;
+        //    this.sorted.Power = 0;
+        //    string fixedLast = "qwerty";
 
-        private void Winner(Player player, string lastly)
-        {
-            if (lastly == " ")
-            {
-                lastly = DataBase.Instace.Players[5].Name;
-            }
+        //    foreach (var player in DataBase.Instace.Players)
+        //    {
+        //        if (!player.Status.Text.Contains("Fold"))
+        //        {
+        //            fixedLast = player.Name;
+        //            this.CheckForHand(player);
+        //            Winner(player, fixedLast);
+        //        }
+        //    }
+        //}
 
-            for (int j = 0; j <= 16; j++)
-            {
-                //await Task.Delay(5);
-                if (DataBase.Instace.Table.CardsHolder[j].Visible)
-                {
-                    DataBase.Instace.Table.CardsHolder[j].Image = DataBase.Instace.Table.CardsImageDeck[j];
-                }
+        //        private void Winner(Player player, string lastly)
+        //        {
+        //            if (lastly == " ")
+        //            {
+        //                lastly = DataBase.Instace.Players[5].Name;
+        //            }
 
-            }
+        //            for (int j = 0; j <= 16; j++)
+        //            {
+        //                //await Task.Delay(5);
+        //                if (DataBase.Instace.Table.CardsHolder[j].Visible)
+        //                {
+        //                    DataBase.Instace.Table.CardsHolder[j].Image = DataBase.Instace.Table.CardsImageDeck[j];
+        //                }
 
-            if (player.Current == this.sorted.Current)
-            {
-                if (player.Power == this.sorted.Power)
-                {
-                    this.Winners++;
-                    this.CheckWinners.Add(player.Name);
+        //            }
 
-                    //TODO if statement to switch
-                    if (player.Current == -1)
-                    {
-                        MessageBox.Show(player.Name + " High Card ");
-                    }
+        //            if (player.Current == this.sorted.Current)
+        //            {
+        //                if (player.Power == this.sorted.Power)
+        //                {
+        //                    this.Winners++;
+        //                    this.CheckWinners.Add(player.Name);
 
-                    if (player.Current == 1 || player.Current == 0)
-                    {
-                        MessageBox.Show(player.Name + " Pair ");
-                    }
+        //                    //TODO if statement to switch
+        //                    if (player.Current == -1)
+        //                    {
+        //                        MessageBox.Show(player.Name + " High Card ");
+        //                    }
 
-                    if (player.Current == 2)
-                    {
-                        MessageBox.Show(player.Name + " Two Pair ");
-                    }
+        //                    if (player.Current == 1 || player.Current == 0)
+        //                    {
+        //                        MessageBox.Show(player.Name + " Pair ");
+        //                    }
 
-                    if (player.Current == 3)
-                    {
-                        MessageBox.Show(player.Name + " Three of a Kind ");
-                    }
+        //                    if (player.Current == 2)
+        //                    {
+        //                        MessageBox.Show(player.Name + " Two Pair ");
+        //                    }
 
-                    if (player.Current == 4)
-                    {
-                        MessageBox.Show(player.Name + " Straight ");
-                    }
+        //                    if (player.Current == 3)
+        //                    {
+        //                        MessageBox.Show(player.Name + " Three of a Kind ");
+        //                    }
 
-                    if (player.Current == 5 || player.Current == 5.5)
-                    {
-                        MessageBox.Show(player.Name + " Flush ");
-                    }
+        //                    if (player.Current == 4)
+        //                    {
+        //                        MessageBox.Show(player.Name + " Straight ");
+        //                    }
 
-                    if (player.Current == 6)
-                    {
-                        MessageBox.Show(player.Name + " Full House ");
-                    }
+        //                    if (player.Current == 5 || player.Current == 5.5)
+        //                    {
+        //                        MessageBox.Show(player.Name + " Flush ");
+        //                    }
 
-                    if (player.Current == 7)
-                    {
-                        MessageBox.Show(player.Name + " Four of a Kind ");
-                    }
+        //                    if (player.Current == 6)
+        //                    {
+        //                        MessageBox.Show(player.Name + " Full House ");
+        //                    }
 
-                    if (player.Current == 8)
-                    {
-                        MessageBox.Show(player.Name + " Straight Flush ");
-                    }
+        //                    if (player.Current == 7)
+        //                    {
+        //                        MessageBox.Show(player.Name + " Four of a Kind ");
+        //                    }
 
-                    if (player.Current == 9)
-                    {
-                        MessageBox.Show(player.Name + " Royal Flush ! ");
-                    }
-                }
-            }
+        //                    if (player.Current == 8)
+        //                    {
+        //                        MessageBox.Show(player.Name + " Straight Flush ");
+        //                    }
 
-            if (player.Name == lastly)//lastfixed
-            {
-                if (this.Winners > 1)
-                {
-                    for (int i = 0; i < DataBase.Instace.Players.Length; i++)
-                    {
-                        if (this.CheckWinners.Contains(DataBase.Instace.Players[i].Name))
-                        {
-                            DataBase.Instace.Players[i].Chips += int.Parse(Launcher.Poker.TextBoxPot.Text) / this.Winners;
-                            Launcher.Poker.ChipsTextBoxes[i].Text = DataBase.Instace.Players[i].Chips.ToString();
+        //                    if (player.Current == 9)
+        //                    {
+        //                        MessageBox.Show(player.Name + " Royal Flush ! ");
+        //                    }
+        //                }
+        //            }
 
-                        }
-                    }
+        //            if (player.Name == lastly)//lastfixed
+        //            {
+        //                if (this.Winners > 1)
+        //                {
+        //                    for (int i = 0; i < DataBase.Instace.Players.Length; i++)
+        //                    {
+        //                        if (this.CheckWinners.Contains(DataBase.Instace.Players[i].Name))
+        //                        {
+        //                            DataBase.Instace.Players[i].Chips += int.Parse(Launcher.Poker.TextBoxPot.Text) / this.Winners;
+        //                            Launcher.Poker.ChipsTextBoxes[i].Text = DataBase.Instace.Players[i].Chips.ToString();
 
-                    //await Finish(1);
-                }
+        //                        }
+        //                    }
 
-                if (this.Winners == 1)
-                {
-                    foreach (var item in DataBase.Instace.Players)
-                    {
-                        if (this.CheckWinners.Contains(item.Name))
-                        {
-                            item.Chips += int.Parse(Launcher.Poker.TextBoxPot.Text);
+        //                    //await Finish(1);
+        //                }
 
-                        }
-                    }
-                }
-            }
-        }
+        //                if (this.Winners == 1)
+        //                {
+        //                    foreach (var item in DataBase.Instace.Players)
+        //                    {
+        //                        if (this.CheckWinners.Contains(item.Name))
+        //                        {
+        //                            item.Chips += int.Parse(Launcher.Poker.TextBoxPot.Text);
+
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
     }
 }

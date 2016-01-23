@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Poker.Interfaces;
 
 namespace Poker.Models.Player
 {
     using System.Drawing;
     using System.Windows.Forms;
     using Poker;
-    public abstract class Player
+    public abstract class Player:IPlayer
     {
+        private const int NumberOfCards = 2;
         private Panel panel;
         private int chips;
         private double power;
@@ -19,7 +20,8 @@ namespace Poker.Models.Player
         private int call;
         private int raise;
         private Label status;
-        private int[] catds=new int[2];
+        //private int[] catds=new int[2];
+        private ICard[] playerCards;
 
         public Player(string name)
         {
@@ -31,13 +33,16 @@ namespace Poker.Models.Player
             this.chips = 100000;
             this.Name = name;
             this.Status = new Label();
+            this.playerCards = new ICard[NumberOfCards];
         }
 
-        public int[] Cards
+
+        public ICard[] PlayerCards
         {
-            get { return this.catds; }
-            set { this.catds = value; }
+            get { return this.playerCards; }
+            set { this.playerCards = value; }
         }
+
         public bool IsPlayerTurn
         {
             get { return this.isPlayerTurn; }
@@ -171,41 +176,39 @@ namespace Poker.Models.Player
             }
         }
 
-        public void PlayerFold()
-        {
-            Launcher.Poker.Raising = false;
-            this.Status.Text = "Fold";
-            this.IsPlayerTurn = false;
-            this.FoldTurn = true;
-        }
+        //public void Fold(ref bool sTurn, ref bool sFTurn, Label sStatus)
+        //{
+        //    raising = false;
+        //    sStatus.Text = "Fold";
+        //    sTurn = false;
+        //    sFTurn = true;
+        //}
 
-        public void PlayerCheck()
-        {
-            this.Status.Text = "Check";
-            this.IsPlayerTurn = false;
-            Launcher.Poker.Raising  = false;
-        }
+        //    public void Check()
+        //    {
+        //        cStatus.Text = "Check";
+        //        cTurn = false;
+        //        raising = false;
+        //    }
 
-        public void PlayerCall()
-        {
-          //  Form1.Raising = false;
-            this.IsPlayerTurn = false;
-            this.Chips -= call;
-            this.Status.Text = "Call " + call;
-            Launcher.Poker.TextBoxPot.Text = (int.Parse(Launcher.Poker.TextBoxPot.Text) + call).ToString();
+        //    public void Call(ref int sChips, ref bool sTurn, Label sStatus)
+        //    {
+        //        Form1.Raising = false;
+        //        sTurn = false;
+        //        sChips -= call;
+        //        sStatus.Text = "Call " + call;
+        //        Form1.textBoxPot.Text = (int.Parse(this.textBoxPot.Text) + call).ToString();
+        //    }
 
-        }
-
-        public void PlayerRaised()
-        {
-            Launcher.Poker.Raise *= 2;
-            this.Chips -= Convert.ToInt32(Launcher.Poker.Raise);
-            this.Status.Text = "Raise " + this.raise;
-            Launcher.Poker.TextBoxPot.Text = (int.Parse(Launcher.Poker.TextBoxPot.Text) + Convert.ToInt32(Launcher.Poker.Raise)).ToString();
-            Launcher.Poker.CallValue = Convert.ToInt32(this.raise);
-            Launcher.Poker.Raising = true;
-            this.IsPlayerTurn = false;
-        }
+        //    public void Raised(ref int sChips, ref bool sTurn, Label sStatus)
+        //    {
+        //        sChips -= Convert.ToInt32(this.raise);
+        //        sStatus.Text = "raise " + this.raise;
+        //        this.textBoxPot.Text = (int.Parse(this.textBoxPot.Text) + Convert.ToInt32(this.raise)).ToString();
+        //        call = Convert.ToInt32(this.raise);
+        //        raising = true;
+        //        sTurn = false;
+        //    }
     }
 
 }

@@ -4,7 +4,7 @@
     {
         public Human(string name) : base(name)
         {
-            this.Cards = new[] {1, 2};
+            //this.Cards = new[] {1, 2};
         }
     }
 }
