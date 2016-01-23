@@ -1,4 +1,5 @@
 ﻿using Poker.Core;
+using Poker.Models.PokerManagement;
 
 namespace Poker
 {
@@ -10,6 +11,7 @@ namespace Poker
     using System.Threading.Tasks;
     using System.Windows.Forms;
     using Poker.Models.Player;
+    
     using Poker.Models;
     public partial class Form1 : Form
     {
@@ -22,7 +24,8 @@ namespace Poker
         Bot thirdBot = new Bot("ThirdBot");
         Bot fourthBot = new Bot("FourthBot");
         Bot fifthBot = new Bot("FifthBot");
-        DataBase Db = new DataBase();
+        DataBase Db = DataBase.Instace;
+        private PokerTable table;
         private const int InitialValueOfChips = 10000;
         private const int DefaultValueOfBigBlind = 500;
         private const int DefaultValueOfSmallBlind = 250;
@@ -146,6 +149,8 @@ namespace Poker
                 this.Db.Players[i].Cards[0] = 2*i;
                 this.Db.Players[i].Cards[1] = 2*i + 1;
             }
+            this.table= new PokerTable(this.Controls, this.MaximizeBox, this.MinimizeBox, this.restart);
+            this.Db.Table = this.table;
             this.call = this.defaultBigBlind;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -187,6 +192,29 @@ namespace Poker
             this.buttonSmallBlind.Visible = false;
             this.textBoxRaise.Text = (this.defaultBigBlind * 2).ToString();
         }
+
+        public Button ButtonCall
+        { get { return this.buttonCall; } }
+
+        public TextBox TextBoxPot
+        { get { return this.textBoxPot; } }
+
+        public TextBox[] ChipsTextBoxes
+        {
+
+            get
+            {
+                TextBox[] result = new TextBox[]
+                {
+                    this.textBoxChips, this.textBoxBotChips1, this.textBoxBotChips2,
+                     this.textBoxBotChips3, this.textBoxBotChips4, this.textBoxBotChips5
+                };
+                return result;
+            }
+
+        }
+
+
         async Task Shuffle()
         {
             //this.bools.Add(this.PlayerFoldTturn);
@@ -888,7 +916,7 @@ namespace Poker
             {
             }
 
-            if (!player.FoldTurn || player.Cards[1] == 0 && player.Cards[2] == 1 && this.playerStatus.Text.Contains("Fold") == false)
+            if (!player.FoldTurn || player.Cards[1] == 0 && player.Cards[2] == 1 && this.player.Status.Text.Contains("Fold") == false)
             {
                 #region Variables
 
@@ -2232,6 +2260,7 @@ namespace Poker
             }
             else
             {
+                //maxLeft-playerLeft(callnebager)
                 if (this.turnCount >= this.maxLeft - 1 || !this.changed && this.turnCount == this.maxLeft)
                 {
                     if (currentTurn == this.raisedTurn - 1 || !this.changed && this.turnCount == this.maxLeft || this.raisedTurn == 0 && currentTurn == 5)
@@ -2247,35 +2276,6 @@ namespace Poker
                         {
                             item.Status.Text = "";
                         }
-                        //    if (!this.PlayerFoldTturn)
-                    //    {
-                    //        this.playerStatus.Text = "";
-                    //    }
-
-                    //    if (!this.B1Fturn)
-                    //    {
-                    //        this.firstBotStatus.Text = "";
-                    //    }
-
-                    //    if (!this.B2Fturn)
-                    //    {
-                    //        this.secondBotStatus.Text = "";
-                    //    }
-
-                    //    if (!this.B3Fturn)
-                    //    {
-                    //        this.thirdBotStatus.Text = "";
-                    //    }
-
-                    //    if (!this.B4Fturn)
-                    //    {
-                    //        this.fourthBotStatus.Text = "";
-                    //    }
-
-                    //    if (!this.B5Fturn)
-                    //    {
-                    //        this.fifthBotStatus.Text = "";
-                    //    }
                    }
                 }
             }
@@ -2292,19 +2292,7 @@ namespace Poker
                             item.Call=0;
                             item.Raise = 0;
                         }
-                        //this.playerCall = 0;
-                        //this.firstBotCall = 0;
-                        //this.secondBotCall = 0;
-                        //this.thirdBotCall = 0;
-                        //this.fourthBotCall = 0;
-                        //this.fifthBotCall = 0;
-
-                        //this.playerRaise = 0;
-                        //this.firstBotRaise = 0;
-                        //this.secondBotRaise = 0;
-                        //this.thirdBotRaise = 0;
-                        //this.fourthBotRaise = 0;
-                        //this.fifthBotRaise = 0;
+                        
                     }
                 }
             }
@@ -2784,7 +2772,7 @@ namespace Poker
             this.height = 0;
             this.width = 0;
             this.winners = 0;
-            this.flop = 1;
+            
             this.turn = 2;
             this.river = 3;
             this.end = 4;

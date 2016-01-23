@@ -1,4 +1,6 @@
-﻿                                        namespace Poker
+﻿                                        using System.Runtime.CompilerServices;
+
+namespace Poker
 {
     partial class Form1
     {
@@ -47,12 +49,12 @@
             this.textBoxSmallBlind = new System.Windows.Forms.TextBox();
             this.buttonSmallBlind = new System.Windows.Forms.Button();
             this.textBoxBigBlind = new System.Windows.Forms.TextBox();
-            this.fifthBotStatus = new System.Windows.Forms.Label();
-            this.fourthBotStatus = new System.Windows.Forms.Label();
-            this.thirdBotStatus = new System.Windows.Forms.Label();
-            this.firstBotStatus = new System.Windows.Forms.Label();
-            this.playerStatus = new System.Windows.Forms.Label();
-            this.secondBotStatus = new System.Windows.Forms.Label();
+            //this.fifthBotStatus = new System.Windows.Forms.Label();
+            //this.fourthBotStatus = new System.Windows.Forms.Label();
+            //this.thirdBotStatus = new System.Windows.Forms.Label();
+            //this.firstBotStatus = new System.Windows.Forms.Label();
+            //this.playerStatus = new System.Windows.Forms.Label();
+            //this.secondBotStatus = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxRaise = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
@@ -257,7 +259,7 @@
             this.fifthBot.Status.Location = new System.Drawing.Point(1012, 579);
             this.fifthBot.Status.Name = "fifthBotStatus";
             this.fifthBot.Status.Size = new System.Drawing.Size(152, 32);
-            this.fifthBotStatus.TabIndex = 26;
+            this.fifthBot.Status.TabIndex = 26;
             // 
             // fourthBotStatus
             // 
@@ -380,12 +382,12 @@
         private System.Windows.Forms.TextBox textBoxSmallBlind;
         private System.Windows.Forms.Button buttonSmallBlind;
         private System.Windows.Forms.TextBox textBoxBigBlind;
-        private System.Windows.Forms.Label fifthBotStatus;
-        private System.Windows.Forms.Label fourthBotStatus;
-        private System.Windows.Forms.Label thirdBotStatus;
-        private System.Windows.Forms.Label firstBotStatus;
-        private System.Windows.Forms.Label playerStatus;
-        private System.Windows.Forms.Label secondBotStatus;
+        //private System.Windows.Forms.Label fifthBotStatus;
+        //private System.Windows.Forms.Label fourthBotStatus;
+        //private System.Windows.Forms.Label thirdBotStatus;
+        //private System.Windows.Forms.Label firstBotStatus;
+        //private System.Windows.Forms.Label playerStatus;
+        //private System.Windows.Forms.Label secondBotStatus;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBoxRaise;
     }
