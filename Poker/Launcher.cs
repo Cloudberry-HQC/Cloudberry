@@ -5,7 +5,7 @@
 
     public static class Launcher
     {
-        private static readonly Form1 poker = new Form1();
+        private static   Form1 poker = new Form1();
         public static Form1 Poker
         { get { return poker; } }
         /// <summary>
