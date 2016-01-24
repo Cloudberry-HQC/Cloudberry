@@ -79,6 +79,8 @@
                 allSevenCards[5] = Database.Instace.Table.CardsOnTable[3];
                 allSevenCards[6] = Database.Instace.Table.CardsOnTable[4];
 
+                var sortedSevenCards = allSevenCards.OrderBy(card => card.Value).ToArray();
+
                 //int[] cardsOnTable = new int[5];      // cards on the table
                 //int[] Straight = new int[7];
                 //Straight[0] = Database.Instace.Table.AvailableCardsInGame[player.Cards[0]];
@@ -119,22 +121,22 @@
                 this.RTwoPair(player); //ready
                 
                 //Three of a kind current = 3
-                this.RThreeOfAKind(player, allSevenCards); //ready
+                this.RThreeOfAKind(player, sortedSevenCards); //ready
                 
                 //Straight current = 4
-                this.RStraight(player, allSevenCards); //ready
+                this.RStraight(player, sortedSevenCards); //ready
 
                 //Flush current = 5 || 5.5
                 this.RFlush(player, ref hasFlush); //ready
                 
                 //Full House current = 6
-                this.RFullHouse(player, ref hasTrips, allSevenCards); //ready
+                this.RFullHouse(player, ref hasTrips, sortedSevenCards); //ready
 
                 //Four of a Kind current = 7
-                this.RFourOfAKind(player, allSevenCards); //ready 
+                this.RFourOfAKind(player, sortedSevenCards); //ready 
 
                 //Straight Flush current = 8 || 9
-                this.RStraightFlush(player, allSevenCards); //ready
+                this.RStraightFlush(player, sortedSevenCards); //ready
 
                 //High Card current = -1
                 this.RHighCard(player); //ready
@@ -144,13 +146,13 @@
             }
         }
 
-        private void RStraightFlush(IPlayer player, ICard[] allSeveCards)
+        private void RStraightFlush(IPlayer player, ICard[] allSevenCards)
         {
             //TODO Check if orderBy work correctly
-            ICard[] clubs = allSeveCards.Where(card => card.Suit == SuitOfCard.Clubs).ToArray(); //  clubs
-            ICard[] diamonds = allSeveCards.Where(card => card.Suit == SuitOfCard.Diamonds).ToArray(); //  diamonds
-            ICard[] hearts = allSeveCards.Where(card => card.Suit == SuitOfCard.Hearts).ToArray(); //  hearts
-            ICard[] spades = allSeveCards.Where(card => card.Suit == SuitOfCard.Spades).ToArray(); //  spades
+            ICard[] clubs = allSevenCards.Where(card => card.Suit == SuitOfCard.Clubs).ToArray(); //  clubs
+            ICard[] diamonds = allSevenCards.Where(card => card.Suit == SuitOfCard.Diamonds).ToArray(); //  diamonds
+            ICard[] hearts = allSevenCards.Where(card => card.Suit == SuitOfCard.Hearts).ToArray(); //  hearts
+            ICard[] spades = allSevenCards.Where(card => card.Suit == SuitOfCard.Spades).ToArray(); //  spades
 
             ICard[] distinctValueOfClubs = clubs
                 .GroupBy(c => c.Value)
