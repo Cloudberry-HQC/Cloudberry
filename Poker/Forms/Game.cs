@@ -21,23 +21,23 @@
         //public int Nm;
         private readonly IPlayer humanPlayer = new Human(GlobalConstants.HumanPlayerName);
         private readonly IPlayer firstBot = new Bot(GlobalConstants.FirstBotPlayerName);
-        private readonly IPlayer secondBot = new Bot(GlobalConstants.SecondBotPlayerName);
-        private readonly IPlayer thirdBot = new Bot(GlobalConstants.ThirdBotPlayerName);
+        private readonly IPlayer secondbot = new Bot(GlobalConstants.SecondbotPlayerName);
+        private readonly IPlayer thirdbot = new Bot(GlobalConstants.ThirdbotPlayerName);
         private readonly IPlayer fourthBot = new Bot(GlobalConstants.FourthBotPlayerName);
         private readonly IPlayer fifthBot = new Bot(GlobalConstants.FifthBotPlayerName);
 
         private readonly Database db = Database.Instace;
         private readonly PokerTable table;
-        private readonly Rules rules = Rules.Instance;
-        private readonly CardHandler cardHandler = new CardHandler();
+        private  Rules rules = Rules.Instance;
+       // private readonly CardHandler cardHandler = new CardHandler();
 
         //private const int InitialValueOfChips = 10000;
         private const int DefaultValueOfBigBlind = 500;
         private const int DefaultValueOfSmallBlind = 250;
         //private Panel player.Panel = new Panel();
         //private Panel firstBot.Panel = new Panel();
-        //private Panel secondBot.Panel = new Panel();
-        //private Panel thirdBotPanel = new Panel();
+        //private Panel secondbot.Panel = new Panel();
+        //private Panel thirdbotPanel = new Panel();
         //private Panel fourthBotPanel = new Panel();
         //private Panel fifthBot.Panel = new Panel();
         private int call = 500;
@@ -45,30 +45,30 @@
         //elica: chips
         //private int chips = InitialValueOfChips;     
         //private int firstBotChips = InitialValueOfChips;
-        //private int secondBotChips = InitialValueOfChips;
-        //private int thirdBotChips = InitialValueOfChips;
+        //private int secondbotChips = InitialValueOfChips;
+        //private int thirdbotChips = InitialValueOfChips;
         //private int fourthBotChips = InitialValueOfChips;
         //private int fifthBotChips = InitialValueOfChips;
 
-        private double type;
+      //  private double type;
         private double rounds;
         private double raise;
         //private double firstBotPower;
-        //private double secondBotPower;
-        //private double thirdBotPower;
+        //private double secondbotPower;
+        //private double thirdbotPower;
         //private double fourthBotPower;
         //private double fifthBotPower;
         //private double playerPower;
         //private double playerType = -1;
         //private double firstBotType = -1;
-        //private double secondBotType = -1;
-        //private double thirdBotType = -1;
+        //private double secondbotType = -1;
+        //private double thirdbotType = -1;
         //private double fourthBotType = -1;
         //private double fifthBotType = -1;
 
         //private bool isFirstBotTurn;
-        //private bool isSecondBotTurn;
-        //private bool isThirdBotTurn;
+        //private bool isSecondbotTurn;
+        //private bool isThirdbotTurn;
         //private bool isFourthBotTurn;
         //private bool isFifthBotTurn;
 
@@ -80,8 +80,8 @@
 
         //private bool hasPlayerFolded;
         //private bool hasFirstBotFolded;
-        //private bool hasSecondBotFolded;
-        //private bool hasThirdBotFolded;
+        //private bool hasSecondbotFolded;
+        //private bool hasThirdbotFolded;
         //private bool hasFourthBotFolded;
         //private bool hasFifthBotFolded;
         private bool intsadded;
@@ -89,22 +89,22 @@
 
         //private int playerCall;
         //private int firstBotCall;
-        //private int secondBotCall;
-        //private int thirdBotCall;
+        //private int secondbotCall;
+        //private int thirdbotCall;
         //private int fourthBotCall;
         //private int fifthBotCall;
 
         //private int playerRaise;
         //private int firstBotRaise;
-        //private int secondBotRaise;
-        //private int thirdBotRaise;
+        //private int secondbotRaise;
+        //private int thirdbotRaise;
         //private int fourthBotRaise;
         //private int fifthBotRaise;
 
         private int height;
         private int width;
 
-        private int winners;
+    //    private int winners;
         private readonly int flop = 1;
         private int turn = 2;
         private int river = 3;
@@ -115,8 +115,8 @@
         private int raisedTurn = 1;
 
         private readonly List<bool?> bools = new List<bool?>();
-        private readonly List<Type> Win = new List<Type>();
-        private readonly List<string> CheckWinners = new List<string>();
+     //   private readonly List<Type> Win = new List<Type>();
+      //  private readonly List<string> CheckWinners = new List<string>();
         private readonly List<int> ints = new List<int>();
 
         //private bool PlayerFoldTturn;
@@ -124,7 +124,7 @@
         private bool restart;
         private bool raising;
 
-        readonly Type sorted = new Type();
+      //  readonly Type sorted = new Type();
         string[] ImgLocation = Directory.GetFiles(GlobalConstants.PlayingCardsDirectoryPath,
             GlobalConstants.PlayingCardsWithPngExtension,
             SearchOption.TopDirectoryOnly);
@@ -147,15 +147,15 @@
             //bools.Add(PlayerFoldTturn); bools.Add(B1Fturn); bools.Add(B2Fturn); bools.Add(B3Fturn); bools.Add(B4Fturn); bools.Add(B5Fturn);
             this.db.Players[0] = this.humanPlayer;
             this.db.Players[1] = this.firstBot;
-            this.db.Players[2] = this.secondBot;
-            this.db.Players[3] = this.thirdBot;
+            this.db.Players[2] = this.secondbot;
+            this.db.Players[3] = this.thirdbot;
             this.db.Players[4] = this.fourthBot;
             this.db.Players[5] = this.fifthBot;
 
-            //for (int i = 0; i < this.Db.Players.Length; i++)
+            //for (int i = 0; i < this.db.Players.Length; i++)
             //{
-            //    this.Db.Players[i].Cards[0] = 2*i;
-            //    this.Db.Players[i].Cards[1] = 2*i + 1;
+            //    this.db.Players[i].Cards[0] = 2*i;
+            //    this.db.Players[i].Cards[1] = 2*i + 1;
             //}
 
             this.table = new PokerTable();
@@ -178,8 +178,8 @@
 
             this.textBoxChips.Text = "chips : " + this.humanPlayer.Chips;
             this.textBoxBotChips1.Text = "chips : " + this.firstBot.Chips;
-            this.textBoxBotChips2.Text = "chips : " + this.secondBot.Chips;
-            this.textBoxBotChips3.Text = "chips : " + this.thirdBot.Chips;
+            this.textBoxBotChips2.Text = "chips : " + this.secondbot.Chips;
+            this.textBoxBotChips3.Text = "chips : " + this.thirdbot.Chips;
             this.textBoxBotChips4.Text = "chips : " + this.fourthBot.Chips;
             this.textBoxBotChips5.Text = "chips : " + this.fifthBot.Chips;
 
@@ -208,6 +208,39 @@
         public TextBox TextBoxPot
         { get { return this.textBoxPot; } }
 
+        public double Rounds
+        {
+            get { return this.rounds; }
+            set { this.rounds = value; }
+        }
+
+        public bool Raising
+        {
+            get { return this.raising; }
+            set { this.raising = value; }
+        }
+
+        public double Raise
+        {
+            get { return this.raise; }
+            set { this.raise = value; }
+        }
+
+        public Image[] CardsImageDeck
+        {
+            get { return this.cardsImageDeck; }
+        }
+
+        public int CallValue
+        {
+            get { return this.call; }
+            set { this.call = value; }
+        }
+        public PictureBox[] CardsHolder
+        {
+            get { return this.cardsHolder; }
+        }
+
         public TextBox[] ChipsTextBoxes
         {
 
@@ -229,7 +262,7 @@
 
         async Task Shuffle()
         {
-            //this.bools.Add(this.PlayerFoldTturn);
+            //this.bools.Add(this.humanPlayerFoldTturn);
             //this.bools.Add(this.B1Fturn);
             //this.bools.Add(this.B2Fturn);
             //this.bools.Add(this.B3Fturn);
@@ -282,267 +315,357 @@
                 #region Throwing Cards
 
                 if (cardsInGame < 2)
-                {
-                    if (this.cardsHolder[0].Tag != null)
+                    if (cardsInGame < 2)
                     {
-                        this.cardsHolder[1].Tag = this.availableCardsInGame[1];
-                        this.humanPlayer.PlayerCards[1] = this.SetCard(this.availableCardsInGame[1]);
-                    }
-
-                    this.cardsHolder[0].Tag = this.availableCardsInGame[0];
-                    this.humanPlayer.PlayerCards[0] = this.SetCard(this.availableCardsInGame[0]);
-                    this.cardsHolder[cardsInGame].Image = this.cardsImageDeck[cardsInGame];
-                    this.cardsHolder[cardsInGame].Anchor = (AnchorStyles.Bottom);
-                    //cardsHolder[cardsInGame].Dock = DockStyle.Top;
-                    this.cardsHolder[cardsInGame].Location = new Point(horizontal, vertical);
-                    horizontal += this.cardsHolder[cardsInGame].Width;
-                    this.Controls.Add(this.humanPlayer.Panel);
-                    this.humanPlayer.Panel.Location = new Point(this.cardsHolder[0].Left - 10, this.cardsHolder[0].Top - 10);
-                    //this.player.Panel.BackColor = Color.DarkBlue;
-                    //this.player.Panel.Height = 150;
-                    //this.player.Panel.Width = 180;
-                    //this.player.Panel.Visible = false;
-                }
-
-                if (this.firstBot.Chips > 0)
-                {
-                    this.foldedPlayers--;
-
-                    if (cardsInGame >= 2 && cardsInGame < 4)     //elica: cards of the first bot with index 2 and 3
-                    {
-                        if (this.cardsHolder[2].Tag != null)
+                        if (this.cardsHolder[0].Tag != null)
                         {
-                            this.cardsHolder[3].Tag = this.availableCardsInGame[3];
-                            this.firstBot.PlayerCards[1] = this.SetCard(this.availableCardsInGame[3]);
+                            this.cardsHolder[1].Tag = int.Parse(this.ImgLocation[1]) - 1;
+                            this.humanPlayer.PlayerCards[1] = new Card((int)this.cardsHolder[1].Tag);
+                            this.humanPlayer.PlayerCards[1].NumberInGame = cardsInGame;
                         }
-
-                        this.cardsHolder[2].Tag = this.availableCardsInGame[2];
-                        this.firstBot.PlayerCards[0] = this.SetCard(this.availableCardsInGame[2]);
-                        if (!check)
+                        else
                         {
-                            horizontal = 15;
-                            vertical = 420;
+                            this.cardsHolder[0].Tag = int.Parse(this.ImgLocation[0]) - 1;
+                            this.humanPlayer.PlayerCards[0] = new Card((int)this.cardsHolder[0].Tag);
+                            this.humanPlayer.PlayerCards[0].NumberInGame = cardsInGame;
                         }
-
-                        check = true;
-                        this.cardsHolder[cardsInGame].Anchor = (AnchorStyles.Bottom | AnchorStyles.Left);
-                        this.cardsHolder[cardsInGame].Image = backImage;
-                        //cardsHolder[cardsInGame].Image = cardsImageDeck[cardsInGame];
+                        this.cardsHolder[cardsInGame].Image = this.cardsImageDeck[cardsInGame];
+                        this.cardsHolder[cardsInGame].Anchor = (AnchorStyles.Bottom);
+                        //cardsHolder[cardsInGame].Dock = DockStyle.Top;
                         this.cardsHolder[cardsInGame].Location = new Point(horizontal, vertical);
                         horizontal += this.cardsHolder[cardsInGame].Width;
-                        this.cardsHolder[cardsInGame].Visible = true;
-                        this.Controls.Add(this.firstBot.Panel);
-                        this.firstBot.Panel.Location = new Point(this.cardsHolder[2].Left - 10, this.cardsHolder[2].Top - 10);
-                        //this.firstBot.Panel.BackColor = Color.DarkBlue;
-                        //this.firstBot.Panel.Height = 150;
-                        //this.firstBot.Panel.Width = 180;
-                        //this.firstBot.Panel.Visible = false;
-
-                        if (cardsInGame == 3)
-                        {
-                            check = false;
-                        }
+                        this.Controls.Add(this.humanPlayer.Panel);
+                        this.humanPlayer.Panel.Location = new Point(this.cardsHolder[0].Left - 10, this.cardsHolder[0].Top - 10);
+                        //this.humanPlayer.Panel.BackColor = Color.DarkBlue;
+                        //this.humanPlayer.Panel.Height = 150;
+                        //this.humanPlayer.Panel.Width = 180;
+                        //this.humanPlayer.Panel.Visible = false;
                     }
-                }
 
-                if (this.secondBot.Chips > 0)
+                //if (this.firstBot.Chips > 0)
+                //{
+                //    this.foldedPlayers--;
+
+                //    if (cardsInGame >= 2 && cardsInGame < 4)     //elica: cards of the first bot with index 2 and 3
+                //    {
+                //        if (this.cardsHolder[2].Tag != null)
+                //        {
+                //            this.cardsHolder[3].Tag = this.availableCardsInGame[3];
+                //            this.firstBot.PlayerCards[1] = this.SetCard(this.availableCardsInGame[3]);
+                //        }
+
+                //        this.cardsHolder[2].Tag = this.availableCardsInGame[2];
+                //        this.firstBot.PlayerCards[0] = this.SetCard(this.availableCardsInGame[2]);
+                //        if (!check)
+                //        {
+                //            horizontal = 15;
+                //            vertical = 420;
+                //        }
+
+                //        check = true;
+                //        this.cardsHolder[cardsInGame].Anchor = (AnchorStyles.Bottom | AnchorStyles.Left);
+                //        this.cardsHolder[cardsInGame].Image = backImage;
+                //        //cardsHolder[cardsInGame].Image = cardsImageDeck[cardsInGame];
+                //        this.cardsHolder[cardsInGame].Location = new Point(horizontal, vertical);
+                //        horizontal += this.cardsHolder[cardsInGame].Width;
+                //        this.cardsHolder[cardsInGame].Visible = true;
+                //        this.Controls.Add(this.firstBot.Panel);
+                //        this.firstBot.Panel.Location = new Point(this.cardsHolder[2].Left - 10, this.cardsHolder[2].Top - 10);
+                //        //this.firstBot.Panel.BackColor = Color.DarkBlue;
+                //        //this.firstBot.Panel.Height = 150;
+                //        //this.firstBot.Panel.Width = 180;
+                //        //this.firstBot.Panel.Visible = false;
+
+                //        if (cardsInGame == 3)
+                //        {
+                //            check = false;
+                //        }
+                //    }
+                //}
+                for (int i = 1; i < this.db.Players.Length; i++)
                 {
-                    this.foldedPlayers--;
-
-                    if (cardsInGame >= 4 && cardsInGame < 6)  // elica: cards of the second bot with index 4 and 5
+                    if (this.db.Players[i].Chips > 0)
                     {
-                        if (this.cardsHolder[4].Tag != null)
+                        this.foldedPlayers--;
+
+                        if (cardsInGame >= 2 * i && cardsInGame < 2 * i + 2)
                         {
-                            this.cardsHolder[5].Tag = this.availableCardsInGame[5];
-                            this.secondBot.PlayerCards[1] = this.SetCard(this.availableCardsInGame[5]);
-                        }
+                            if (this.cardsHolder[2 * i].Tag != null)
+                            {
+                                this.cardsHolder[2 * i + 1].Tag = int.Parse(this.ImgLocation[2 * i + 1]) - 1;
+                                this.db.Players[i].PlayerCards[1] = new Card((int)this.cardsHolder[2 * i + 1].Tag);
+                                this.db.Players[i].PlayerCards[1].NumberInGame = cardsInGame;
+                            }
+                            else
+                            {
+                                this.cardsHolder[2 * i].Tag = int.Parse(this.ImgLocation[2 * i]) - 1;
+                                this.db.Players[i].PlayerCards[0] = new Card((int)this.cardsHolder[2 * i].Tag);
+                                this.db.Players[i].PlayerCards[0].NumberInGame = cardsInGame;
+                            }
+                            if (!check)
+                            {
+                                switch (i)
+                                {
+                                    case 1:
+                                        horizontal = 15;
+                                        vertical = 420;
 
-                        this.cardsHolder[4].Tag = this.availableCardsInGame[4];
-                        this.secondBot.PlayerCards[0] = this.SetCard(this.availableCardsInGame[4]);
+                                        break;
+                                    case 2:
+                                        horizontal = 75;
+                                        vertical = 65;
 
-                        if (!check)
-                        {
-                            horizontal = 75;
-                            vertical = 65;
-                        }
+                                        break;
+                                    case 3:
+                                        horizontal = 590;
+                                        vertical = 25;
 
-                        check = true;
-                        this.cardsHolder[cardsInGame].Anchor = (AnchorStyles.Top | AnchorStyles.Left);
-                        this.cardsHolder[cardsInGame].Image = backImage;
-                        //cardsHolder[cardsInGame].Image = cardsImageDeck[cardsInGame];
-                        this.cardsHolder[cardsInGame].Location = new Point(horizontal, vertical);
-                        horizontal += this.cardsHolder[cardsInGame].Width;
-                        this.cardsHolder[cardsInGame].Visible = true;
-                        this.Controls.Add(this.secondBot.Panel);
-                        this.secondBot.Panel.Location = new Point(this.cardsHolder[4].Left - 10, this.cardsHolder[4].Top - 10);
-                        //this.secondBot.Panel.BackColor = Color.DarkBlue;
-                        //this.secondBot.Panel.Height = 150;
-                        //this.secondBot.Panel.Width = 180;
-                        //this.secondBot.Panel.Visible = false;
+                                        break;
+                                    case 4:
+                                        horizontal = 1115;
+                                        vertical = 65;
 
-                        if (cardsInGame == 5)
-                        {
-                            check = false;
+                                        break;
+
+                                    case 5:
+                                        horizontal = 1160;
+                                        vertical = 420;
+
+                                        break;
+                                }
+                            }
+                            check = true;
+                            this.cardsHolder[cardsInGame].Anchor = (AnchorStyles.Top | AnchorStyles.Left);
+                            this.cardsHolder[cardsInGame].Image = backImage;
+                            //cardsHolder[cardsInGame].Image = cardsImageDeck[cardsInGame];
+                            this.cardsHolder[cardsInGame].Location = new Point(horizontal, vertical);
+                            horizontal += this.cardsHolder[cardsInGame].Width;
+                            this.cardsHolder[cardsInGame].Visible = true;
+                            this.Controls.Add(this.db.Players[i].Panel);
+                            this.db.Players[i].Panel.Location = new Point(this.cardsHolder[2 * i].Left - 10, this.cardsHolder[2 * i].Top - 10);
+
+                            if (cardsInGame == 2 * i + 1)
+                            {
+                                check = false;
+                            }
                         }
                     }
                 }
 
-                if (this.thirdBot.Chips > 0)
-                {
-                    this.foldedPlayers--;
+                //if (this.secondbot.Chips > 0)
+                //{
+                //    this.foldedPlayers--;
 
-                    if (cardsInGame >= 6 && cardsInGame < 8)    // elica: cards of the third bot with index 6 and 7
-                    {
-                        if (this.cardsHolder[6].Tag != null)
-                        {
-                            this.cardsHolder[7].Tag = this.availableCardsInGame[7];
-                            this.thirdBot.PlayerCards[1] = this.SetCard(this.availableCardsInGame[7]);
-                        }
+                //    if (cardsInGame >= 4 && cardsInGame < 6)  // elica: cards of the second bot with index 4 and 5
+                //    {
+                //        if (this.cardsHolder[4].Tag != null)
+                //        {
+                //            this.cardsHolder[5].Tag = this.availableCardsInGame[5];
+                //            this.secondbot.PlayerCards[1] = this.SetCard(this.availableCardsInGame[5]);
+                //        }
 
-                        this.cardsHolder[6].Tag = this.availableCardsInGame[6];
-                        this.thirdBot.PlayerCards[0] = this.SetCard(this.availableCardsInGame[6]);
+                //        this.cardsHolder[4].Tag = this.availableCardsInGame[4];
+                //        this.secondbot.PlayerCards[0] = this.SetCard(this.availableCardsInGame[4]);
 
-                        if (!check)
-                        {
-                            horizontal = 590;
-                            vertical = 25;
-                        }
+                //        if (!check)
+                //        {
+                //            horizontal = 75;
+                //            vertical = 65;
+                //        }
 
-                        check = true;
-                        this.cardsHolder[cardsInGame].Anchor = (AnchorStyles.Top);
-                        this.cardsHolder[cardsInGame].Image = backImage;
-                        //cardsHolder[cardsInGame].Image = cardsImageDeck[cardsInGame;
-                        this.cardsHolder[cardsInGame].Location = new Point(horizontal, vertical);
-                        horizontal += this.cardsHolder[cardsInGame].Width;
-                        this.cardsHolder[cardsInGame].Visible = true;
-                        this.Controls.Add(this.thirdBot.Panel);
-                        this.thirdBot.Panel.Location = new Point(this.cardsHolder[6].Left - 10, this.cardsHolder[6].Top - 10);
-                        //this.thirdBot.Panel.BackColor = Color.DarkBlue;
-                        //this.thirdBot.Panel.Height = 150;
-                        //this.thirdBot.Panel.Width = 180;
-                        //this.thirdBot.Panel.Visible = false;
+                //        check = true;
+                //        this.cardsHolder[cardsInGame].Anchor = (AnchorStyles.Top | AnchorStyles.Left);
+                //        this.cardsHolder[cardsInGame].Image = backImage;
+                //        //cardsHolder[cardsInGame].Image = cardsImageDeck[cardsInGame];
+                //        this.cardsHolder[cardsInGame].Location = new Point(horizontal, vertical);
+                //        horizontal += this.cardsHolder[cardsInGame].Width;
+                //        this.cardsHolder[cardsInGame].Visible = true;
+                //        this.Controls.Add(this.secondbot.Panel);
+                //        this.secondbot.Panel.Location = new Point(this.cardsHolder[4].Left - 10, this.cardsHolder[4].Top - 10);
+                //        //this.secondbot.Panel.BackColor = Color.DarkBlue;
+                //        //this.secondbot.Panel.Height = 150;
+                //        //this.secondbot.Panel.Width = 180;
+                //        //this.secondbot.Panel.Visible = false;
 
-                        if (cardsInGame == 7)
-                        {
-                            check = false;
-                        }
-                    }
-                }
+                //        if (cardsInGame == 5)
+                //        {
+                //            check = false;
+                //        }
+                //    }
+                //}
 
-                if (this.fourthBot.Chips > 0)
-                {
-                    this.foldedPlayers--;
+                //if (this.thirdbot.Chips > 0)
+                //{
+                //    this.foldedPlayers--;
 
-                    if (cardsInGame >= 8 && cardsInGame < 10)  // elica: cards of the fourth bot with index 8 and 9
-                    {
-                        if (this.cardsHolder[8].Tag != null)
-                        {
-                            this.cardsHolder[9].Tag = this.availableCardsInGame[9];
-                            this.fourthBot.PlayerCards[1] = this.SetCard(this.availableCardsInGame[9]);
-                        }
+                //    if (cardsInGame >= 6 && cardsInGame < 8)    // elica: cards of the third bot with index 6 and 7
+                //    {
+                //        if (this.cardsHolder[6].Tag != null)
+                //        {
+                //            this.cardsHolder[7].Tag = this.availableCardsInGame[7];
+                //            this.thirdbot.PlayerCards[1] = this.SetCard(this.availableCardsInGame[7]);
+                //        }
 
-                        this.cardsHolder[8].Tag = this.availableCardsInGame[8];
-                        this.fourthBot.PlayerCards[0] = this.SetCard(this.availableCardsInGame[8]);
+                //        this.cardsHolder[6].Tag = this.availableCardsInGame[6];
+                //        this.thirdbot.PlayerCards[0] = this.SetCard(this.availableCardsInGame[6]);
 
-                        if (!check)
-                        {
-                            horizontal = 1115;
-                            vertical = 65;
-                        }
+                //        if (!check)
+                //        {
+                //            horizontal = 590;
+                //            vertical = 25;
+                //        }
 
-                        check = true;
-                        this.cardsHolder[cardsInGame].Anchor = (AnchorStyles.Top | AnchorStyles.Right);
-                        this.cardsHolder[cardsInGame].Image = backImage;
-                        //cardsHolder[cardsInGame].Image = cardsImageDeck[cardsInGame];
-                        this.cardsHolder[cardsInGame].Location = new Point(horizontal, vertical);
-                        horizontal += this.cardsHolder[cardsInGame].Width;
-                        this.cardsHolder[cardsInGame].Visible = true;
-                        this.Controls.Add(this.fourthBot.Panel);
-                        this.fourthBot.Panel.Location = new Point(this.cardsHolder[8].Left - 10, this.cardsHolder[8].Top - 10);
-                        //this.fourthBot.Panel.BackColor = Color.DarkBlue;
-                        //this.fourthBot.Panel.Height = 150;
-                        //this.fourthBot.Panel.Width = 180;
-                        //this.fourthBot.Panel.Visible = false;
+                //        check = true;
+                //        this.cardsHolder[cardsInGame].Anchor = (AnchorStyles.Top);
+                //        this.cardsHolder[cardsInGame].Image = backImage;
+                //        //cardsHolder[cardsInGame].Image = cardsImageDeck[cardsInGame;
+                //        this.cardsHolder[cardsInGame].Location = new Point(horizontal, vertical);
+                //        horizontal += this.cardsHolder[cardsInGame].Width;
+                //        this.cardsHolder[cardsInGame].Visible = true;
+                //        this.Controls.Add(this.thirdbot.Panel);
+                //        this.thirdbot.Panel.Location = new Point(this.cardsHolder[6].Left - 10, this.cardsHolder[6].Top - 10);
+                //        //this.thirdbot.Panel.BackColor = Color.DarkBlue;
+                //        //this.thirdbot.Panel.Height = 150;
+                //        //this.thirdbot.Panel.Width = 180;
+                //        //this.thirdbot.Panel.Visible = false;
 
-                        if (cardsInGame == 9)
-                        {
-                            check = false;
-                        }
-                    }
-                }
+                //        if (cardsInGame == 7)
+                //        {
+                //            check = false;
+                //        }
+                //    }
+                //}
 
-                if (this.fifthBot.Chips > 0)
-                {
-                    this.foldedPlayers--;
+                //if (this.fourthBot.Chips > 0)
+                //{
+                //    this.foldedPlayers--;
 
-                    if (cardsInGame >= 10 && cardsInGame < 12)   // elica: cards of the fifth bot with index 10 and 11
-                    {
-                        if (this.cardsHolder[10].Tag != null)
-                        {
-                            this.cardsHolder[11].Tag = this.availableCardsInGame[11];
-                            this.fifthBot.PlayerCards[1] = this.SetCard(this.availableCardsInGame[11]);
-                        }
+                //    if (cardsInGame >= 8 && cardsInGame < 10)  // elica: cards of the fourth bot with index 8 and 9
+                //    {
+                //        if (this.cardsHolder[8].Tag != null)
+                //        {
+                //            this.cardsHolder[9].Tag = this.availableCardsInGame[9];
+                //            this.fourthBot.PlayerCards[1] = this.SetCard(this.availableCardsInGame[9]);
+                //        }
 
-                        this.cardsHolder[10].Tag = this.availableCardsInGame[10];
-                        this.fifthBot.PlayerCards[0] = this.SetCard(this.availableCardsInGame[10]);
+                //        this.cardsHolder[8].Tag = this.availableCardsInGame[8];
+                //        this.fourthBot.PlayerCards[0] = this.SetCard(this.availableCardsInGame[8]);
 
-                        if (!check)
-                        {
-                            horizontal = 1160;
-                            vertical = 420;
-                        }
+                //        if (!check)
+                //        {
+                //            horizontal = 1115;
+                //            vertical = 65;
+                //        }
 
-                        check = true;
-                        this.cardsHolder[cardsInGame].Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
-                        this.cardsHolder[cardsInGame].Image = backImage;
-                        //cardsHolder[cardsInGame].Image = cardsImageDeck[cardsInGame];
-                        this.cardsHolder[cardsInGame].Location = new Point(horizontal, vertical);
-                        horizontal += this.cardsHolder[cardsInGame].Width;
-                        this.cardsHolder[cardsInGame].Visible = true;
-                        this.Controls.Add(this.fifthBot.Panel);
-                        this.fifthBot.Panel.Location = new Point(this.cardsHolder[10].Left - 10, this.cardsHolder[10].Top - 10);
-                        //this.fifthBot.Panel.BackColor = Color.DarkBlue;
-                        //this.fifthBot.Panel.Height = 150;
-                        //this.fifthBot.Panel.Width = 180;
-                        //this.fifthBot.Panel.Visible = false;
+                //        check = true;
+                //        this.cardsHolder[cardsInGame].Anchor = (AnchorStyles.Top | AnchorStyles.Right);
+                //        this.cardsHolder[cardsInGame].Image = backImage;
+                //        //cardsHolder[cardsInGame].Image = cardsImageDeck[cardsInGame];
+                //        this.cardsHolder[cardsInGame].Location = new Point(horizontal, vertical);
+                //        horizontal += this.cardsHolder[cardsInGame].Width;
+                //        this.cardsHolder[cardsInGame].Visible = true;
+                //        this.Controls.Add(this.fourthBot.Panel);
+                //        this.fourthBot.Panel.Location = new Point(this.cardsHolder[8].Left - 10, this.cardsHolder[8].Top - 10);
+                //        //this.fourthBot.Panel.BackColor = Color.DarkBlue;
+                //        //this.fourthBot.Panel.Height = 150;
+                //        //this.fourthBot.Panel.Width = 180;
+                //        //this.fourthBot.Panel.Visible = false;
 
-                        if (cardsInGame == 11)
-                        {
-                            check = false;
-                        }
-                    }
-                }
+                //        if (cardsInGame == 9)
+                //        {
+                //            check = false;
+                //        }
+                //    }
+                //}
+
+                //if (this.fifthBot.Chips > 0)
+                //{
+                //    this.foldedPlayers--;
+
+                //    if (cardsInGame >= 10 && cardsInGame < 12)   // elica: cards of the fifth bot with index 10 and 11
+                //    {
+                //        if (this.cardsHolder[10].Tag != null)
+                //        {
+                //            this.cardsHolder[11].Tag = this.availableCardsInGame[11];
+                //            this.fifthBot.PlayerCards[1] = this.SetCard(this.availableCardsInGame[11]);
+                //        }
+
+                //        this.cardsHolder[10].Tag = this.availableCardsInGame[10];
+                //        this.fifthBot.PlayerCards[0] = this.SetCard(this.availableCardsInGame[10]);
+
+                //        if (!check)
+                //        {
+                //            horizontal = 1160;
+                //            vertical = 420;
+                //        }
+
+                //        check = true;
+                //        this.cardsHolder[cardsInGame].Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
+                //        this.cardsHolder[cardsInGame].Image = backImage;
+                //        //cardsHolder[cardsInGame].Image = cardsImageDeck[cardsInGame];
+                //        this.cardsHolder[cardsInGame].Location = new Point(horizontal, vertical);
+                //        horizontal += this.cardsHolder[cardsInGame].Width;
+                //        this.cardsHolder[cardsInGame].Visible = true;
+                //        this.Controls.Add(this.fifthBot.Panel);
+                //        this.fifthBot.Panel.Location = new Point(this.cardsHolder[10].Left - 10, this.cardsHolder[10].Top - 10);
+                //        //this.fifthBot.Panel.BackColor = Color.DarkBlue;
+                //        //this.fifthBot.Panel.Height = 150;
+                //        //this.fifthBot.Panel.Width = 180;
+                //        //this.fifthBot.Panel.Visible = false;
+
+                //        if (cardsInGame == 11)
+                //        {
+                //            check = false;
+                //        }
+                //    }
+                //}
 
                 // TODO if statement to switch
                 if (cardsInGame >= 12)    // elica: cards on the table with index 12, 13, 14, 15, 16
                 {
+                    //for (int i = 0; i <5; i++)
+                    //{
+                    //    this.cardsHolder[12+i].Tag = int.Parse(this.ImgLocation[12+i]) - 1;
+                    //    this.table.CardsOnTable[i] = new Card((int)this.cardsHolder[12+i].Tag);
+                    //    if (!check)
+                    //    {
+                    //        horizontal = 410;
+                    //        vertical = 265;
+                    //    }
 
-                    this.cardsHolder[12].Tag = this.availableCardsInGame[12];
-                    this.table.CardsOnTable[0] = this.SetCard(this.availableCardsInGame[12]);
+                    //    check = true;
+                    //}
 
+
+                    this.cardsHolder[12].Tag = int.Parse(this.ImgLocation[12]) - 1;
+                    this.table.CardsOnTable[0] = new Card((int)this.cardsHolder[12].Tag);
+                    this.table.CardsOnTable[0].NumberInGame = cardsInGame;
                     if (cardsInGame > 12)
                     {
-                        this.cardsHolder[13].Tag = this.availableCardsInGame[13];
-                        this.table.CardsOnTable[1] = this.SetCard(this.availableCardsInGame[13]);
+                        this.cardsHolder[13].Tag = int.Parse(this.ImgLocation[13]) - 1;
+                        this.table.CardsOnTable[1] = new Card((int)this.cardsHolder[12].Tag);
+                        this.table.CardsOnTable[1].NumberInGame = cardsInGame;
                     }
 
                     if (cardsInGame > 13)
                     {
-                        this.cardsHolder[14].Tag = this.availableCardsInGame[14];
-                        this.table.CardsOnTable[2] = this.SetCard(this.availableCardsInGame[14]);
+                        this.cardsHolder[14].Tag = int.Parse(this.ImgLocation[14]) - 1;
+                        this.table.CardsOnTable[2] = new Card((int)this.cardsHolder[13].Tag);
+                        this.table.CardsOnTable[2].NumberInGame = cardsInGame;
                     }
 
                     if (cardsInGame > 14)
                     {
-                        this.cardsHolder[15].Tag = this.availableCardsInGame[15];
-                        this.table.CardsOnTable[3] = this.SetCard(this.availableCardsInGame[15]);
+                        this.cardsHolder[15].Tag = int.Parse(this.ImgLocation[15]) - 1;
+                        this.table.CardsOnTable[3] = new Card((int)this.cardsHolder[14].Tag);
+                        this.table.CardsOnTable[3].NumberInGame = cardsInGame;
                     }
 
                     if (cardsInGame > 15)
                     {
-                        this.cardsHolder[16].Tag = this.availableCardsInGame[16];
-                        this.table.CardsOnTable[4] = this.SetCard(this.availableCardsInGame[16]);
-
+                        this.cardsHolder[16].Tag = int.Parse(this.ImgLocation[16]) - 1;
+                        this.table.CardsOnTable[4] = new Card((int)this.cardsHolder[12].Tag);
+                        this.table.CardsOnTable[4].NumberInGame = cardsInGame;
                     }
 
                     if (!check)
@@ -565,11 +688,11 @@
 
                 #endregion
 
-                //for (int i = 1; i <this.Db.Players.Length; i++)
+                //for (int i = 1; i <this.db.Players.Length; i++)
                 //{
-                //    if (Db.Players[i].Chips<=0 )
+                //    if (db.Players[i].Chips<=0 )
                 //    {
-                //        this.Db.Players[i].FoldTurn = true;
+                //        this.db.Players[i].FoldTurn = true;
                 //        this.cardsHolder[i*2].Visible = false;
                 //        this.cardsHolder[(i * 2)+1].Visible = false;
                 //    }
@@ -604,7 +727,7 @@
                 ////    }
                 ////}
 
-                //if (this.secondBotChips <= 0)
+                //if (this.secondbotChips <= 0)
                 //{
                 //    this.B2Fturn = true;
                 //    this.cardsHolder[4].Visible = false;
@@ -624,7 +747,7 @@
                 ////    }
                 ////}
 
-                //if (this.thirdBotChips <= 0)
+                //if (this.thirdbotChips <= 0)
                 //{
                 //    this.B3Fturn = true;
                 //    this.cardsHolder[6].Visible = false;
@@ -782,11 +905,11 @@
                         //Rules(this.firstBot);
                         this.rules.CheckForHand(this.firstBot);
                         MessageBox.Show(this.firstBot.Name);
-                        this.Ai(this.firstBot, 2, 3);
+                        AiMenager.CheckHand(this.firstBot);
                         this.turnCount++;
                         this.last = 1;
                         this.firstBot.IsPlayerTurn = false;
-                        this.secondBot.IsPlayerTurn = true;
+                        this.secondbot.IsPlayerTurn = true;
                     }
                 }
 
@@ -801,66 +924,66 @@
                 if (this.firstBot.FoldTurn || !this.firstBot.IsPlayerTurn)
                 {
                     await this.CheckRaise(1);
-                    this.secondBot.IsPlayerTurn = true;
+                    this.secondbot.IsPlayerTurn = true;
                 }
 
-                if (!this.secondBot.FoldTurn)
+                if (!this.secondbot.FoldTurn)
                 {
-                    if (this.secondBot.IsPlayerTurn)
+                    if (this.secondbot.IsPlayerTurn)
                     {
-                        this.FixCall(this.secondBot, 1);
-                        this.FixCall(this.secondBot, 2);
-                        //Rules(this.secondBot);
-                        this.rules.CheckForHand(this.secondBot);
-                        MessageBox.Show(this.secondBot.Name);
-                        this.Ai(this.secondBot, 4, 5);
+                        this.FixCall(this.secondbot, 1);
+                        this.FixCall(this.secondbot, 2);
+                        //Rules(this.secondbot);
+                        this.rules.CheckForHand(this.secondbot);
+                        MessageBox.Show(this.secondbot.Name);
+                        AiMenager.CheckHand(this.secondbot);
                         this.turnCount++;
                         this.last = 2;
-                        this.secondBot.IsPlayerTurn = false;
-                        this.thirdBot.IsPlayerTurn = true;
+                        this.secondbot.IsPlayerTurn = false;
+                        this.thirdbot.IsPlayerTurn = true;
                     }
                 }
 
-                if (this.secondBot.FoldTurn && !this.secondBot.HasPlayerFolded)
+                if (this.secondbot.FoldTurn && !this.secondbot.HasPlayerFolded)
                 {
                     this.bools.RemoveAt(2);
                     this.bools.Insert(2, null);
                     this.maxLeft--;
-                    this.secondBot.HasPlayerFolded = true;
+                    this.secondbot.HasPlayerFolded = true;
                 }
 
-                if (this.secondBot.FoldTurn || !this.secondBot.IsPlayerTurn)
+                if (this.secondbot.FoldTurn || !this.secondbot.IsPlayerTurn)
                 {
                     await this.CheckRaise(2);
-                    this.thirdBot.IsPlayerTurn = true;
+                    this.thirdbot.IsPlayerTurn = true;
                 }
 
-                if (!this.thirdBot.FoldTurn)
+                if (!this.thirdbot.FoldTurn)
                 {
-                    if (this.thirdBot.IsPlayerTurn)
+                    if (this.thirdbot.IsPlayerTurn)
                     {
-                        this.FixCall(this.thirdBot, 1);
-                        this.FixCall(this.thirdBot, 2);
-                        //Rules(this.thirdBot);
-                        this.rules.CheckForHand(this.thirdBot);
-                        MessageBox.Show(this.thirdBot.Name);
-                        this.Ai(this.thirdBot, 6, 7);
+                        this.FixCall(this.thirdbot, 1);
+                        this.FixCall(this.thirdbot, 2);
+                        //Rules(this.thirdbot);
+                        this.rules.CheckForHand(this.thirdbot);
+                        MessageBox.Show(this.thirdbot.Name);
+                        AiMenager.CheckHand(this.thirdbot);
                         this.turnCount++;
                         this.last = 3;
-                        this.thirdBot.IsPlayerTurn = false;
+                        this.thirdbot.IsPlayerTurn = false;
                         this.fourthBot.IsPlayerTurn = true;
                     }
                 }
 
-                if (this.thirdBot.FoldTurn && !this.thirdBot.HasPlayerFolded)
+                if (this.thirdbot.FoldTurn && !this.thirdbot.HasPlayerFolded)
                 {
                     this.bools.RemoveAt(3);
                     this.bools.Insert(3, null);
                     this.maxLeft--;
-                    this.thirdBot.HasPlayerFolded = true;
+                    this.thirdbot.HasPlayerFolded = true;
                 }
 
-                if (this.thirdBot.FoldTurn || !this.thirdBot.IsPlayerTurn)
+                if (this.thirdbot.FoldTurn || !this.thirdbot.IsPlayerTurn)
                 {
                     await this.CheckRaise(3);
                     this.fourthBot.IsPlayerTurn = true;
@@ -875,7 +998,7 @@
                         //Rules(this.fourthBot);
                         this.rules.CheckForHand(this.fourthBot);
                         MessageBox.Show(this.fourthBot.Name);
-                        this.Ai(this.fourthBot, 8, 9);
+                        AiMenager.CheckHand(this.fourthBot);
                         this.turnCount++;
                         this.last = 4;
                         this.fourthBot.IsPlayerTurn = false;
@@ -906,7 +1029,7 @@
                         //Rules(this.fifthBot);
                         this.rules.CheckForHand(this.fifthBot);
                         MessageBox.Show(this.fifthBot.Name);
-                        this.Ai(this.fifthBot, 10, 11);
+                        AiMenager.CheckHand(this.fifthBot);
                         this.turnCount++;
                         this.last = 5;
                         this.fifthBot.IsPlayerTurn = false;
@@ -955,7 +1078,7 @@
         //    //{
         //    //}
 
-        //    if (!player.FoldTurn || player.Cards[1] == 0 && player.Cards[2] == 1 && this.player.Status.Text.Contains("Fold") == false)
+        //    if (!player.FoldTurn || player.Cards[1] == 0 && player.Cards[2] == 1 && this.humanPlayer.Status.Text.Contains("Fold") == false)
         //    {
         //        #region Variables
 
@@ -2114,179 +2237,179 @@
         //    }
         //}
 
-        void Winner(IPlayer player, string lastly)
-        {
-            if (lastly == " ")
-            {
-                lastly = this.fifthBot.Name;
-            }
+        //void Winner(IPlayer player, string lastly)
+        //{
+        //    if (lastly == " ")
+        //    {
+        //        lastly = this.fifthBot.Name;
+        //    }
 
-            for (int j = 0; j <= 16; j++)
-            {
-                //await Task.Delay(5);
-                if (this.cardsHolder[j].Visible)
-                {
-                    this.cardsHolder[j].Image = this.cardsImageDeck[j];
-                }
+        //    for (int j = 0; j <= 16; j++)
+        //    {
+        //        //await Task.Delay(5);
+        //        if (this.cardsHolder[j].Visible)
+        //        {
+        //            this.cardsHolder[j].Image = this.cardsImageDeck[j];
+        //        }
 
-            }
+        //    }
 
-            if (player.Current == this.sorted.Current)
-            {
-                if (player.Power == this.sorted.Power)
-                {
-                    this.winners++;
-                    this.CheckWinners.Add(player.Name);
+        //    if (player.Current == this.sorted.Current)
+        //    {
+        //        if (player.Power == this.sorted.Power)
+        //        {
+        //            this.winners++;
+        //            this.CheckWinners.Add(player.Name);
 
-                    //TODO if statement to switch
-                    if (player.Current == -1)
-                    {
-                        MessageBox.Show(player.Name + " High Card ");
-                    }
+        //            //TODO if statement to switch
+        //            if (player.Current == -1)
+        //            {
+        //                MessageBox.Show(player.Name + " High Card ");
+        //            }
 
-                    if (player.Current == 1 || player.Current == 0)
-                    {
-                        MessageBox.Show(player.Name + " Pair ");
-                    }
+        //            if (player.Current == 1 || player.Current == 0)
+        //            {
+        //                MessageBox.Show(player.Name + " Pair ");
+        //            }
 
-                    if (player.Current == 2)
-                    {
-                        MessageBox.Show(player.Name + " Two Pair ");
-                    }
+        //            if (player.Current == 2)
+        //            {
+        //                MessageBox.Show(player.Name + " Two Pair ");
+        //            }
 
-                    if (player.Current == 3)
-                    {
-                        MessageBox.Show(player.Name + " Three of a Kind ");
-                    }
+        //            if (player.Current == 3)
+        //            {
+        //                MessageBox.Show(player.Name + " Three of a Kind ");
+        //            }
 
-                    if (player.Current == 4)
-                    {
-                        MessageBox.Show(player.Name + " Straight ");
-                    }
+        //            if (player.Current == 4)
+        //            {
+        //                MessageBox.Show(player.Name + " Straight ");
+        //            }
 
-                    if (player.Current == 5 || player.Current == 5.5)
-                    {
-                        MessageBox.Show(player.Name + " Flush ");
-                    }
+        //            if (player.Current == 5 || player.Current == 5.5)
+        //            {
+        //                MessageBox.Show(player.Name + " Flush ");
+        //            }
 
-                    if (player.Current == 6)
-                    {
-                        MessageBox.Show(player.Name + " Full House ");
-                    }
+        //            if (player.Current == 6)
+        //            {
+        //                MessageBox.Show(player.Name + " Full House ");
+        //            }
 
-                    if (player.Current == 7)
-                    {
-                        MessageBox.Show(player.Name + " Four of a Kind ");
-                    }
+        //            if (player.Current == 7)
+        //            {
+        //                MessageBox.Show(player.Name + " Four of a Kind ");
+        //            }
 
-                    if (player.Current == 8)
-                    {
-                        MessageBox.Show(player.Name + " Straight Flush ");
-                    }
+        //            if (player.Current == 8)
+        //            {
+        //                MessageBox.Show(player.Name + " Straight Flush ");
+        //            }
 
-                    if (player.Current == 9)
-                    {
-                        MessageBox.Show(player.Name + " Royal Flush ! ");
-                    }
-                }
-            }
+        //            if (player.Current == 9)
+        //            {
+        //                MessageBox.Show(player.Name + " Royal Flush ! ");
+        //            }
+        //        }
+        //    }
 
-            if (player.Name == lastly)//lastfixed
-            {
-                if (this.winners > 1)
-                {
-                    if (this.CheckWinners.Contains(this.humanPlayer.Name))
-                    {
-                        this.humanPlayer.Chips += int.Parse(this.textBoxPot.Text) / this.winners;
-                        this.textBoxChips.Text = this.humanPlayer.Chips.ToString();
-                        //player.Panel.Visible = true;
+        //    if (player.Name == lastly)//lastfixed
+        //    {
+        //        if (this.winners > 1)
+        //        {
+        //            if (this.CheckWinners.Contains(this.humanPlayer.Name))
+        //            {
+        //                this.humanPlayer.Chips += int.Parse(this.textBoxPot.Text) / this.winners;
+        //                this.textBoxChips.Text = this.humanPlayer.Chips.ToString();
+        //                //player.Panel.Visible = true;
 
-                    }
+        //            }
 
-                    if (this.CheckWinners.Contains(this.firstBot.Name))
-                    {
-                        this.firstBot.Chips += int.Parse(this.textBoxPot.Text) / this.winners;
-                        this.textBoxBotChips1.Text = this.firstBot.Chips.ToString();
-                        //firstBot.Panel.Visible = true;
-                    }
+        //            if (this.CheckWinners.Contains(this.firstBot.Name))
+        //            {
+        //                this.firstBot.Chips += int.Parse(this.textBoxPot.Text) / this.winners;
+        //                this.textBoxBotChips1.Text = this.firstBot.Chips.ToString();
+        //                //firstBot.Panel.Visible = true;
+        //            }
 
-                    if (this.CheckWinners.Contains(this.secondBot.Name))
-                    {
-                        this.secondBot.Chips += int.Parse(this.textBoxPot.Text) / this.winners;
-                        this.textBoxBotChips2.Text = this.secondBot.Chips.ToString();
-                        //secondBot.Panel.Visible = true;
-                    }
+        //            if (this.CheckWinners.Contains(this.secondbot.Name))
+        //            {
+        //                this.secondbot.Chips += int.Parse(this.textBoxPot.Text) / this.winners;
+        //                this.textBoxBotChips2.Text = this.secondbot.Chips.ToString();
+        //                //secondbot.Panel.Visible = true;
+        //            }
 
-                    if (this.CheckWinners.Contains(this.thirdBot.Name))
-                    {
-                        this.thirdBot.Chips += int.Parse(this.textBoxPot.Text) / this.winners;
-                        this.textBoxBotChips3.Text = this.thirdBot.Chips.ToString();
-                        //thirdBotPanel.Visible = true;
-                    }
+        //            if (this.CheckWinners.Contains(this.thirdbot.Name))
+        //            {
+        //                this.thirdbot.Chips += int.Parse(this.textBoxPot.Text) / this.winners;
+        //                this.textBoxBotChips3.Text = this.thirdbot.Chips.ToString();
+        //                //thirdbotPanel.Visible = true;
+        //            }
 
-                    if (this.CheckWinners.Contains(this.fourthBot.Name))
-                    {
-                        this.fourthBot.Chips += int.Parse(this.textBoxPot.Text) / this.winners;
-                        this.textBoxBotChips4.Text = this.fourthBot.Chips.ToString();
-                        //fourthBotPanel.Visible = true;
-                    }
+        //            if (this.CheckWinners.Contains(this.fourthBot.Name))
+        //            {
+        //                this.fourthBot.Chips += int.Parse(this.textBoxPot.Text) / this.winners;
+        //                this.textBoxBotChips4.Text = this.fourthBot.Chips.ToString();
+        //                //fourthBotPanel.Visible = true;
+        //            }
 
-                    if (this.CheckWinners.Contains(this.fifthBot.Name))
-                    {
-                        this.fifthBot.Chips += int.Parse(this.textBoxPot.Text) / this.winners;
-                        this.textBoxBotChips5.Text = this.fifthBot.Chips.ToString();
-                        //fifthBot.Panel.Visible = true;
-                    }
-                    //await Finish(1);
-                }
+        //            if (this.CheckWinners.Contains(this.fifthBot.Name))
+        //            {
+        //                this.fifthBot.Chips += int.Parse(this.textBoxPot.Text) / this.winners;
+        //                this.textBoxBotChips5.Text = this.fifthBot.Chips.ToString();
+        //                //fifthBot.Panel.Visible = true;
+        //            }
+        //            //await Finish(1);
+        //        }
 
-                if (this.winners == 1)
-                {
-                    if (this.CheckWinners.Contains(this.humanPlayer.Name))
-                    {
-                        this.humanPlayer.Chips += int.Parse(this.textBoxPot.Text);
+        //        if (this.winners == 1)
+        //        {
+        //            if (this.CheckWinners.Contains(this.humanPlayer.Name))
+        //            {
+        //                this.humanPlayer.Chips += int.Parse(this.textBoxPot.Text);
 
-                        //player.Panel.Visible = true;
+        //                //player.Panel.Visible = true;
 
-                    }
+        //            }
 
-                    if (this.CheckWinners.Contains(this.firstBot.Name))
-                    {
-                        this.firstBot.Chips += int.Parse(this.textBoxPot.Text);
+        //            if (this.CheckWinners.Contains(this.firstBot.Name))
+        //            {
+        //                this.firstBot.Chips += int.Parse(this.textBoxPot.Text);
 
-                        //firstBot.Panel.Visible = true;
-                    }
+        //                //firstBot.Panel.Visible = true;
+        //            }
 
-                    if (this.CheckWinners.Contains(this.secondBot.Name))
-                    {
-                        this.secondBot.Chips += int.Parse(this.textBoxPot.Text);
+        //            if (this.CheckWinners.Contains(this.secondbot.Name))
+        //            {
+        //                this.secondbot.Chips += int.Parse(this.textBoxPot.Text);
 
-                        //secondBot.Panel.Visible = true;
-                    }
+        //                //secondbot.Panel.Visible = true;
+        //            }
 
-                    if (this.CheckWinners.Contains(this.thirdBot.Name))
-                    {
-                        this.thirdBot.Chips += int.Parse(this.textBoxPot.Text);
+        //            if (this.CheckWinners.Contains(this.thirdbot.Name))
+        //            {
+        //                this.thirdbot.Chips += int.Parse(this.textBoxPot.Text);
 
-                        //thirdBotPanel.Visible = true;
-                    }
+        //                //thirdbotPanel.Visible = true;
+        //            }
 
-                    if (this.CheckWinners.Contains(this.fourthBot.Name))
-                    {
-                        this.fourthBot.Chips += int.Parse(this.textBoxPot.Text);
+        //            if (this.CheckWinners.Contains(this.fourthBot.Name))
+        //            {
+        //                this.fourthBot.Chips += int.Parse(this.textBoxPot.Text);
 
-                        //fourthBotPanel.Visible = true;
-                    }
+        //                //fourthBotPanel.Visible = true;
+        //            }
 
-                    if (this.CheckWinners.Contains(this.fifthBot.Name))
-                    {
-                        this.fifthBot.Chips += int.Parse(this.textBoxPot.Text);
+        //            if (this.CheckWinners.Contains(this.fifthBot.Name))
+        //            {
+        //                this.fifthBot.Chips += int.Parse(this.textBoxPot.Text);
 
-                        //fifthBot.Panel.Visible = true;
-                    }
-                }
-            }
-        }
+        //                //fifthBot.Panel.Visible = true;
+        //            }
+        //        }
+        //    }
+        //}
 
         async Task CheckRaise(int currentTurn)
         {
@@ -2348,17 +2471,17 @@
                             item.Call = 0;
                             item.Raise = 0;
                         }
-                        //this.playerCall = 0;
+                        //this.humanPlayerCall = 0;
                         //this.firstBotCall = 0;
-                        //this.secondBotCall = 0;
-                        //this.thirdBotCall = 0;
+                        //this.secondbotCall = 0;
+                        //this.thirdbotCall = 0;
                         //this.fourthBotCall = 0;
                         //this.fifthBotCall = 0;
 
-                        //this.playerRaise = 0;
+                        //this.humanPlayerRaise = 0;
                         //this.firstBotRaise = 0;
-                        //this.secondBotRaise = 0;
-                        //this.thirdBotRaise = 0;
+                        //this.secondbotRaise = 0;
+                        //this.thirdbotRaise = 0;
                         //this.fourthBotRaise = 0;
                         //this.fifthBotRaise = 0;
                     }
@@ -2377,17 +2500,17 @@
                             item.Call = 0;
                             item.Raise = 0;
                         }
-                        //this.playerCall = 0;
+                        //this.humanPlayerCall = 0;
                         //this.firstBotCall = 0;
-                        //this.secondBotCall = 0;
-                        //this.thirdBotCall = 0;
+                        //this.secondbotCall = 0;
+                        //this.thirdbotCall = 0;
                         //this.fourthBotCall = 0;
                         //this.fifthBotCall = 0;
 
-                        //this.playerRaise = 0;
+                        //this.humanPlayerRaise = 0;
                         //this.firstBotRaise = 0;
-                        //this.secondBotRaise = 0;
-                        //this.thirdBotRaise = 0;
+                        //this.secondbotRaise = 0;
+                        //this.thirdbotRaise = 0;
                         //this.fourthBotRaise = 0;
                         //this.fifthBotRaise = 0;
                     }
@@ -2405,21 +2528,21 @@
                         fixedLast = player.Name;
                         //Rules(player);
                         this.rules.CheckForHand(player);
-                        this.Winner(player, fixedLast);
+                        this.rules.Winner(player, fixedLast);
                         player.FoldTurn = false;
                     }
                 }
 
 
-                //Winner(this.playerType, this.playerPower, "Player", this.chips, fixedLast);
+                //Winner(this.humanPlayerType, this.humanPlayerPower, "Player", this.chips, fixedLast);
                 //Winner(this.firstBotType, this.firstBotPower, "Bot 1", this.firstBotChips, fixedLast);
-                //Winner(this.secondBotType, this.secondBotPower, "Bot 2", this.secondBotChips, fixedLast);
-                //Winner(this.thirdBotType, this.thirdBotPower, "Bot 3", this.thirdBotChips, fixedLast);
+                //Winner(this.secondbotType, this.secondbotPower, "Bot 2", this.secondbotChips, fixedLast);
+                //Winner(this.thirdbotType, this.thirdbotPower, "Bot 3", this.thirdbotChips, fixedLast);
                 //Winner(this.fourthBotType, this.fourthBotPower, "Bot 4", this.fourthBotChips, fixedLast);
                 //Winner(this.fifthBotType, this.fifthBotPower, "Bot 5", this.fifthBotChips, fixedLast);
                 this.restart = true;
                 this.humanPlayer.IsPlayerTurn = true;
-                //this.PlayerFoldTturn = false;
+                //this.humanPlayerFoldTturn = false;
                 //this.B1Fturn = false;
                 //this.B2Fturn = false;
                 //this.B3Fturn = false;
@@ -2438,8 +2561,8 @@
                             this.db.Players[i].Chips += f2.a;
                         }
                         //this.firstBotChips += f2.a;
-                        //this.secondBotChips += f2.a;
-                        //this.thirdBotChips += f2.a;
+                        //this.secondbotChips += f2.a;
+                        //this.thirdbotChips += f2.a;
                         //this.fourthBotChips += f2.a;
                         //this.fifthBotChips += f2.a;
                         this.humanPlayer.FoldTurn = false;
@@ -2451,10 +2574,10 @@
                     }
                 }
 
-                //this.player.Panel.Visible = false;
+                //this.humanPlayer.Panel.Visible = false;
                 //this.firstBot.Panel.Visible = false;
-                //this.secondBot.Panel.Visible = false;
-                //this.thirdBotPanel.Visible = false;
+                //this.secondbot.Panel.Visible = false;
+                //this.thirdbotPanel.Visible = false;
                 //this.fourthBotPanel.Visible = false;
                 //this.fifthBot.Panel.Visible = false;
                 foreach (var player in this.db.Players)
@@ -2465,17 +2588,17 @@
                     player.Power = 0;
                     player.Current = -1;
                 }
-                //this.playerCall = 0;
+                //this.humanPlayerCall = 0;
                 //this.firstBotCall = 0;
-                //this.secondBotCall = 0;
-                //this.thirdBotCall = 0;
+                //this.secondbotCall = 0;
+                //this.thirdbotCall = 0;
                 //this.fourthBotCall = 0;
                 //this.fifthBotCall = 0;
 
-                //this.playerRaise = 0;
+                //this.humanPlayerRaise = 0;
                 //this.firstBotRaise = 0;
-                //this.secondBotRaise = 0;
-                //this.thirdBotRaise = 0;
+                //this.secondbotRaise = 0;
+                //this.thirdbotRaise = 0;
                 //this.fourthBotRaise = 0;
                 //this.fifthBotRaise = 0;
 
@@ -2489,28 +2612,29 @@
 
                 this.bools.Clear();
                 this.rounds = 0;
-                //this.playerPower = 0;
-                //this.playerType = -1;
-                this.type = 0;
+                //this.humanPlayerPower = 0;
+                //this.humanPlayerType = -1;
+                this.rules.Type = 0;
 
                 //this.firstBotPower = 0;
-                //this.secondBotPower = 0;
-                //this.thirdBotPower = 0;
+                //this.secondbotPower = 0;
+                //this.thirdbotPower = 0;
                 //this.fourthBotPower = 0;
                 //this.fifthBotPower = 0;
 
                 //this.firstBotType = -1;
-                //this.secondBotType = -1;
-                //this.thirdBotType = -1;
+                //this.secondbotType = -1;
+                //this.thirdbotType = -1;
                 //this.fourthBotType = -1;
                 //this.fifthBotType = -1;
 
                 this.ints.Clear();
-                this.CheckWinners.Clear();
-                this.winners = 0;
-                this.Win.Clear();
-                this.sorted.Current = 0;
-                this.sorted.Power = 0;
+               
+                //this.CheckWinners.Clear();
+                //this.winners = 0;
+                //this.Win.Clear();
+                //this.sorted.Current = 0;
+                //this.sorted.Power = 0;
 
                 for (int os = 0; os < 17; os++)
                 {
@@ -2602,21 +2726,21 @@
                 this.intsadded = false;
             }
 
-            if (this.secondBot.Chips <= 0 && !this.secondBot.FoldTurn)
+            if (this.secondbot.Chips <= 0 && !this.secondbot.FoldTurn)
             {
                 if (!this.intsadded)
                 {
-                    this.ints.Add(this.secondBot.Chips);
+                    this.ints.Add(this.secondbot.Chips);
                     this.intsadded = true;
                 }
                 this.intsadded = false;
             }
 
-            if (this.thirdBot.Chips <= 0 && !this.thirdBot.FoldTurn)
+            if (this.thirdbot.Chips <= 0 && !this.thirdbot.FoldTurn)
             {
                 if (!this.intsadded)
                 {
-                    this.ints.Add(this.thirdBot.Chips);
+                    this.ints.Add(this.thirdbot.Chips);
                     this.intsadded = true;
                 }
                 this.intsadded = false;
@@ -2677,18 +2801,18 @@
 
                 if (index == 2)
                 {
-                    this.secondBot.Chips += int.Parse(this.textBoxPot.Text);
-                    this.textBoxChips.Text = this.secondBot.Chips.ToString();
-                    this.secondBot.Panel.Visible = true;
-                    MessageBox.Show(GlobalConstants.SecondBotPlayerWinMessage);
+                    this.secondbot.Chips += int.Parse(this.textBoxPot.Text);
+                    this.textBoxChips.Text = this.secondbot.Chips.ToString();
+                    this.secondbot.Panel.Visible = true;
+                    MessageBox.Show(GlobalConstants.SecondbotPlayerWinMessage);
                 }
 
                 if (index == 3)
                 {
-                    this.thirdBot.Chips += int.Parse(this.textBoxPot.Text);
-                    this.textBoxChips.Text = this.thirdBot.Chips.ToString();
-                    this.thirdBot.Panel.Visible = true;
-                    MessageBox.Show(GlobalConstants.ThirdBotPlayerWinMessage);
+                    this.thirdbot.Chips += int.Parse(this.textBoxPot.Text);
+                    this.textBoxChips.Text = this.thirdbot.Chips.ToString();
+                    this.thirdbot.Panel.Visible = true;
+                    MessageBox.Show(GlobalConstants.ThirdbotPlayerWinMessage);
                 }
 
                 if (index == 4)
@@ -2731,29 +2855,29 @@
         {
             if (n == 2)
             {
-                this.FixWinners();
+                this.rules.FixWinners();
             }
             this.humanPlayer.Panel.Visible = false;
             this.firstBot.Panel.Visible = false;
-            this.secondBot.Panel.Visible = false;
-            this.thirdBot.Panel.Visible = false;
+            this.secondbot.Panel.Visible = false;
+            this.thirdbot.Panel.Visible = false;
             this.fourthBot.Panel.Visible = false;
             this.fifthBot.Panel.Visible = false;
 
             this.call = this.defaultBigBlind;
             this.raise = 0;
             this.foldedPlayers = 5;
-            this.type = 0;
+            this.rules.Type = 0;
             this.rounds = 0;
 
             this.firstBot.Power = 0;
-            this.secondBot.Power = 0;
-            this.thirdBot.Power = 0;
+            this.secondbot.Power = 0;
+            this.thirdbot.Power = 0;
             this.fourthBot.Power = 0;
             this.fifthBot.Power = 0;
             this.humanPlayer.Power = 0;
 
-            //this.playerType = -1;
+            //this.humanPlayerType = -1;
             this.raise = 0;
             foreach (var player in this.db.Players)
             {
@@ -2770,14 +2894,14 @@
             }
             this.humanPlayer.IsPlayerTurn = true;
             //this.firstBotType = -1;
-            //this.secondBotType = -1;
-            //this.thirdBotType = -1;
+            //this.secondbotType = -1;
+            //this.thirdbotType = -1;
             //this.fourthBotType = -1;
             //this.fifthBotType = -1;
 
             //this.isFirstBotTurn = false;
-            //this.isSecondBotTurn = false;
-            //this.isThirdBotTurn = false;
+            //this.isSecondbotTurn = false;
+            //this.isThirdbotTurn = false;
             //this.isFourthBotTurn = false;
             //this.isFifthBotTurn = false;
 
@@ -2789,34 +2913,34 @@
 
             //this.hasPlayerFolded = false;
             //this.hasFirstBotFolded = false;
-            //this.hasSecondBotFolded = false;
-            //this.hasThirdBotFolded = false;
+            //this.hasSecondbotFolded = false;
+            //this.hasThirdbotFolded = false;
             //this.hasFourthBotFolded = false;
             //this.hasFifthBotFolded = false;
 
-            //this.PlayerFoldTturn = false;
+            //this.humanPlayerFoldTturn = false;
 
             this.restart = false;
             this.raising = false;
 
-            //this.playerCall = 0;
+            //this.humanPlayerCall = 0;
             //this.firstBotCall = 0;
-            //this.secondBotCall = 0;
-            //this.thirdBotCall = 0;
+            //this.secondbotCall = 0;
+            //this.thirdbotCall = 0;
             //this.fourthBotCall = 0;
             //this.fifthBotCall = 0;
 
-            //this.playerRaise = 0;
+            //this.humanPlayerRaise = 0;
             //this.firstBotRaise = 0;
-            //this.secondBotRaise = 0;
-            //this.thirdBotRaise = 0;
+            //this.secondbotRaise = 0;
+            //this.thirdbotRaise = 0;
             //this.fourthBotRaise = 0;
             //this.fifthBotRaise = 0;
 
             this.height = 0;
             this.width = 0;
-            this.winners = 0;
-
+            //this.winners = 0;
+            this.rules.Winners = 0;
             this.turn = 2;
             this.river = 3;
             this.end = 4;
@@ -2824,19 +2948,20 @@
             this.last = 123;
             this.raisedTurn = 1;
             this.bools.Clear();
-            this.CheckWinners.Clear();
+            this.rules.CheckWinners.Clear();
+
             this.ints.Clear();
-            this.Win.Clear();
-            this.sorted.Current = 0;
-            this.sorted.Power = 0;
+            this.rules.Win.Clear();
+            this.rules.Sorted.Current = 0;
+            this.rules.Sorted.Power = 0;
             this.textBoxPot.Text = "0";
             this.t = 60;
             this.up = 10000000;
             this.turnCount = 0;
-            //this.playerStatus.Text = "";
+            //this.humanPlayerStatus.Text = "";
             //this.firstBotStatus.Text = "";
-            //this.secondBotStatus.Text = "";
-            //this.thirdBotStatus.Text = "";
+            //this.secondbotStatus.Text = "";
+            //this.thirdbotStatus.Text = "";
             //this.fourthBotStatus.Text = "";
             //this.fifthBotStatus.Text = "";
             if (this.humanPlayer.Chips <= 0)
@@ -2847,8 +2972,8 @@
                 {
                     this.humanPlayer.Chips = f2.a;
                     this.firstBot.Chips += f2.a;
-                    this.secondBot.Chips += f2.a;
-                    this.thirdBot.Chips += f2.a;
+                    this.secondbot.Chips += f2.a;
+                    this.thirdbot.Chips += f2.a;
                     this.fourthBot.Chips += f2.a;
                     this.fifthBot.Chips += f2.a;
                     this.humanPlayer.FoldTurn = false;
@@ -2873,525 +2998,525 @@
             //await Turns();
         }
 
-        void FixWinners()
-        {
-            this.Win.Clear();
-            this.sorted.Current = 0;
-            this.sorted.Power = 0;
-            string fixedLast = String.Empty; //"qwerty";
+        //void FixWinners()
+        //{
+        //    this.Win.Clear();
+        //    this.sorted.Current = 0;
+        //    this.sorted.Power = 0;
+        //    string fixedLast = String.Empty; //"qwerty";
 
-            foreach (var player in this.db.Players)
-            {
-                if (!player.Status.Text.Contains(GlobalConstants.FoldMessage))
-                {
-                    fixedLast = player.Name;
-                    //Rules(player);
-                    this.rules.CheckForHand(player);
-                    this.Winner(player, fixedLast);
-                }
-            }
+        //    foreach (var player in this.db.Players)
+        //    {
+        //        if (!player.Status.Text.Contains(GlobalConstants.FoldMessage))
+        //        {
+        //            fixedLast = player.Name;
+        //            //Rules(player);
+        //            this.rules.CheckForHand(player);
+        //            this.Winner(player, fixedLast);
+        //        }
+        //    }
 
 
-        }
-        //rrr
-        void Ai(IPlayer player, int indexFirstCard, int indexSecondCard)
-        {
-            if (!player.FoldTurn)
-            {
-                if (player.Current == -1)
-                {
-                    this.HighCard(player);
-                }
+        //}
+        
+        //void Ai(IPlayer player, int indexFirstCard, int indexSecondCard)
+        //{
+        //    if (!player.FoldTurn)
+        //    {
+        //        if (player.Current == -1)
+        //        {
+        //            this.HighCard(player);
+        //        }
 
-                if (player.Current == 0)
-                {
-                    this.PairTable(player);
-                }
+        //        if (player.Current == 0)
+        //        {
+        //            this.PairTable(player);
+        //        }
 
-                if (player.Current == 1)
-                {
-                    this.PairHand(player);
-                }
+        //        if (player.Current == 1)
+        //        {
+        //            this.PairHand(player);
+        //        }
 
-                if (player.Current == 2)
-                {
-                    this.TwoPair(player);
-                }
+        //        if (player.Current == 2)
+        //        {
+        //            this.TwoPair(player);
+        //        }
 
-                if (player.Current == 3)
-                {
-                    this.ThreeOfAKind(player);
-                }
+        //        if (player.Current == 3)
+        //        {
+        //            this.ThreeOfAKind(player);
+        //        }
 
-                if (player.Current == 4)
-                {
-                    this.Straight(player);
-                }
+        //        if (player.Current == 4)
+        //        {
+        //            this.Straight(player);
+        //        }
 
-                if (player.Current == 5 || player.Current == 5.5)
-                {
-                    this.Flush(player);
-                }
+        //        if (player.Current == 5 || player.Current == 5.5)
+        //        {
+        //            this.Flush(player);
+        //        }
 
-                if (player.Current == 6)
-                {
-                    this.FullHouse(player);
-                }
+        //        if (player.Current == 6)
+        //        {
+        //            this.FullHouse(player);
+        //        }
 
-                if (player.Current == 7)
-                {
-                    this.FourOfAKind(player);
-                }
+        //        if (player.Current == 7)
+        //        {
+        //            this.FourOfAKind(player);
+        //        }
 
-                if (player.Current == 8 || player.Current == 9)
-                {
-                    this.StraightFlush(player);
-                }
-            }
+        //        if (player.Current == 8 || player.Current == 9)
+        //        {
+        //            this.StraightFlush(player);
+        //        }
+        //    }
 
-            if (player.FoldTurn)
-            {
-                this.cardsHolder[indexFirstCard].Visible = false;
-                this.cardsHolder[indexSecondCard].Visible = false;
-            }
-        }
+        //    if (player.FoldTurn)
+        //    {
+        //        this.cardsHolder[indexFirstCard].Visible = false;
+        //        this.cardsHolder[indexSecondCard].Visible = false;
+        //    }
+        //}
 
-        private void HighCard(IPlayer player)
-        {
-            this.HP(player, 20, 25);
-        }
+        //private void HighCard(IPlayer player)
+        //{
+        //    this.HP(player, 20, 25);
+        //}
 
-        private void PairTable(IPlayer player)
-        {
-            this.HP(player, 16, 25);
-        }
+        //private void PairTable(IPlayer player)
+        //{
+        //    this.HP(player, 16, 25);
+        //}
 
-        private void PairHand(IPlayer player)
-        {
-            Random rPair = new Random();
-            int rCall = rPair.Next(10, 16);
-            int rRaise = rPair.Next(10, 13);
-            if (player.Power <= 199 && player.Power >= 140)
-            {
-                this.PH(player, rCall, 6, rRaise);
-            }
+        //private void PairHand(IPlayer player)
+        //{
+        //    Random rPair = new Random();
+        //    int rCall = rPair.Next(10, 16);
+        //    int rRaise = rPair.Next(10, 13);
+        //    if (player.Power <= 199 && player.Power >= 140)
+        //    {
+        //        this.PH(player, rCall, 6, rRaise);
+        //    }
 
-            if (player.Power <= 139 && player.Power >= 128)
-            {
-                this.PH(player, rCall, 7, rRaise);
-            }
+        //    if (player.Power <= 139 && player.Power >= 128)
+        //    {
+        //        this.PH(player, rCall, 7, rRaise);
+        //    }
 
-            if (player.Power < 128 && player.Power >= 101)
-            {
-                this.PH(player, rCall, 9, rRaise);
-            }
-        }
+        //    if (player.Power < 128 && player.Power >= 101)
+        //    {
+        //        this.PH(player, rCall, 9, rRaise);
+        //    }
+        //}
 
-        private void TwoPair(IPlayer player)
-        {
-            Random rPair = new Random();
-            int rCall = rPair.Next(6, 11);
-            int rRaise = rPair.Next(6, 11);
-            if (player.Power <= 290 && player.Power >= 246)
-            {
-                this.PH(player, rCall, 3, rRaise);
-            }
+        //private void TwoPair(IPlayer player)
+        //{
+        //    Random rPair = new Random();
+        //    int rCall = rPair.Next(6, 11);
+        //    int rRaise = rPair.Next(6, 11);
+        //    if (player.Power <= 290 && player.Power >= 246)
+        //    {
+        //        this.PH(player, rCall, 3, rRaise);
+        //    }
 
-            if (player.Power <= 244 && player.Power >= 234)
-            {
-                this.PH(player, rCall, 4, rRaise);
-            }
+        //    if (player.Power <= 244 && player.Power >= 234)
+        //    {
+        //        this.PH(player, rCall, 4, rRaise);
+        //    }
 
-            if (player.Power < 234 && player.Power >= 201)
-            {
-                this.PH(player, rCall, 4, rRaise);
-            }
-        }
+        //    if (player.Power < 234 && player.Power >= 201)
+        //    {
+        //        this.PH(player, rCall, 4, rRaise);
+        //    }
+        //}
 
-        private void ThreeOfAKind(IPlayer player)
-        {
-            Random tk = new Random();
-            int tCall = tk.Next(3, 7);
-            int tRaise = tk.Next(4, 8);
-            if (player.Power <= 390 && player.Power >= 330)
-            {
-                this.Smooth(player, tRaise);
-            }
+        //private void ThreeOfAKind(IPlayer player)
+        //{
+        //    Random tk = new Random();
+        //    int tCall = tk.Next(3, 7);
+        //    int tRaise = tk.Next(4, 8);
+        //    if (player.Power <= 390 && player.Power >= 330)
+        //    {
+        //        this.Smooth(player, tRaise);
+        //    }
 
-            if (player.Power <= 327 && player.Power >= 321)//10  8
-            {
-                this.Smooth(player, tRaise);
-            }
+        //    if (player.Power <= 327 && player.Power >= 321)//10  8
+        //    {
+        //        this.Smooth(player, tRaise);
+        //    }
 
-            if (player.Power < 321 && player.Power >= 303)//7 2
-            {
-                this.Smooth(player, tRaise);
-            }
-        }
+        //    if (player.Power < 321 && player.Power >= 303)//7 2
+        //    {
+        //        this.Smooth(player, tRaise);
+        //    }
+        //}
 
-        private void Straight(IPlayer player)
-        {
-            Random str = new Random();
-            int sCall = str.Next(3, 6);
-            int sRaise = str.Next(3, 8);
-            if (player.Power <= 480 && player.Power >= 410)
-            {
-                this.Smooth(player, sRaise);
-            }
+        //private void Straight(IPlayer player)
+        //{
+        //    Random str = new Random();
+        //    int sCall = str.Next(3, 6);
+        //    int sRaise = str.Next(3, 8);
+        //    if (player.Power <= 480 && player.Power >= 410)
+        //    {
+        //        this.Smooth(player, sRaise);
+        //    }
 
-            if (player.Power <= 409 && player.Power >= 407)//10  8
-            {
-                this.Smooth(player, sRaise);
-            }
+        //    if (player.Power <= 409 && player.Power >= 407)//10  8
+        //    {
+        //        this.Smooth(player, sRaise);
+        //    }
 
-            if (player.Power < 407 && player.Power >= 404)
-            {
-                this.Smooth(player, sRaise);
-            }
-        }
+        //    if (player.Power < 407 && player.Power >= 404)
+        //    {
+        //        this.Smooth(player, sRaise);
+        //    }
+        //}
 
-        private void Flush(IPlayer player)
-        {
-            Random fsh = new Random();
-            int fCall = fsh.Next(2, 6);
-            int fRaise = fsh.Next(3, 7);
-            this.Smooth(player, fRaise);
-        }
+        //private void Flush(IPlayer player)
+        //{
+        //    Random fsh = new Random();
+        //    int fCall = fsh.Next(2, 6);
+        //    int fRaise = fsh.Next(3, 7);
+        //    this.Smooth(player, fRaise);
+        //}
 
-        private void FullHouse(IPlayer player)
-        {
-            Random flh = new Random();
-            int fhCall = flh.Next(1, 5);
-            int fhRaise = flh.Next(2, 6);
-            if (player.Power <= 626 && player.Power >= 620)
-            {
-                this.Smooth(player, fhRaise);
-            }
+        //private void FullHouse(IPlayer player)
+        //{
+        //    Random flh = new Random();
+        //    int fhCall = flh.Next(1, 5);
+        //    int fhRaise = flh.Next(2, 6);
+        //    if (player.Power <= 626 && player.Power >= 620)
+        //    {
+        //        this.Smooth(player, fhRaise);
+        //    }
 
-            if (player.Power < 620 && player.Power >= 602)
-            {
-                this.Smooth(player, fhRaise);
-            }
-        }
+        //    if (player.Power < 620 && player.Power >= 602)
+        //    {
+        //        this.Smooth(player, fhRaise);
+        //    }
+        //}
 
-        private void FourOfAKind(IPlayer player)
-        {
-            Random fk = new Random();
-            int fkCall = fk.Next(1, 4);
-            int fkRaise = fk.Next(2, 5);
-            if (player.Power <= 752 && player.Power >= 704)
-            {
-                this.Smooth(player, fkRaise);
-            }
-        }
+        //private void FourOfAKind(IPlayer player)
+        //{
+        //    Random fk = new Random();
+        //    int fkCall = fk.Next(1, 4);
+        //    int fkRaise = fk.Next(2, 5);
+        //    if (player.Power <= 752 && player.Power >= 704)
+        //    {
+        //        this.Smooth(player, fkRaise);
+        //    }
+        //}
 
-        private void StraightFlush(IPlayer player)
-        {
-            Random sf = new Random();
-            int sfCall = sf.Next(1, 3);
-            int sfRaise = sf.Next(1, 3);
-            if (player.Power <= 913 && player.Power >= 804)
-            {
-                this.Smooth(player, sfRaise);
-            }
-        }
+        //private void StraightFlush(IPlayer player)
+        //{
+        //    Random sf = new Random();
+        //    int sfCall = sf.Next(1, 3);
+        //    int sfRaise = sf.Next(1, 3);
+        //    if (player.Power <= 913 && player.Power >= 804)
+        //    {
+        //        this.Smooth(player, sfRaise);
+        //    }
+        //}
 
-        private void Fold(IPlayer player)
-        {
-            this.raising = false;
-            player.Status.Text = GlobalConstants.FoldMessage;
-            player.IsPlayerTurn = false;
-            player.FoldTurn = true;
-        }
+        //private void Fold(IPlayer player)
+        //{
+        //    this.raising = false;
+        //    player.Status.Text = GlobalConstants.FoldMessage;
+        //    player.IsPlayerTurn = false;
+        //    player.FoldTurn = true;
+        //}
 
-        private void Check(IPlayer player)
-        {
-            player.Status.Text = GlobalConstants.CheckMessage;
-            player.IsPlayerTurn = false;
-            this.raising = false;
-        }
+        //private void Check(IPlayer player)
+        //{
+        //    player.Status.Text = GlobalConstants.CheckMessage;
+        //    player.IsPlayerTurn = false;
+        //    this.raising = false;
+        //}
 
-        private void Call(IPlayer player)
-        {
-            this.raising = false;
-            player.IsPlayerTurn = false;
-            player.Chips -= this.call;
-            player.Status.Text = GlobalConstants.CallMessage + " " + this.call;
-            this.textBoxPot.Text = (int.Parse(this.textBoxPot.Text) + this.call).ToString();
-        }
+        //private void Call(IPlayer player)
+        //{
+        //    this.raising = false;
+        //    player.IsPlayerTurn = false;
+        //    player.Chips -= this.call;
+        //    player.Status.Text = GlobalConstants.CallMessage + " " + this.call;
+        //    this.textBoxPot.Text = (int.Parse(this.textBoxPot.Text) + this.call).ToString();
+        //}
 
-        private void Raised(IPlayer player)
-        {
-            player.Chips -= Convert.ToInt32(this.raise);
-            player.Status.Text = GlobalConstants.RaiseMessage + this.raise;
-            this.textBoxPot.Text = (int.Parse(this.textBoxPot.Text) + Convert.ToInt32(this.raise)).ToString();
-            this.call = Convert.ToInt32(this.raise);
-            this.raising = true;
-            player.IsPlayerTurn = false;
-        }
+        //private void Raised(IPlayer player)
+        //{
+        //    player.Chips -= Convert.ToInt32(this.raise);
+        //    player.Status.Text = GlobalConstants.RaiseMessage + this.raise;
+        //    this.textBoxPot.Text = (int.Parse(this.textBoxPot.Text) + Convert.ToInt32(this.raise)).ToString();
+        //    this.call = Convert.ToInt32(this.raise);
+        //    this.raising = true;
+        //    player.IsPlayerTurn = false;
+        //}
 
-        private static double RoundN(int sChips, int n)
-        {
-            double a = Math.Round(sChips / n / 100d, 0) * 100;
-            return a;
-        }
+        //private static double RoundN(int sChips, int n)
+        //{
+        //    double a = Math.Round(sChips / n / 100d, 0) * 100;
+        //    return a;
+        //}
 
-        /// <summary>
-        /// Creates a choice generator for bots.
-        /// This generator is used when bot has only high card or table pair hand.
-        /// </summary>
-        /// <param name="sChips">Bot's chips</param>     //botChips
-        /// <param name="sTurn">Parameter that indicates if it's current player's turn</param>   //botTurn
-        /// <param name="sFTurn">Parameter that indicates if current bot has folded or is all in</param>   //botFoldsTurn
-        /// <param name="sStatus">The status text of the bot</param>    //botStatus
-        /// <param name="botPower">The bot's hand category factor</param>   //botHandRankFactor
-        /// <param name="n">The n parameter</param>
-        /// <param name="n1">The n1 parameter</param>        
-        private void HP(IPlayer player, int n, int n1)
-        {
-            Random rand = new Random();
-            int rnd = rand.Next(1, 4);
-            if (this.call <= 0)
-            {
-                this.Check(player);
-            }
+        ///// <summary>
+        ///// Creates a choice generator for bots.
+        ///// This generator is used when bot has only high card or table pair hand.
+        ///// </summary>
+        ///// <param name="sChips">Bot's chips</param>     //botChips
+        ///// <param name="sTurn">Parameter that indicates if it's current player's turn</param>   //botTurn
+        ///// <param name="sFTurn">Parameter that indicates if current bot has folded or is all in</param>   //botFoldsTurn
+        ///// <param name="sStatus">The status text of the bot</param>    //botStatus
+        ///// <param name="botPower">The bot's hand category factor</param>   //botHandRankFactor
+        ///// <param name="n">The n parameter</param>
+        ///// <param name="n1">The n1 parameter</param>        
+        //private void HP(IPlayer player, int n, int n1)
+        //{
+        //    Random rand = new Random();
+        //    int rnd = rand.Next(1, 4);
+        //    if (this.call <= 0)
+        //    {
+        //        this.Check(player);
+        //    }
 
-            if (this.call > 0)
-            {
-                if (rnd == 1)
-                {
-                    if (this.call <= RoundN(player.Chips, n))
-                    {
-                        this.Call(player);
-                    }
-                    else
-                    {
-                        this.Fold(player);
-                    }
-                }
+        //    if (this.call > 0)
+        //    {
+        //        if (rnd == 1)
+        //        {
+        //            if (this.call <= RoundN(player.Chips, n))
+        //            {
+        //                this.Call(player);
+        //            }
+        //            else
+        //            {
+        //                this.Fold(player);
+        //            }
+        //        }
 
-                if (rnd == 2)
-                {
-                    if (this.call <= RoundN(player.Chips, n1))
-                    {
-                        this.Call(player);
-                    }
-                    else
-                    {
-                        this.Fold(player);
-                    }
-                }
-            }
+        //        if (rnd == 2)
+        //        {
+        //            if (this.call <= RoundN(player.Chips, n1))
+        //            {
+        //                this.Call(player);
+        //            }
+        //            else
+        //            {
+        //                this.Fold(player);
+        //            }
+        //        }
+        //    }
 
-            if (rnd == 3)
-            {
-                if (this.raise == 0)
-                {
-                    this.raise = this.call * 2;
-                    this.Raised(player);
-                }
-                else
-                {
-                    if (this.raise <= RoundN(player.Chips, n))
-                    {
-                        this.raise = this.call * 2;
-                        this.Raised(player);
-                    }
-                    else
-                    {
-                        this.Fold(player);
-                    }
-                }
-            }
+        //    if (rnd == 3)
+        //    {
+        //        if (this.raise == 0)
+        //        {
+        //            this.raise = this.call * 2;
+        //            this.Raised(player);
+        //        }
+        //        else
+        //        {
+        //            if (this.raise <= RoundN(player.Chips, n))
+        //            {
+        //                this.raise = this.call * 2;
+        //                this.Raised(player);
+        //            }
+        //            else
+        //            {
+        //                this.Fold(player);
+        //            }
+        //        }
+        //    }
 
-            if (player.Chips <= 0)
-            {
-                player.FoldTurn = true;
-            }
-        }
+        //    if (player.Chips <= 0)
+        //    {
+        //        player.FoldTurn = true;
+        //    }
+        //}
 
-        /// <summary>
-        /// Choice maker for bots if they have a hand which is a pair or two pairs.
-        /// Uses BotChoiceFormula formula.
-        /// </summary>
-        /// <param name="sChips">Bot's chips</param>  //botChips
-        /// <param name="sTurn">Parameter that indicates if it's current player's turn</param>   //botTurn
-        /// <param name="sFTurn">Parameter that indicates if current bot has folded or is all in</param>  //botFoldsTurn
-        /// <param name="sStatus">The status text of the bot</param>  //botStatus
-        /// <param name="n">The n parameter</param>
-        /// <param name="n1">The n1 parameter</param>
-        /// <param name="r">The randGenerator parameter</param>   //randGenerator
-        private void PH(IPlayer player, int n, int n1, int r)
-        {
-            Random rand = new Random();
-            int rnd = rand.Next(1, 3);
-            if (this.rounds < 2)
-            {
-                if (this.call <= 0)
-                {
-                    this.Check(player);
-                }
+        ///// <summary>
+        ///// Choice maker for bots if they have a hand which is a pair or two pairs.
+        ///// Uses BotChoiceFormula formula.
+        ///// </summary>
+        ///// <param name="sChips">Bot's chips</param>  //botChips
+        ///// <param name="sTurn">Parameter that indicates if it's current player's turn</param>   //botTurn
+        ///// <param name="sFTurn">Parameter that indicates if current bot has folded or is all in</param>  //botFoldsTurn
+        ///// <param name="sStatus">The status text of the bot</param>  //botStatus
+        ///// <param name="n">The n parameter</param>
+        ///// <param name="n1">The n1 parameter</param>
+        ///// <param name="r">The randGenerator parameter</param>   //randGenerator
+        //private void PH(IPlayer player, int n, int n1, int r)
+        //{
+        //    Random rand = new Random();
+        //    int rnd = rand.Next(1, 3);
+        //    if (this.rounds < 2)
+        //    {
+        //        if (this.call <= 0)
+        //        {
+        //            this.Check(player);
+        //        }
 
-                if (this.call > 0)
-                {
-                    if (this.call >= RoundN(player.Chips, n1))
-                    {
-                        this.Fold(player);
-                    }
+        //        if (this.call > 0)
+        //        {
+        //            if (this.call >= RoundN(player.Chips, n1))
+        //            {
+        //                this.Fold(player);
+        //            }
 
-                    if (this.raise > RoundN(player.Chips, n))
-                    {
-                        this.Fold(player);
-                    }
+        //            if (this.raise > RoundN(player.Chips, n))
+        //            {
+        //                this.Fold(player);
+        //            }
 
-                    if (!player.FoldTurn)
-                    {
-                        if (this.call >= RoundN(player.Chips, n) && this.call <= RoundN(player.Chips, n1))
-                        {
-                            this.Call(player);
-                        }
+        //            if (!player.FoldTurn)
+        //            {
+        //                if (this.call >= RoundN(player.Chips, n) && this.call <= RoundN(player.Chips, n1))
+        //                {
+        //                    this.Call(player);
+        //                }
 
-                        if (this.raise <= RoundN(player.Chips, n) && this.raise >= (RoundN(player.Chips, n)) / 2)
-                        {
-                            this.Call(player);
-                        }
+        //                if (this.raise <= RoundN(player.Chips, n) && this.raise >= (RoundN(player.Chips, n)) / 2)
+        //                {
+        //                    this.Call(player);
+        //                }
 
-                        if (this.raise <= (RoundN(player.Chips, n)) / 2)
-                        {
-                            if (this.raise > 0)
-                            {
-                                this.raise = RoundN(player.Chips, n);
-                                this.Raised(player);
-                            }
-                            else
-                            {
-                                this.raise = this.call * 2;
-                                this.Raised(player);
-                            }
-                        }
+        //                if (this.raise <= (RoundN(player.Chips, n)) / 2)
+        //                {
+        //                    if (this.raise > 0)
+        //                    {
+        //                        this.raise = RoundN(player.Chips, n);
+        //                        this.Raised(player);
+        //                    }
+        //                    else
+        //                    {
+        //                        this.raise = this.call * 2;
+        //                        this.Raised(player);
+        //                    }
+        //                }
 
-                    }
-                }
-            }
+        //            }
+        //        }
+        //    }
 
-            if (this.rounds >= 2)
-            {
-                if (this.call > 0)
-                {
-                    if (this.call >= RoundN(player.Chips, n1 - rnd))
-                    {
-                        this.Fold(player);
-                    }
+        //    if (this.rounds >= 2)
+        //    {
+        //        if (this.call > 0)
+        //        {
+        //            if (this.call >= RoundN(player.Chips, n1 - rnd))
+        //            {
+        //                this.Fold(player);
+        //            }
 
-                    if (this.raise > RoundN(player.Chips, n - rnd))
-                    {
-                        this.Fold(player);
-                    }
+        //            if (this.raise > RoundN(player.Chips, n - rnd))
+        //            {
+        //                this.Fold(player);
+        //            }
 
-                    if (!player.FoldTurn)
-                    {
-                        if (this.call >= RoundN(player.Chips, n - rnd) && this.call <= RoundN(player.Chips, n1 - rnd))
-                        {
-                            this.Call(player);
-                        }
+        //            if (!player.FoldTurn)
+        //            {
+        //                if (this.call >= RoundN(player.Chips, n - rnd) && this.call <= RoundN(player.Chips, n1 - rnd))
+        //                {
+        //                    this.Call(player);
+        //                }
 
-                        if (this.raise <= RoundN(player.Chips, n - rnd) && this.raise >= (RoundN(player.Chips, n - rnd)) / 2)
-                        {
-                            this.Call(player);
-                        }
+        //                if (this.raise <= RoundN(player.Chips, n - rnd) && this.raise >= (RoundN(player.Chips, n - rnd)) / 2)
+        //                {
+        //                    this.Call(player);
+        //                }
 
-                        if (this.raise <= (RoundN(player.Chips, n - rnd)) / 2)
-                        {
-                            if (this.raise > 0)
-                            {
-                                this.raise = RoundN(player.Chips, n - rnd);
-                                this.Raised(player);
-                            }
-                            else
-                            {
-                                this.raise = this.call * 2;
-                                this.Raised(player);
-                            }
-                        }
-                    }
-                }
+        //                if (this.raise <= (RoundN(player.Chips, n - rnd)) / 2)
+        //                {
+        //                    if (this.raise > 0)
+        //                    {
+        //                        this.raise = RoundN(player.Chips, n - rnd);
+        //                        this.Raised(player);
+        //                    }
+        //                    else
+        //                    {
+        //                        this.raise = this.call * 2;
+        //                        this.Raised(player);
+        //                    }
+        //                }
+        //            }
+        //        }
 
-                if (this.call <= 0)
-                {
-                    this.raise = RoundN(player.Chips, r - rnd);
-                    this.Raised(player);
-                }
-            }
+        //        if (this.call <= 0)
+        //        {
+        //            this.raise = RoundN(player.Chips, r - rnd);
+        //            this.Raised(player);
+        //        }
+        //    }
 
-            if (player.Chips <= 0)
-            {
-                player.FoldTurn = true;
-            }
-        }
+        //    if (player.Chips <= 0)
+        //    {
+        //        player.FoldTurn = true;
+        //    }
+        //}
 
-        /// <summary>
-        /// Choice maker for bots with a hand three of a kind or higher.
-        /// Uses BotChoiceFormula formula.
-        /// </summary>
-        /// <param name="botChips">Bot's chips</param>
-        /// <param name="botTurn">Parameter that indicates if it's current player's turn</param>
-        /// <param name="botFTurn">Parameter that indicates if current bot has folded or is all in</param>
-        /// <param name="botStatus">The status text of the bot</param>
-        /// <param name="name">The current bot's name</param>   //  botName
-        /// <param name="n">The n parameter</param>
-        /// <param name="r">The randGenerator parameter</param>  //randGenerator       
-        void Smooth(IPlayer player, int n)
-        {
-            Random rand = new Random();
-            int rnd = rand.Next(1, 3);
-            if (this.call <= 0)
-            {
-                this.Check(player);
-            }
-            else
-            {
-                if (this.call >= RoundN(player.Chips, n))
-                {
-                    if (player.Chips > this.call)
-                    {
-                        this.Call(player);
-                    }
-                    else if (player.Chips <= this.call)
-                    {
-                        this.raising = false;
-                        player.Turn = false;
-                        player.Chips = 0;
-                        player.Status.Text = GlobalConstants.CallMessage + " " + player.Chips;
-                        this.textBoxPot.Text = (int.Parse(this.textBoxPot.Text) + player.Chips).ToString();
-                    }
-                }
-                else
-                {
-                    if (this.raise > 0)
-                    {
-                        if (player.Chips >= this.raise * 2)
-                        {
-                            this.raise *= 2;
-                            this.Raised(player);
-                        }
-                        else
-                        {
-                            this.Call(player);
-                        }
-                    }
-                    else
-                    {
-                        this.raise = this.call * 2;
-                        this.Raised(player);
-                    }
-                }
-            }
+        ///// <summary>
+        ///// Choice maker for bots with a hand three of a kind or higher.
+        ///// Uses BotChoiceFormula formula.
+        ///// </summary>
+        ///// <param name="botChips">Bot's chips</param>
+        ///// <param name="botTurn">Parameter that indicates if it's current player's turn</param>
+        ///// <param name="botFTurn">Parameter that indicates if current bot has folded or is all in</param>
+        ///// <param name="botStatus">The status text of the bot</param>
+        ///// <param name="name">The current bot's name</param>   //  botName
+        ///// <param name="n">The n parameter</param>
+        ///// <param name="r">The randGenerator parameter</param>  //randGenerator       
+        //void Smooth(IPlayer player, int n)
+        //{
+        //    Random rand = new Random();
+        //    int rnd = rand.Next(1, 3);
+        //    if (this.call <= 0)
+        //    {
+        //        this.Check(player);
+        //    }
+        //    else
+        //    {
+        //        if (this.call >= RoundN(player.Chips, n))
+        //        {
+        //            if (player.Chips > this.call)
+        //            {
+        //                this.Call(player);
+        //            }
+        //            else if (player.Chips <= this.call)
+        //            {
+        //                this.raising = false;
+        //                player.Turn = false;
+        //                player.Chips = 0;
+        //                player.Status.Text = GlobalConstants.CallMessage + " " + player.Chips;
+        //                this.textBoxPot.Text = (int.Parse(this.textBoxPot.Text) + player.Chips).ToString();
+        //            }
+        //        }
+        //        else
+        //        {
+        //            if (this.raise > 0)
+        //            {
+        //                if (player.Chips >= this.raise * 2)
+        //                {
+        //                    this.raise *= 2;
+        //                    this.Raised(player);
+        //                }
+        //                else
+        //                {
+        //                    this.Call(player);
+        //                }
+        //            }
+        //            else
+        //            {
+        //                this.raise = this.call * 2;
+        //                this.Raised(player);
+        //            }
+        //        }
+        //    }
 
-            if (player.Chips <= 0)
-            {
-                player.IsPlayerTurn = true;
-            }
-        }
+        //    if (player.Chips <= 0)
+        //    {
+        //        player.IsPlayerTurn = true;
+        //    }
+        //}
 
         #region UI
         private async void timer_Tick(object sender, object e)
@@ -3415,8 +3540,8 @@
 
             this.textBoxChips.Text = "chips : " + this.humanPlayer.Chips.ToString();
             this.textBoxBotChips1.Text = "chips : " + this.firstBot.Chips.ToString();
-            this.textBoxBotChips2.Text = "chips : " + this.secondBot.Chips.ToString();
-            this.textBoxBotChips3.Text = "chips : " + this.thirdBot.Chips.ToString();
+            this.textBoxBotChips2.Text = "chips : " + this.secondbot.Chips.ToString();
+            this.textBoxBotChips3.Text = "chips : " + this.thirdbot.Chips.ToString();
             this.textBoxBotChips4.Text = "chips : " + this.fourthBot.Chips.ToString();
             this.textBoxBotChips5.Text = "chips : " + this.fifthBot.Chips.ToString();
 
@@ -3507,7 +3632,7 @@
 
         private async void buttonCall_IsClicked(object sender, EventArgs e)
         {
-            //Rules(this.player);
+            //Rules(this.humanPlayer);
             this.rules.CheckForHand(this.humanPlayer);
             if (this.humanPlayer.Chips >= this.call)
             {
@@ -3542,7 +3667,7 @@
 
         private async void buttonRaise_IsClicked(object sender, EventArgs e)
         {
-            //Rules(this.player);
+            //Rules(this.humanPlayer);
             this.rules.CheckForHand(this.humanPlayer);
             int parsedValue;
             if (this.textBoxRaise.Text != "" && int.TryParse(this.textBoxRaise.Text, out parsedValue))
@@ -3602,8 +3727,8 @@
             {
                 this.humanPlayer.Chips += int.Parse(this.tbAdd.Text);
                 this.firstBot.Chips += int.Parse(this.tbAdd.Text);
-                this.secondBot.Chips += int.Parse(this.tbAdd.Text);
-                this.thirdBot.Chips += int.Parse(this.tbAdd.Text);
+                this.secondbot.Chips += int.Parse(this.tbAdd.Text);
+                this.thirdbot.Chips += int.Parse(this.tbAdd.Text);
                 this.fourthBot.Chips += int.Parse(this.tbAdd.Text);
                 this.fifthBot.Chips += int.Parse(this.tbAdd.Text);
             }
@@ -3705,11 +3830,11 @@
         }
         #endregion
 
-        private ICard SetCard(int card)
-        {
-            var suit = this.cardHandler.GetSuit(card);
-            var value = this.cardHandler.GetValue(card);
-            return new Card(suit, value);
-        }
+        //private ICard SetCard(int card)
+        //{
+        //    var suit = this.cardHandler.GetSuit(card);
+        //    var value = this.cardHandler.GetValue(card);
+        //    return new Card(suit, value);
+        //}
     }
 }

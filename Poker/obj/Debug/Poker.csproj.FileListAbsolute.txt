@@ -5,7 +5,6 @@ C:\Users\vb\Desktop\su\kpk\Cloudberry\trunk\Poker\bin\Debug\Poker.exe
 C:\Users\vb\Desktop\su\kpk\Cloudberry\trunk\Poker\bin\Debug\Poker.pdb
 C:\Users\vb\Desktop\su\kpk\Cloudberry\trunk\Poker\obj\Debug\Poker.csprojResolveAssemblyReference.cache
 C:\Users\vb\Desktop\su\kpk\Cloudberry\trunk\Poker\obj\Debug\Poker.AddChips.resources
-C:\Users\vb\Desktop\su\kpk\Cloudberry\trunk\Poker\obj\Debug\Poker.Form1.resources
 C:\Users\vb\Desktop\su\kpk\Cloudberry\trunk\Poker\obj\Debug\Poker.Properties.Resources.resources
 C:\Users\vb\Desktop\su\kpk\Cloudberry\trunk\Poker\obj\Debug\Poker.csproj.GenerateResource.Cache
 C:\Users\Kolev\Desktop\Github\Cloudberry\Poker\bin\Debug\Poker.exe.config
@@ -18,3 +17,4 @@ C:\Users\Kolev\Desktop\Github\Cloudberry\Poker\obj\Debug\Poker.exe
 C:\Users\Kolev\Desktop\Github\Cloudberry\Poker\obj\Debug\Poker.pdb
 C:\Users\Kolev\Desktop\Github\Cloudberry\Poker\obj\Debug\Poker.csprojResolveAssemblyReference.cache
 C:\Users\Kolev\Desktop\Github\Cloudberry\Poker\obj\Debug\Poker.Forms.Game.resources
+C:\Users\vb\Desktop\su\kpk\Cloudberry\trunk\Poker\obj\Debug\Poker.Forms.Game.resources

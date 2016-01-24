@@ -6,5 +6,6 @@
     {
         SuitOfCard Suit { get; set; }
         ValueOfCard Value { get; set; }
+        int NumberInGame { get; set; }
     }
 }

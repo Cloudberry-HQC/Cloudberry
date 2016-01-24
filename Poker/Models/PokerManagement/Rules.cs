@@ -5,7 +5,7 @@
     using Core;
     using Enums;
     using Interfaces;
-
+    using System.Windows.Forms;
     public class Rules
     {
         private List<Type> win;
@@ -48,7 +48,7 @@
         public double Type
         {
             get { return this.type; }
-            private set { this.type = value; }
+             set { this.type = value; }
         }
 
         public List<Type> Win
@@ -1556,130 +1556,130 @@
         }
 
 
-        //public void FixWinners()
-        //{
-        //    this.Win.Clear();
-        //    this.sorted.Current = 0;
-        //    this.sorted.Power = 0;
-        //    string fixedLast = "qwerty";
+        public void FixWinners()
+        {
+            this.Win.Clear();
+            this.sorted.Current = 0;
+            this.sorted.Power = 0;
+            string fixedLast = "qwerty";
 
-        //    foreach (var player in Database.Instace.Players)
-        //    {
-        //        if (!player.Status.Text.Contains("Fold"))
-        //        {
-        //            fixedLast = player.Name;
-        //            this.CheckForHand(player);
-        //            Winner(player, fixedLast);
-        //        }
-        //    }
-        //}
+            foreach (var player in Database.Instace.Players)
+            {
+                if (!player.Status.Text.Contains("Fold"))
+                {
+                    fixedLast = player.Name;
+                    this.CheckForHand(player);
+                    Winner(player, fixedLast);
+                }
+            }
+        }
 
-        //        private void Winner(Player player, string lastly)
-        //        {
-        //            if (lastly == " ")
-        //            {
-        //                lastly = Database.Instace.Players[5].Name;
-        //            }
+        public void Winner(IPlayer player, string lastly)
+        {
+            if (lastly == " ")
+            {
+                lastly = Database.Instace.Players[5].Name;
+            }
 
-        //            for (int j = 0; j <= 16; j++)
-        //            {
-        //                //await Task.Delay(5);
-        //                if (Database.Instace.Table.CardsHolder[j].Visible)
-        //                {
-        //                    Database.Instace.Table.CardsHolder[j].Image = Database.Instace.Table.CardsImageDeck[j];
-        //                }
+            for (int j = 0; j <= 16; j++)
+            {
+                //await Task.Delay(5);
+                if (Launcher.Poker.CardsHolder[j].Visible)
+                {
+                    Launcher.Poker.CardsHolder[j].Image = Launcher.Poker.CardsImageDeck[j];
+                }
 
-        //            }
+            }
 
-        //            if (player.Current == this.sorted.Current)
-        //            {
-        //                if (player.Power == this.sorted.Power)
-        //                {
-        //                    this.Winners++;
-        //                    this.CheckWinners.Add(player.Name);
+            if (player.Current == this.sorted.Current)
+            {
+                if (player.Power == this.sorted.Power)
+                {
+                    this.Winners++;
+                    this.CheckWinners.Add(player.Name);
 
-        //                    //TODO if statement to switch
-        //                    if (player.Current == -1)
-        //                    {
-        //                        MessageBox.Show(player.Name + " High Card ");
-        //                    }
+                    //TODO if statement to switch
+                    if (player.Current == -1)
+                    {
+                        MessageBox.Show(player.Name + " High Card ");
+                    }
 
-        //                    if (player.Current == 1 || player.Current == 0)
-        //                    {
-        //                        MessageBox.Show(player.Name + " Pair ");
-        //                    }
+                    if (player.Current == 1 || player.Current == 0)
+                    {
+                        MessageBox.Show(player.Name + " Pair ");
+                    }
 
-        //                    if (player.Current == 2)
-        //                    {
-        //                        MessageBox.Show(player.Name + " Two Pair ");
-        //                    }
+                    if (player.Current == 2)
+                    {
+                        MessageBox.Show(player.Name + " Two Pair ");
+                    }
 
-        //                    if (player.Current == 3)
-        //                    {
-        //                        MessageBox.Show(player.Name + " Three of a Kind ");
-        //                    }
+                    if (player.Current == 3)
+                    {
+                        MessageBox.Show(player.Name + " Three of a Kind ");
+                    }
 
-        //                    if (player.Current == 4)
-        //                    {
-        //                        MessageBox.Show(player.Name + " Straight ");
-        //                    }
+                    if (player.Current == 4)
+                    {
+                        MessageBox.Show(player.Name + " Straight ");
+                    }
 
-        //                    if (player.Current == 5 || player.Current == 5.5)
-        //                    {
-        //                        MessageBox.Show(player.Name + " Flush ");
-        //                    }
+                    if (player.Current == 5 || player.Current == 5.5)
+                    {
+                        MessageBox.Show(player.Name + " Flush ");
+                    }
 
-        //                    if (player.Current == 6)
-        //                    {
-        //                        MessageBox.Show(player.Name + " Full House ");
-        //                    }
+                    if (player.Current == 6)
+                    {
+                        MessageBox.Show(player.Name + " Full House ");
+                    }
 
-        //                    if (player.Current == 7)
-        //                    {
-        //                        MessageBox.Show(player.Name + " Four of a Kind ");
-        //                    }
+                    if (player.Current == 7)
+                    {
+                        MessageBox.Show(player.Name + " Four of a Kind ");
+                    }
 
-        //                    if (player.Current == 8)
-        //                    {
-        //                        MessageBox.Show(player.Name + " Straight Flush ");
-        //                    }
+                    if (player.Current == 8)
+                    {
+                        MessageBox.Show(player.Name + " Straight Flush ");
+                    }
 
-        //                    if (player.Current == 9)
-        //                    {
-        //                        MessageBox.Show(player.Name + " Royal Flush ! ");
-        //                    }
-        //                }
-        //            }
+                    if (player.Current == 9)
+                    {
+                        MessageBox.Show(player.Name + " Royal Flush ! ");
+                    }
+                }
+            }
 
-        //            if (player.Name == lastly)//lastfixed
-        //            {
-        //                if (this.Winners > 1)
-        //                {
-        //                    for (int i = 0; i < Database.Instace.Players.Length; i++)
-        //                    {
-        //                        if (this.CheckWinners.Contains(Database.Instace.Players[i].Name))
-        //                        {
-        //                            Database.Instace.Players[i].Chips += int.Parse(Launcher.Poker.TextBoxPot.Text) / this.Winners;
-        //                            Launcher.Poker.ChipsTextBoxes[i].Text = Database.Instace.Players[i].Chips.ToString();
+            if (player.Name == lastly)//lastfixed
+            {
+                if (this.Winners > 1)
+                {
+                    for (int i = 0; i < Database.Instace.Players.Length; i++)
+                    {
+                        if (this.CheckWinners.Contains(Database.Instace.Players[i].Name))
+                        {
+                            Database.Instace.Players[i].Chips += int.Parse(Launcher.Poker.TextBoxPot.Text) / this.Winners;
+                            Launcher.Poker.ChipsTextBoxes[i].Text = Database.Instace.Players[i].Chips.ToString();
 
-        //                        }
-        //                    }
+                        }
+                    }
 
-        //                    //await Finish(1);
-        //                }
+                    //await Finish(1);
+                }
 
-        //                if (this.Winners == 1)
-        //                {
-        //                    foreach (var item in Database.Instace.Players)
-        //                    {
-        //                        if (this.CheckWinners.Contains(item.Name))
-        //                        {
-        //                            item.Chips += int.Parse(Launcher.Poker.TextBoxPot.Text);
+                if (this.Winners == 1)
+                {
+                    foreach (var item in Database.Instace.Players)
+                    {
+                        if (this.CheckWinners.Contains(item.Name))
+                        {
+                            item.Chips += int.Parse(Launcher.Poker.TextBoxPot.Text);
 
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //        }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

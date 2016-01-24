@@ -8,16 +8,16 @@
         //Names of the players
         public const string HumanPlayerName = "Human";
         public const string FirstBotPlayerName = "First Bot";
-        public const string SecondBotPlayerName = "Second Bot";
-        public const string ThirdBotPlayerName = "Third Bot";
+        public const string SecondbotPlayerName = "Second Bot";
+        public const string ThirdbotPlayerName = "Third Bot";
         public const string FourthBotPlayerName = "Fourth Bot";
         public const string FifthBotPlayerName = "Fifth Bot";
 
         //Win messages based on player name
         public const string HumanPlayerWinMessage = HumanPlayerName + " Wins";
         public const string FirstBotPlayerWinMessage = FirstBotPlayerName + " Wins";
-        public const string SecondBotPlayerWinMessage = SecondBotPlayerName + " Wins";
-        public const string ThirdBotPlayerWinMessage = ThirdBotPlayerName + " Wins";
+        public const string SecondbotPlayerWinMessage = SecondbotPlayerName + " Wins";
+        public const string ThirdbotPlayerWinMessage = ThirdbotPlayerName + " Wins";
         public const string FourthBotPlayerWinMessage = FourthBotPlayerName + " Wins";
         public const string FifthBotPlayerWinMessage = FifthBotPlayerName + " Wins";
 

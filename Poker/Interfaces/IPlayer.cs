@@ -30,5 +30,13 @@
         int Call { get; set; }
 
         int Raise { get; set; }
+
+        void PlayerFold();
+
+        void PlayerCheck();
+
+        void PlayerCall();
+
+        void PlayerRaised();
     }
 }

@@ -1,13 +1,14 @@
 ﻿namespace Poker.Models.PokerManagement
 {
+    using System;
     using Enums;
     using Interfaces;
 
-    public class CardHandler
+    public static class CardHandler
     {
-        private ICard card;
+       
 
-        public SuitOfCard GetSuit(int cardAsNumber)
+        public static SuitOfCard GetSuit(int cardAsNumber)
         {
             int reminderSuit = cardAsNumber % 4;
 
@@ -31,7 +32,12 @@
             return suit;
         }
 
-        public ValueOfCard GetValue(int cardAsNumber)
+        internal static SuitOfCard GetSuit()
+        {
+            throw new NotImplementedException();
+        }
+
+        public static ValueOfCard GetValue(int cardAsNumber)
         {
             int reminderValue = cardAsNumber / 4;
 

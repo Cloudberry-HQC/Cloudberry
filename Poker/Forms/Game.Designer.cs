@@ -49,10 +49,10 @@
             this.textBoxBigBlind = new System.Windows.Forms.TextBox();
             //this.fifthBotStatus = new System.Windows.Forms.Label();
             //this.fourthBotStatus = new System.Windows.Forms.Label();
-            //this.thirdBotStatus = new System.Windows.Forms.Label();
+            //this.thirdbotStatus = new System.Windows.Forms.Label();
             //this.firstBotStatus = new System.Windows.Forms.Label();
-            //this.playerStatus = new System.Windows.Forms.Label();
-            //this.secondBotStatus = new System.Windows.Forms.Label();
+            //this.humanPlayerStatus = new System.Windows.Forms.Label();
+            //this.secondbotStatus = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxRaise = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
@@ -267,13 +267,13 @@
             this.fourthBot.Status.Size = new System.Drawing.Size(123, 32);
             this.fourthBot.Status.TabIndex = 27;
             // 
-            // thirdBotStatus
+            // thirdbotStatus
             // 
-            this.thirdBot.Status.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.thirdBot.Status.Location = new System.Drawing.Point(755, 107);
-            this.thirdBot.Status.Name = "thirdBotStatus";
-            this.thirdBot.Status.Size = new System.Drawing.Size(125, 32);
-            this.thirdBot.Status.TabIndex = 28;
+            this.thirdbot.Status.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.thirdbot.Status.Location = new System.Drawing.Point(755, 107);
+            this.thirdbot.Status.Name = "thirdbotStatus";
+            this.thirdbot.Status.Size = new System.Drawing.Size(125, 32);
+            this.thirdbot.Status.TabIndex = 28;
             // 
             // firstBotStatus
             // 
@@ -291,12 +291,12 @@
             this.humanPlayer.Status.Size = new System.Drawing.Size(163, 32);
             this.humanPlayer.Status.TabIndex = 30;
             // 
-            // secondBotStatus
+            // secondbotStatus
             // 
-            this.secondBot.Status.Location = new System.Drawing.Point(276, 107);
-            this.secondBot.Status.Name = "secondBotStatus";
-            this.secondBot.Status.Size = new System.Drawing.Size(133, 32);
-            this.secondBot.Status.TabIndex = 31;
+            this.secondbot.Status.Location = new System.Drawing.Point(276, 107);
+            this.secondbot.Status.Name = "secondbotStatus";
+            this.secondbot.Status.Size = new System.Drawing.Size(133, 32);
+            this.secondbot.Status.TabIndex = 31;
             // 
             // label1
             // 
@@ -325,10 +325,10 @@
             this.ClientSize = new System.Drawing.Size(1350, 729);
             this.Controls.Add(this.textBoxRaise);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.secondBot.Status);
+            this.Controls.Add(this.secondbot.Status);
             this.Controls.Add(this.humanPlayer.Status);
             this.Controls.Add(this.firstBot.Status);
-            this.Controls.Add(this.thirdBot.Status);
+            this.Controls.Add(this.thirdbot.Status);
             this.Controls.Add(this.fourthBot.Status);
             this.Controls.Add(this.fifthBot.Status);
             this.Controls.Add(this.textBoxBigBlind);
@@ -382,10 +382,10 @@
         private System.Windows.Forms.TextBox textBoxBigBlind;
         //private System.Windows.Forms.Label fifthBotStatus;
         //private System.Windows.Forms.Label fourthBotStatus;
-        //private System.Windows.Forms.Label thirdBotStatus;
+        //private System.Windows.Forms.Label thirdbotStatus;
         //private System.Windows.Forms.Label firstBotStatus;
         //private System.Windows.Forms.Label playerStatus;
-        //private System.Windows.Forms.Label secondBotStatus;
+        //private System.Windows.Forms.Label secondbotStatus;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBoxRaise;
     }

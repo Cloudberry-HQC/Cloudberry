@@ -1,4 +1,6 @@
-﻿namespace Poker.Models.Player
+﻿using System;
+
+namespace Poker.Models.Player
 {
     using System.Drawing;
     using System.Windows.Forms;
@@ -176,38 +178,40 @@
             }
         }
 
-        //public void Fold(ref bool sTurn, ref bool sFTurn, Label sStatus)
-        //{
-        //    raising = false;
-        //    sStatus.Text = "Fold";
-        //    sTurn = false;
-        //    sFTurn = true;
-        //}
+      public void PlayerFold()
+        {
+            Launcher.Poker.Raising = false;
+            this.Status.Text = "Fold";
+            this.IsPlayerTurn = false;
+            this.FoldTurn = true;
+        }
 
-        //    public void Check()
-        //    {
-        //        cStatus.Text = "Check";
-        //        cTurn = false;
-        //        raising = false;
-        //    }
+        public void PlayerCheck()
+        {
+            this.Status.Text = "Check";
+            this.IsPlayerTurn = false;
+            Launcher.Poker.Raising = false;
+        }
 
-        //    public void Call(ref int sChips, ref bool sTurn, Label sStatus)
-        //    {
-        //        Form1.Raising = false;
-        //        sTurn = false;
-        //        sChips -= call;
-        //        sStatus.Text = "Call " + call;
-        //        Form1.textBoxPot.Text = (int.Parse(this.textBoxPot.Text) + call).ToString();
-        //    }
+        public void PlayerCall()
+        {
+            //  Form1.Raising = false;
+            this.IsPlayerTurn = false;
+            this.Chips -= Launcher.Poker.CallValue;
+            this.Status.Text = "Call " + Launcher.Poker.CallValue;
+            Launcher.Poker.TextBoxPot.Text = (int.Parse(Launcher.Poker.TextBoxPot.Text) + call).ToString();
+            Launcher.Poker.Raising = false;
+        }
 
-        //    public void Raised(ref int sChips, ref bool sTurn, Label sStatus)
-        //    {
-        //        sChips -= Convert.ToInt32(this.raise);
-        //        sStatus.Text = "raise " + this.raise;
-        //        this.textBoxPot.Text = (int.Parse(this.textBoxPot.Text) + Convert.ToInt32(this.raise)).ToString();
-        //        call = Convert.ToInt32(this.raise);
-        //        raising = true;
-        //        sTurn = false;
-        //    }
+        public void PlayerRaised()
+        {
+           // Launcher.Poker.Raise *= 2;
+            this.Chips -= Convert.ToInt32(Launcher.Poker.Raise);
+            this.Status.Text = "Raise " + Launcher.Poker.Raise;
+            Launcher.Poker.TextBoxPot.Text = (int.Parse(Launcher.Poker.TextBoxPot.Text) + Convert.ToInt32(Launcher.Poker.Raise)).ToString();
+            Launcher.Poker.CallValue = Convert.ToInt32(Launcher.Poker.Raise);
+            Launcher.Poker.Raising = true;
+            this.IsPlayerTurn = false;
+        }
     }
 }
