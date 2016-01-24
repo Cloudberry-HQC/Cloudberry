@@ -342,46 +342,7 @@
                         //this.humanPlayer.Panel.Visible = false;
                     }
 
-                //if (this.firstBot.Chips > 0)
-                //{
-                //    this.foldedPlayers--;
-
-                //    if (cardsInGame >= 2 && cardsInGame < 4)     //elica: cards of the first bot with index 2 and 3
-                //    {
-                //        if (this.cardsHolder[2].Tag != null)
-                //        {
-                //            this.cardsHolder[3].Tag = this.availableCardsInGame[3];
-                //            this.firstBot.PlayerCards[1] = this.SetCard(this.availableCardsInGame[3]);
-                //        }
-
-                //        this.cardsHolder[2].Tag = this.availableCardsInGame[2];
-                //        this.firstBot.PlayerCards[0] = this.SetCard(this.availableCardsInGame[2]);
-                //        if (!check)
-                //        {
-                //            horizontal = 15;
-                //            vertical = 420;
-                //        }
-
-                //        check = true;
-                //        this.cardsHolder[cardsInGame].Anchor = (AnchorStyles.Bottom | AnchorStyles.Left);
-                //        this.cardsHolder[cardsInGame].Image = backImage;
-                //        //cardsHolder[cardsInGame].Image = cardsImageDeck[cardsInGame];
-                //        this.cardsHolder[cardsInGame].Location = new Point(horizontal, vertical);
-                //        horizontal += this.cardsHolder[cardsInGame].Width;
-                //        this.cardsHolder[cardsInGame].Visible = true;
-                //        this.Controls.Add(this.firstBot.Panel);
-                //        this.firstBot.Panel.Location = new Point(this.cardsHolder[2].Left - 10, this.cardsHolder[2].Top - 10);
-                //        //this.firstBot.Panel.BackColor = Color.DarkBlue;
-                //        //this.firstBot.Panel.Height = 150;
-                //        //this.firstBot.Panel.Width = 180;
-                //        //this.firstBot.Panel.Visible = false;
-
-                //        if (cardsInGame == 3)
-                //        {
-                //            check = false;
-                //        }
-                //    }
-                //}
+             
                 for (int i = 1; i < this.db.Players.Length; i++)
                 {
                     if (this.db.Players[i].Chips > 0)
@@ -452,219 +413,41 @@
                     }
                 }
 
-                //if (this.secondbot.Chips > 0)
-                //{
-                //    this.foldedPlayers--;
-
-                //    if (cardsInGame >= 4 && cardsInGame < 6)  // elica: cards of the second bot with index 4 and 5
-                //    {
-                //        if (this.cardsHolder[4].Tag != null)
-                //        {
-                //            this.cardsHolder[5].Tag = this.availableCardsInGame[5];
-                //            this.secondbot.PlayerCards[1] = this.SetCard(this.availableCardsInGame[5]);
-                //        }
-
-                //        this.cardsHolder[4].Tag = this.availableCardsInGame[4];
-                //        this.secondbot.PlayerCards[0] = this.SetCard(this.availableCardsInGame[4]);
-
-                //        if (!check)
-                //        {
-                //            horizontal = 75;
-                //            vertical = 65;
-                //        }
-
-                //        check = true;
-                //        this.cardsHolder[cardsInGame].Anchor = (AnchorStyles.Top | AnchorStyles.Left);
-                //        this.cardsHolder[cardsInGame].Image = backImage;
-                //        //cardsHolder[cardsInGame].Image = cardsImageDeck[cardsInGame];
-                //        this.cardsHolder[cardsInGame].Location = new Point(horizontal, vertical);
-                //        horizontal += this.cardsHolder[cardsInGame].Width;
-                //        this.cardsHolder[cardsInGame].Visible = true;
-                //        this.Controls.Add(this.secondbot.Panel);
-                //        this.secondbot.Panel.Location = new Point(this.cardsHolder[4].Left - 10, this.cardsHolder[4].Top - 10);
-                //        //this.secondbot.Panel.BackColor = Color.DarkBlue;
-                //        //this.secondbot.Panel.Height = 150;
-                //        //this.secondbot.Panel.Width = 180;
-                //        //this.secondbot.Panel.Visible = false;
-
-                //        if (cardsInGame == 5)
-                //        {
-                //            check = false;
-                //        }
-                //    }
-                //}
-
-                //if (this.thirdbot.Chips > 0)
-                //{
-                //    this.foldedPlayers--;
-
-                //    if (cardsInGame >= 6 && cardsInGame < 8)    // elica: cards of the third bot with index 6 and 7
-                //    {
-                //        if (this.cardsHolder[6].Tag != null)
-                //        {
-                //            this.cardsHolder[7].Tag = this.availableCardsInGame[7];
-                //            this.thirdbot.PlayerCards[1] = this.SetCard(this.availableCardsInGame[7]);
-                //        }
-
-                //        this.cardsHolder[6].Tag = this.availableCardsInGame[6];
-                //        this.thirdbot.PlayerCards[0] = this.SetCard(this.availableCardsInGame[6]);
-
-                //        if (!check)
-                //        {
-                //            horizontal = 590;
-                //            vertical = 25;
-                //        }
-
-                //        check = true;
-                //        this.cardsHolder[cardsInGame].Anchor = (AnchorStyles.Top);
-                //        this.cardsHolder[cardsInGame].Image = backImage;
-                //        //cardsHolder[cardsInGame].Image = cardsImageDeck[cardsInGame;
-                //        this.cardsHolder[cardsInGame].Location = new Point(horizontal, vertical);
-                //        horizontal += this.cardsHolder[cardsInGame].Width;
-                //        this.cardsHolder[cardsInGame].Visible = true;
-                //        this.Controls.Add(this.thirdbot.Panel);
-                //        this.thirdbot.Panel.Location = new Point(this.cardsHolder[6].Left - 10, this.cardsHolder[6].Top - 10);
-                //        //this.thirdbot.Panel.BackColor = Color.DarkBlue;
-                //        //this.thirdbot.Panel.Height = 150;
-                //        //this.thirdbot.Panel.Width = 180;
-                //        //this.thirdbot.Panel.Visible = false;
-
-                //        if (cardsInGame == 7)
-                //        {
-                //            check = false;
-                //        }
-                //    }
-                //}
-
-                //if (this.fourthBot.Chips > 0)
-                //{
-                //    this.foldedPlayers--;
-
-                //    if (cardsInGame >= 8 && cardsInGame < 10)  // elica: cards of the fourth bot with index 8 and 9
-                //    {
-                //        if (this.cardsHolder[8].Tag != null)
-                //        {
-                //            this.cardsHolder[9].Tag = this.availableCardsInGame[9];
-                //            this.fourthBot.PlayerCards[1] = this.SetCard(this.availableCardsInGame[9]);
-                //        }
-
-                //        this.cardsHolder[8].Tag = this.availableCardsInGame[8];
-                //        this.fourthBot.PlayerCards[0] = this.SetCard(this.availableCardsInGame[8]);
-
-                //        if (!check)
-                //        {
-                //            horizontal = 1115;
-                //            vertical = 65;
-                //        }
-
-                //        check = true;
-                //        this.cardsHolder[cardsInGame].Anchor = (AnchorStyles.Top | AnchorStyles.Right);
-                //        this.cardsHolder[cardsInGame].Image = backImage;
-                //        //cardsHolder[cardsInGame].Image = cardsImageDeck[cardsInGame];
-                //        this.cardsHolder[cardsInGame].Location = new Point(horizontal, vertical);
-                //        horizontal += this.cardsHolder[cardsInGame].Width;
-                //        this.cardsHolder[cardsInGame].Visible = true;
-                //        this.Controls.Add(this.fourthBot.Panel);
-                //        this.fourthBot.Panel.Location = new Point(this.cardsHolder[8].Left - 10, this.cardsHolder[8].Top - 10);
-                //        //this.fourthBot.Panel.BackColor = Color.DarkBlue;
-                //        //this.fourthBot.Panel.Height = 150;
-                //        //this.fourthBot.Panel.Width = 180;
-                //        //this.fourthBot.Panel.Visible = false;
-
-                //        if (cardsInGame == 9)
-                //        {
-                //            check = false;
-                //        }
-                //    }
-                //}
-
-                //if (this.fifthBot.Chips > 0)
-                //{
-                //    this.foldedPlayers--;
-
-                //    if (cardsInGame >= 10 && cardsInGame < 12)   // elica: cards of the fifth bot with index 10 and 11
-                //    {
-                //        if (this.cardsHolder[10].Tag != null)
-                //        {
-                //            this.cardsHolder[11].Tag = this.availableCardsInGame[11];
-                //            this.fifthBot.PlayerCards[1] = this.SetCard(this.availableCardsInGame[11]);
-                //        }
-
-                //        this.cardsHolder[10].Tag = this.availableCardsInGame[10];
-                //        this.fifthBot.PlayerCards[0] = this.SetCard(this.availableCardsInGame[10]);
-
-                //        if (!check)
-                //        {
-                //            horizontal = 1160;
-                //            vertical = 420;
-                //        }
-
-                //        check = true;
-                //        this.cardsHolder[cardsInGame].Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
-                //        this.cardsHolder[cardsInGame].Image = backImage;
-                //        //cardsHolder[cardsInGame].Image = cardsImageDeck[cardsInGame];
-                //        this.cardsHolder[cardsInGame].Location = new Point(horizontal, vertical);
-                //        horizontal += this.cardsHolder[cardsInGame].Width;
-                //        this.cardsHolder[cardsInGame].Visible = true;
-                //        this.Controls.Add(this.fifthBot.Panel);
-                //        this.fifthBot.Panel.Location = new Point(this.cardsHolder[10].Left - 10, this.cardsHolder[10].Top - 10);
-                //        //this.fifthBot.Panel.BackColor = Color.DarkBlue;
-                //        //this.fifthBot.Panel.Height = 150;
-                //        //this.fifthBot.Panel.Width = 180;
-                //        //this.fifthBot.Panel.Visible = false;
-
-                //        if (cardsInGame == 11)
-                //        {
-                //            check = false;
-                //        }
-                //    }
-                //}
 
                 // TODO if statement to switch
+                
                 if (cardsInGame >= 12)    // elica: cards on the table with index 12, 13, 14, 15, 16
                 {
-                    //for (int i = 0; i <5; i++)
-                    //{
-                    //    this.cardsHolder[12+i].Tag = int.Parse(this.ImgLocation[12+i]) - 1;
-                    //    this.table.CardsOnTable[i] = new Card((int)this.cardsHolder[12+i].Tag);
-                    //    if (!check)
-                    //    {
-                    //        horizontal = 410;
-                    //        vertical = 265;
-                    //    }
-
-                    //    check = true;
-                    //}
-
+                  
 
                     this.cardsHolder[12].Tag = int.Parse(this.ImgLocation[12]) - 1;
                     this.table.CardsOnTable[0] = new Card((int)this.cardsHolder[12].Tag);
                     this.table.CardsOnTable[0].NumberInGame = cardsInGame;
-                    if (cardsInGame > 12)
+                    if (cardsInGame == 13)
                     {
                         this.cardsHolder[13].Tag = int.Parse(this.ImgLocation[13]) - 1;
-                        this.table.CardsOnTable[1] = new Card((int)this.cardsHolder[12].Tag);
+                        this.table.CardsOnTable[1] = new Card((int)this.cardsHolder[13].Tag);
                         this.table.CardsOnTable[1].NumberInGame = cardsInGame;
                     }
 
-                    if (cardsInGame > 13)
+                    if (cardsInGame ==14)
                     {
                         this.cardsHolder[14].Tag = int.Parse(this.ImgLocation[14]) - 1;
-                        this.table.CardsOnTable[2] = new Card((int)this.cardsHolder[13].Tag);
+                        this.table.CardsOnTable[2] = new Card((int)this.cardsHolder[14].Tag);
                         this.table.CardsOnTable[2].NumberInGame = cardsInGame;
                     }
 
-                    if (cardsInGame > 14)
+                    if (cardsInGame ==15)
                     {
                         this.cardsHolder[15].Tag = int.Parse(this.ImgLocation[15]) - 1;
-                        this.table.CardsOnTable[3] = new Card((int)this.cardsHolder[14].Tag);
+                        this.table.CardsOnTable[3] = new Card((int)this.cardsHolder[15].Tag);
                         this.table.CardsOnTable[3].NumberInGame = cardsInGame;
                     }
 
-                    if (cardsInGame > 15)
+                    if (cardsInGame ==16)
                     {
                         this.cardsHolder[16].Tag = int.Parse(this.ImgLocation[16]) - 1;
-                        this.table.CardsOnTable[4] = new Card((int)this.cardsHolder[12].Tag);
+                        this.table.CardsOnTable[4] = new Card((int)this.cardsHolder[16].Tag);
                         this.table.CardsOnTable[4].NumberInGame = cardsInGame;
                     }
 
