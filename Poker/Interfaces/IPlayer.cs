@@ -1,7 +1,7 @@
-﻿using System.Windows.Forms;
-
-namespace Poker.Interfaces
+﻿namespace Poker.Interfaces
 {
+    using System.Windows.Forms;
+
     public interface IPlayer
     {
         //int[] Cards { get; set; }
@@ -30,6 +30,5 @@ namespace Poker.Interfaces
         int Call { get; set; }
 
         int Raise { get; set; }
-
     }
 }

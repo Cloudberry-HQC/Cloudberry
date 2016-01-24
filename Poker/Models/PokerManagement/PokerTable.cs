@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Poker.Interfaces;
-
-namespace Poker.Models.PokerManagement
+﻿namespace Poker.Models.PokerManagement
 {
+    using Interfaces;
+
     public class PokerTable
     {
         private const int NumberOfTableCard = 5;
@@ -22,6 +17,5 @@ namespace Poker.Models.PokerManagement
         {
             get { return this.cardsOnTable; }
         }
-
     }
 }

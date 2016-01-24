@@ -1,18 +1,19 @@
-﻿using Poker.Models.PokerManagement;
-
-namespace Poker.Core
+﻿namespace Poker.Core
 {
-    using Poker.Models.Player;
-    class DataBase
+    using Interfaces;
+    using Models.Player;
+    using Models.PokerManagement;
+
+    public class Database
     {
-        private static DataBase instance = null;
-        Player[] players = new Player[6];
+        private static Database instance = null;
+        readonly IPlayer[] players = new Player[6];
         private PokerTable table;
-        private DataBase()
+        private Database()
         {
 
         }
-        public Player[] Players { get { return this.players; } }
+        public IPlayer[] Players { get { return this.players; } }
 
         public PokerTable Table
         {
@@ -20,13 +21,13 @@ namespace Poker.Core
             set { this.table = value; }
         }
 
-        public static DataBase Instace
+        public static Database Instace
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new DataBase();
+                    instance = new Database();
                     return instance;
                 }
                 return instance;

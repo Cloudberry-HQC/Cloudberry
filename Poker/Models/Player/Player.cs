@@ -1,11 +1,10 @@
-﻿using Poker.Interfaces;
-
-namespace Poker.Models.Player
+﻿namespace Poker.Models.Player
 {
     using System.Drawing;
     using System.Windows.Forms;
-    using Poker;
-    public abstract class Player:IPlayer
+    using Interfaces;
+
+    public abstract class Player : IPlayer
     {
         private const int NumberOfCards = 2;
         private Panel panel;
@@ -23,19 +22,20 @@ namespace Poker.Models.Player
         //private int[] catds=new int[2];
         private ICard[] playerCards;
 
-        public Player(string name)
+        protected Player(string name)
         {
-            this.panel = new Panel();
-            this.panel.BackColor = Color.DarkBlue;
-            this.panel.Height = 150;
-            this.panel.Width = 180;
-            this.panel.Visible = false;
-            this.chips = 100000;
+            this.panel = new Panel
+            {
+                BackColor = Color.DarkBlue,
+                Height = 150,
+                Width = 180,
+                Visible = false
+            };
+            this.chips = 10000;
             this.Name = name;
             this.Status = new Label();
             this.playerCards = new ICard[NumberOfCards];
         }
-
 
         public ICard[] PlayerCards
         {
@@ -210,5 +210,4 @@ namespace Poker.Models.Player
         //        sTurn = false;
         //    }
     }
-
 }

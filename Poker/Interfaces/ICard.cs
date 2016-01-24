@@ -1,7 +1,7 @@
-﻿using Poker.Enums;
-
-namespace Poker.Interfaces
+﻿namespace Poker.Interfaces
 {
+    using Enums;
+
     public interface ICard
     {
         SuitOfCard Suit { get; set; }

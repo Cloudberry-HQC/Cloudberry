@@ -1,10 +1,9 @@
-﻿using System.Threading;
-
-namespace Poker.Models.Player
+﻿namespace Poker.Models.Player
 {
     public class Bot : Player
     {
-        public Bot(string name) : base(name)
+        public Bot(string name) 
+            : base(name)
         {
 
         }

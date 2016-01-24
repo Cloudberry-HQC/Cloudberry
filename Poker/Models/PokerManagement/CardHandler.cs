@@ -1,9 +1,8 @@
-﻿using System.Threading;
-using Poker.Enums;
-using Poker.Interfaces;
-
-namespace Poker.Models
+﻿namespace Poker.Models.PokerManagement
 {
+    using Enums;
+    using Interfaces;
+
     public class CardHandler
     {
         private ICard card;
@@ -17,22 +16,17 @@ namespace Poker.Models
             {
                 case 0:
                     suit = SuitOfCard.Clubs;
-
                     break;
                 case 1:
                     suit = SuitOfCard.Diamonds;
-
                     break;
                 case 2:
                     suit = SuitOfCard.Hearts;
-
                     break;
                 case 3:
                     suit = SuitOfCard.Spades;
-
                     break;
             }
-
 
             return suit;
         }

@@ -1,10 +1,6 @@
-﻿using Poker.Core;
-
-namespace Poker.Models.PokerManagement
+﻿namespace Poker.Models.PokerManagement
 {
-    using System;
-    using Poker.Models.Player;
-    public class AIMenager
+    public class AiMenager
     {
         //void AI(Player player)
         //{
@@ -63,8 +59,8 @@ namespace Poker.Models.PokerManagement
 
         //    if (player.FoldTurn)
         //    {
-        //        DataBase.Instace.Table.CardsHolder[player.Cards[0]].Visible = false;
-        //        DataBase.Instace.Table.CardsHolder[player.Cards[1]].Visible = false;
+        //        Database.Instace.Table.CardsHolder[player.Cards[0]].Visible = false;
+        //        Database.Instace.Table.CardsHolder[player.Cards[1]].Visible = false;
                 
         //    }
         //}

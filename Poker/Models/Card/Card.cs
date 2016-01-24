@@ -1,11 +1,10 @@
-﻿using Poker.Enums;
-using Poker.Interfaces;
-
-namespace Poker.Models.Card
+﻿namespace Poker.Models.Card
 {
+    using Enums;
+    using Interfaces;
+
     public class Card : ICard
     {
-
         public Card(SuitOfCard suit, ValueOfCard value)
         {
             this.Suit = suit;
@@ -13,6 +12,7 @@ namespace Poker.Models.Card
         }
 
         public SuitOfCard Suit { get; set; }
+
         public ValueOfCard Value { get; set; }
     }
 }
