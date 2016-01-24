@@ -216,15 +216,15 @@ namespace Poker.Models.PokerManagement
 
 
 
-            if (player.Current >= - 1)
+            if (player.Current >= -1)
             {
                 if (distinctValueOfClubs.Length >= 5)
                 {
                     if (distinctValueOfClubs[0].Value + 4 == distinctValueOfClubs[4].Value)
                     {
                         player.Current = 8;
-                        player.Power = ((int) distinctValueOfClubs.Max(card => card.Value)) + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 8});
+                        player.Power = ((int)distinctValueOfClubs.Max(card => card.Value)) + player.Current * 100;
+                        this.Win.Add(new Type() { Power = player.Power, Current = 8 });
                         this.Sorted = this.Win
                             .OrderByDescending(op1 => op1.Current)
                             .ThenByDescending(op1 => op1.Power)
@@ -238,8 +238,8 @@ namespace Poker.Models.PokerManagement
                         distinctValueOfClubs[4].Value == ValueOfCard.King)
                     {
                         player.Current = 9;
-                        player.Power = ((int) distinctValueOfClubs.Max(card => card.Value)) + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 9});
+                        player.Power = ((int)distinctValueOfClubs.Max(card => card.Value)) + player.Current * 100;
+                        this.Win.Add(new Type() { Power = player.Power, Current = 9 });
                         this.Sorted = this.Win
                             .OrderByDescending(op1 => op1.Current)
                             .ThenByDescending(op1 => op1.Power)
@@ -252,8 +252,8 @@ namespace Poker.Models.PokerManagement
                     if (distinctValueOfDiamonds[0].Value + 4 == distinctValueOfDiamonds[4].Value)
                     {
                         player.Current = 8;
-                        player.Power = ((int) distinctValueOfDiamonds.Max(card => card.Value)) + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 8});
+                        player.Power = ((int)distinctValueOfDiamonds.Max(card => card.Value)) + player.Current * 100;
+                        this.Win.Add(new Type() { Power = player.Power, Current = 8 });
                         this.Sorted = this.Win
                             .OrderByDescending(op1 => op1.Current)
                             .ThenByDescending(op1 => op1.Power)
@@ -267,8 +267,8 @@ namespace Poker.Models.PokerManagement
                         distinctValueOfDiamonds[4].Value == ValueOfCard.King)
                     {
                         player.Current = 9;
-                        player.Power = (int) distinctValueOfDiamonds.Max(card => card.Value) + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 9});
+                        player.Power = (int)distinctValueOfDiamonds.Max(card => card.Value) + player.Current * 100;
+                        this.Win.Add(new Type() { Power = player.Power, Current = 9 });
                         this.Sorted = this.Win
                             .OrderByDescending(op1 => op1.Current)
                             .ThenByDescending(op1 => op1.Power)
@@ -281,8 +281,8 @@ namespace Poker.Models.PokerManagement
                     if (distinctValueOfHearts[0].Value + 4 == distinctValueOfHearts[4].Value)
                     {
                         player.Current = 8;
-                        player.Power = ((int) distinctValueOfHearts.Max(card => card.Value)) + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 8});
+                        player.Power = ((int)distinctValueOfHearts.Max(card => card.Value)) + player.Current * 100;
+                        this.Win.Add(new Type() { Power = player.Power, Current = 8 });
                         this.Sorted = this.Win
                             .OrderByDescending(op1 => op1.Current)
                             .ThenByDescending(op1 => op1.Power)
@@ -296,8 +296,8 @@ namespace Poker.Models.PokerManagement
                         distinctValueOfHearts[4].Value == ValueOfCard.King)
                     {
                         player.Current = 9;
-                        player.Power = ((int) distinctValueOfHearts.Max(card => card.Value)) + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 9});
+                        player.Power = ((int)distinctValueOfHearts.Max(card => card.Value)) + player.Current * 100;
+                        this.Win.Add(new Type() { Power = player.Power, Current = 9 });
                         this.Sorted = this.Win
                             .OrderByDescending(op1 => op1.Current)
                             .ThenByDescending(op1 => op1.Power)
@@ -310,8 +310,8 @@ namespace Poker.Models.PokerManagement
                     if (distinctValueOfSpades[0].Value + 4 == distinctValueOfSpades[4].Value)
                     {
                         player.Current = 8;
-                        player.Power = ((int) distinctValueOfSpades.Max(card => card.Value)) + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 8});
+                        player.Power = ((int)distinctValueOfSpades.Max(card => card.Value)) + player.Current * 100;
+                        this.Win.Add(new Type() { Power = player.Power, Current = 8 });
                         this.Sorted = this.Win
                             .OrderByDescending(op1 => op1.Current)
                             .ThenByDescending(op1 => op1.Power)
@@ -325,8 +325,8 @@ namespace Poker.Models.PokerManagement
                         distinctValueOfSpades[4].Value == ValueOfCard.King)
                     {
                         player.Current = 9;
-                        player.Power = ((int) distinctValueOfSpades.Max(card => card.Value)) + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 9});
+                        player.Power = ((int)distinctValueOfSpades.Max(card => card.Value)) + player.Current * 100;
+                        this.Win.Add(new Type() { Power = player.Power, Current = 9 });
                         this.Sorted = this.Win
                             .OrderByDescending(op1 => op1.Current)
                             .ThenByDescending(op1 => op1.Power)
@@ -338,7 +338,7 @@ namespace Poker.Models.PokerManagement
 
         private void rFourOfAKind(IPlayer player, ICard[] allSevenCards)
         {
-            if (player.Current >= - 1)
+            if (player.Current >= -1)
             {
                 for (int j = 0; j <= 3; j++)
                 {
@@ -348,8 +348,8 @@ namespace Poker.Models.PokerManagement
                         allSevenCards[j].Value == allSevenCards[j + 3].Value)
                     {
                         player.Current = 7;
-                        player.Power = ((int) allSevenCards[j].Value) * 4 + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 7});
+                        player.Power = ((int)allSevenCards[j].Value) * 4 + player.Current * 100;
+                        this.Win.Add(new Type() { Power = player.Power, Current = 7 });
                         this.Sorted = this.Win
                             .OrderByDescending(op1 => op1.Current)
                             .ThenByDescending(op1 => op1.Power)
@@ -364,7 +364,7 @@ namespace Poker.Models.PokerManagement
                     {
                         player.Current = 7;
                         player.Power = 13 * 4 + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 7});
+                        this.Win.Add(new Type() { Power = player.Power, Current = 7 });
                         this.Sorted = this.Win
                             .OrderByDescending(op1 => op1.Current)
                             .ThenByDescending(op1 => op1.Power)
@@ -376,13 +376,13 @@ namespace Poker.Models.PokerManagement
 
         private void rFullHouse(IPlayer player, ref bool hasTrips, ICard[] allSevenCards)
         {
-            if (player.Current >= - 1)
+            if (player.Current >= -1)
             {
                 this.type = player.Power;
                 //loops through value (rank) of cards 0-ace ... king-12
                 for (int j = 0; j <= 12; j++)
                 {
-                    var equalCards = allSevenCards.Where(card => (int) card.Value == j).ToArray();
+                    var equalCards = allSevenCards.Where(card => (int)card.Value == j).ToArray();
                     if (equalCards.Length == 3 || hasTrips)
                     {
                         if (equalCards.Length == 2)
@@ -391,7 +391,7 @@ namespace Poker.Models.PokerManagement
                             {
                                 player.Current = 6;
                                 player.Power = 13 * 2 + player.Current * 100;
-                                this.Win.Add(new Type() {Power = player.Power, Current = 6});
+                                this.Win.Add(new Type() { Power = player.Power, Current = 6 });
                                 this.sorted = this.Win
                                     .OrderByDescending(op1 => op1.Current)
                                     .ThenByDescending(op1 => op1.Power)
@@ -402,8 +402,8 @@ namespace Poker.Models.PokerManagement
                             if (equalCards.Max(card => card.Value) != 0)
                             {
                                 player.Current = 6;
-                                player.Power = (int) equalCards.Max(card => card.Value) * 2 + player.Current * 100;
-                                this.Win.Add(new Type() {Power = player.Power, Current = 6});
+                                player.Power = (int)equalCards.Max(card => card.Value) * 2 + player.Current * 100;
+                                this.Win.Add(new Type() { Power = player.Power, Current = 6 });
                                 this.sorted = this.Win
                                     .OrderByDescending(op1 => op1.Current)
                                     .ThenByDescending(op1 => op1.Power)
@@ -418,13 +418,13 @@ namespace Poker.Models.PokerManagement
                             {
                                 player.Power = 13;
                                 hasTrips = true;
-                                j = - 1;
+                                j = -1;
                             }
                             else
                             {
-                                player.Power = (int) equalCards.Max(card => card.Value);
+                                player.Power = (int)equalCards.Max(card => card.Value);
                                 hasTrips = true;
-                                j = - 1;
+                                j = -1;
                             }
                         }
                     }
@@ -439,7 +439,7 @@ namespace Poker.Models.PokerManagement
 
         private void rFlush(IPlayer player, ref bool hasFlush)
         {
-            if (player.Current >= - 1)
+            if (player.Current >= -1)
             {
 
                 ICard[] clubs = DataBase.Instace.Table.CardsOnTable
@@ -462,8 +462,8 @@ namespace Poker.Models.PokerManagement
                         if (player.PlayerCards[0].Value > clubs.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = (int) player.PlayerCards[0].Value + player.Current * 100;
-                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            player.Power = (int)player.PlayerCards[0].Value + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                             this.Sorted =
                                 this.Win.OrderByDescending(op1 => op1.Current)
                                     .ThenByDescending(op1 => op1.Power)
@@ -475,8 +475,8 @@ namespace Poker.Models.PokerManagement
                         if (player.PlayerCards[1].Value > clubs.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = (int) player.PlayerCards[1].Value + player.Current * 100;
-                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            player.Power = (int)player.PlayerCards[1].Value + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                             this.Sorted =
                                 this.Win.OrderByDescending(op1 => op1.Current)
                                     .ThenByDescending(op1 => op1.Power)
@@ -488,8 +488,8 @@ namespace Poker.Models.PokerManagement
                                  player.PlayerCards[1].Value < clubs.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = (int) clubs.Max(card => card.Value) + player.Current * 100;
-                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            player.Power = (int)clubs.Max(card => card.Value) + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                             this.Sorted =
                                 this.Win.OrderByDescending(op1 => op1.Current)
                                     .ThenByDescending(op1 => op1.Power)
@@ -510,8 +510,8 @@ namespace Poker.Models.PokerManagement
                         if (player.PlayerCards[0].Value > clubs.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = (int) player.PlayerCards[0].Value + player.Current * 100;
-                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            player.Power = (int)player.PlayerCards[0].Value + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                             this.Sorted =
                                 this.Win.OrderByDescending(op1 => op1.Current)
                                     .ThenByDescending(op1 => op1.Power)
@@ -521,8 +521,8 @@ namespace Poker.Models.PokerManagement
                         else
                         {
                             player.Current = 5;
-                            player.Power = (int) clubs.Max(card => card.Value) + player.Current * 100;
-                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            player.Power = (int)clubs.Max(card => card.Value) + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                             this.Sorted =
                                 this.Win.OrderByDescending(op1 => op1.Current)
                                     .ThenByDescending(op1 => op1.Power)
@@ -540,8 +540,8 @@ namespace Poker.Models.PokerManagement
                         if (player.PlayerCards[1].Value > clubs.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = (int) player.PlayerCards[1].Value + player.Current * 100;
-                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            player.Power = (int)player.PlayerCards[1].Value + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                             this.Sorted =
                                 this.Win.OrderByDescending(op1 => op1.Current)
                                     .ThenByDescending(op1 => op1.Power)
@@ -551,8 +551,8 @@ namespace Poker.Models.PokerManagement
                         else
                         {
                             player.Current = 5;
-                            player.Power = (int) clubs.Max(card => card.Value) + player.Current * 100;
-                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            player.Power = (int)clubs.Max(card => card.Value) + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                             this.Sorted =
                                 this.Win.OrderByDescending(op1 => op1.Current)
                                     .ThenByDescending(op1 => op1.Power)
@@ -570,8 +570,8 @@ namespace Poker.Models.PokerManagement
                         player.PlayerCards[0].Value > clubs.Min(card => card.Value))
                     {
                         player.Current = 5;
-                        player.Power = (int) player.PlayerCards[0].Value + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                        player.Power = (int)player.PlayerCards[0].Value + player.Current * 100;
+                        this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                         this.Sorted =
                             this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                         hasFlush = true;
@@ -582,8 +582,8 @@ namespace Poker.Models.PokerManagement
                         player.PlayerCards[1].Value > clubs.Min(card => card.Value))
                     {
                         player.Current = 5;
-                        player.Power = (int) player.PlayerCards[1].Value + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                        player.Power = (int)player.PlayerCards[1].Value + player.Current * 100;
+                        this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                         this.Sorted =
                             this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                         hasFlush = true;
@@ -595,8 +595,8 @@ namespace Poker.Models.PokerManagement
                              player.PlayerCards[1].Value < clubs.Min(card => card.Value))
                     {
                         player.Current = 5;
-                        player.Power = (int) clubs.Max(card => card.Value) + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                        player.Power = (int)clubs.Max(card => card.Value) + player.Current * 100;
+                        this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                         this.Sorted =
                             this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                         hasFlush = true;
@@ -612,8 +612,8 @@ namespace Poker.Models.PokerManagement
                         if (player.PlayerCards[0].Value > diamonds.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = (int) player.PlayerCards[0].Value + player.Current * 100;
-                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            player.Power = (int)player.PlayerCards[0].Value + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                             this.Sorted =
                                 this.Win.OrderByDescending(op1 => op1.Current)
                                     .ThenByDescending(op1 => op1.Power)
@@ -624,8 +624,8 @@ namespace Poker.Models.PokerManagement
                         if (player.PlayerCards[1].Value > diamonds.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = (int) player.PlayerCards[1].Value + player.Current * 100;
-                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            player.Power = (int)player.PlayerCards[1].Value + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                             this.Sorted =
                                 this.Win.OrderByDescending(op1 => op1.Current)
                                     .ThenByDescending(op1 => op1.Power)
@@ -636,8 +636,8 @@ namespace Poker.Models.PokerManagement
                                  player.PlayerCards[1].Value < diamonds.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = (int) diamonds.Max(card => card.Value) + player.Current * 100;
-                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            player.Power = (int)diamonds.Max(card => card.Value) + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                             this.Sorted =
                                 this.Win.OrderByDescending(op1 => op1.Current)
                                     .ThenByDescending(op1 => op1.Power)
@@ -655,8 +655,8 @@ namespace Poker.Models.PokerManagement
                         if (player.PlayerCards[0].Value > diamonds.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = (int) player.PlayerCards[0].Value + player.Current * 100;
-                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            player.Power = (int)player.PlayerCards[0].Value + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                             this.Sorted =
                                 this.Win.OrderByDescending(op1 => op1.Current)
                                     .ThenByDescending(op1 => op1.Power)
@@ -666,8 +666,8 @@ namespace Poker.Models.PokerManagement
                         else
                         {
                             player.Current = 5;
-                            player.Power = (int) diamonds.Max(card => card.Value) + player.Current * 100;
-                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            player.Power = (int)diamonds.Max(card => card.Value) + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                             this.Sorted =
                                 this.Win.OrderByDescending(op1 => op1.Current)
                                     .ThenByDescending(op1 => op1.Power)
@@ -682,8 +682,8 @@ namespace Poker.Models.PokerManagement
                         if (player.PlayerCards[1].Value > diamonds.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = (int) player.PlayerCards[1].Value + player.Current * 100;
-                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            player.Power = (int)player.PlayerCards[1].Value + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                             this.Sorted =
                                 this.Win.OrderByDescending(op1 => op1.Current)
                                     .ThenByDescending(op1 => op1.Power)
@@ -693,8 +693,8 @@ namespace Poker.Models.PokerManagement
                         else
                         {
                             player.Current = 5;
-                            player.Power = (int) diamonds.Max(card => card.Value) + player.Current * 100;
-                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            player.Power = (int)diamonds.Max(card => card.Value) + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                             this.Sorted =
                                 this.Win.OrderByDescending(op1 => op1.Current)
                                     .ThenByDescending(op1 => op1.Power)
@@ -710,8 +710,8 @@ namespace Poker.Models.PokerManagement
                         player.PlayerCards[0].Value > diamonds.Min(card => card.Value))
                     {
                         player.Current = 5;
-                        player.Power = (int) player.PlayerCards[0].Value + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                        player.Power = (int)player.PlayerCards[0].Value + player.Current * 100;
+                        this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                         this.Sorted =
                             this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                         hasFlush = true;
@@ -721,8 +721,8 @@ namespace Poker.Models.PokerManagement
                         player.PlayerCards[1].Value > diamonds.Min(card => card.Value))
                     {
                         player.Current = 5;
-                        player.Power = (int) player.PlayerCards[1].Value + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                        player.Power = (int)player.PlayerCards[1].Value + player.Current * 100;
+                        this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                         this.Sorted =
                             this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                         hasFlush = true;
@@ -732,8 +732,8 @@ namespace Poker.Models.PokerManagement
                              player.PlayerCards[1].Value < diamonds.Min(card => card.Value))
                     {
                         player.Current = 5;
-                        player.Power = (int) diamonds.Max(card => card.Value) + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                        player.Power = (int)diamonds.Max(card => card.Value) + player.Current * 100;
+                        this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                         this.Sorted =
                             this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                         hasFlush = true;
@@ -749,8 +749,8 @@ namespace Poker.Models.PokerManagement
                         if (player.PlayerCards[0].Value > hearts.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = (int) player.PlayerCards[0].Value + player.Current * 100;
-                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            player.Power = (int)player.PlayerCards[0].Value + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                             this.Sorted =
                                 this.Win.OrderByDescending(op1 => op1.Current)
                                     .ThenByDescending(op1 => op1.Power)
@@ -761,8 +761,8 @@ namespace Poker.Models.PokerManagement
                         if (player.PlayerCards[1].Value > hearts.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = (int) player.PlayerCards[1].Value + player.Current * 100;
-                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            player.Power = (int)player.PlayerCards[1].Value + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                             this.Sorted =
                                 this.Win.OrderByDescending(op1 => op1.Current)
                                     .ThenByDescending(op1 => op1.Power)
@@ -773,8 +773,8 @@ namespace Poker.Models.PokerManagement
                                  player.PlayerCards[1].Value < hearts.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = (int) hearts.Max(card => card.Value) + player.Current * 100;
-                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            player.Power = (int)hearts.Max(card => card.Value) + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                             this.Sorted =
                                 this.Win.OrderByDescending(op1 => op1.Current)
                                     .ThenByDescending(op1 => op1.Power)
@@ -792,8 +792,8 @@ namespace Poker.Models.PokerManagement
                         if (player.PlayerCards[0].Value > hearts.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = (int) player.PlayerCards[0].Value + player.Current * 100;
-                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            player.Power = (int)player.PlayerCards[0].Value + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                             this.Sorted =
                                 this.Win.OrderByDescending(op1 => op1.Current)
                                     .ThenByDescending(op1 => op1.Power)
@@ -803,8 +803,8 @@ namespace Poker.Models.PokerManagement
                         else
                         {
                             player.Current = 5;
-                            player.Power = (int) hearts.Max(card => card.Value) + player.Current * 100;
-                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            player.Power = (int)hearts.Max(card => card.Value) + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                             this.Sorted =
                                 this.Win.OrderByDescending(op1 => op1.Current)
                                     .ThenByDescending(op1 => op1.Power)
@@ -819,8 +819,8 @@ namespace Poker.Models.PokerManagement
                         if (player.PlayerCards[1].Value > hearts.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = (int) player.PlayerCards[1].Value + player.Current * 100;
-                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            player.Power = (int)player.PlayerCards[1].Value + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                             this.Sorted =
                                 this.Win.OrderByDescending(op1 => op1.Current)
                                     .ThenByDescending(op1 => op1.Power)
@@ -830,8 +830,8 @@ namespace Poker.Models.PokerManagement
                         else
                         {
                             player.Current = 5;
-                            player.Power = (int) hearts.Max(card => card.Value) + player.Current * 100;
-                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            player.Power = (int)hearts.Max(card => card.Value) + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                             this.Sorted =
                                 this.Win.OrderByDescending(op1 => op1.Current)
                                     .ThenByDescending(op1 => op1.Power)
@@ -847,8 +847,8 @@ namespace Poker.Models.PokerManagement
                         player.PlayerCards[0].Value > hearts.Min(card => card.Value))
                     {
                         player.Current = 5;
-                        player.Power = (int) player.PlayerCards[0].Value + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                        player.Power = (int)player.PlayerCards[0].Value + player.Current * 100;
+                        this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                         this.Sorted =
                             this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                         hasFlush = true;
@@ -858,8 +858,8 @@ namespace Poker.Models.PokerManagement
                         player.PlayerCards[1].Value > hearts.Min(card => card.Value))
                     {
                         player.Current = 5;
-                        player.Power = (int) player.PlayerCards[1].Value + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                        player.Power = (int)player.PlayerCards[1].Value + player.Current * 100;
+                        this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                         this.Sorted =
                             this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                         hasFlush = true;
@@ -870,8 +870,8 @@ namespace Poker.Models.PokerManagement
                              player.PlayerCards[1].Value < hearts.Min(card => card.Value))
                     {
                         player.Current = 5;
-                        player.Power = (int) hearts.Max(card => card.Value) + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                        player.Power = (int)hearts.Max(card => card.Value) + player.Current * 100;
+                        this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                         this.Sorted =
                             this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                         hasFlush = true;
@@ -887,8 +887,8 @@ namespace Poker.Models.PokerManagement
                         if (player.PlayerCards[0].Value > spades.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = (int) player.PlayerCards[0].Value + player.Current * 100;
-                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            player.Power = (int)player.PlayerCards[0].Value + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                             this.Sorted =
                                 this.Win.OrderByDescending(op1 => op1.Current)
                                     .ThenByDescending(op1 => op1.Power)
@@ -899,8 +899,8 @@ namespace Poker.Models.PokerManagement
                         if (player.PlayerCards[1].Value > spades.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = (int) player.PlayerCards[1].Value + player.Current * 100;
-                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            player.Power = (int)player.PlayerCards[1].Value + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                             this.Sorted =
                                 this.Win.OrderByDescending(op1 => op1.Current)
                                     .ThenByDescending(op1 => op1.Power)
@@ -913,8 +913,8 @@ namespace Poker.Models.PokerManagement
                                  player.PlayerCards[1].Value < spades.Max(card => card.Value))
                         {
                             player.Current = 5;
-                            player.Power = (int) spades.Max(card => card.Value) + player.Current * 100;
-                            this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                            player.Power = (int)spades.Max(card => card.Value) + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                             this.Sorted =
                                 this.Win.OrderByDescending(op1 => op1.Current)
                                     .ThenByDescending(op1 => op1.Power)
@@ -930,45 +930,54 @@ namespace Poker.Models.PokerManagement
                         player.PlayerCards[0].Suit == spades[0].Suit)
                     {
                         if (player.PlayerCards[0].Value > spades.Max(card => card.Value))
-
+                        {
                             player.Current = 5;
-                        player.Power = (int) player.PlayerCards[0].Value + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
-                        this.Sorted =
-                            this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                        hasFlush = true;
+                            player.Power = (int)player.PlayerCards[0].Value + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
+                            this.Sorted =
+                                this.Win.OrderByDescending(op1 => op1.Current)
+                                    .ThenByDescending(op1 => op1.Power)
+                                    .First();
+                            hasFlush = true;
+                        }
+                        else
+                        {
+                            player.Current = 5;
+                            player.Power = (int)spades.Max(card => card.Value) + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
+                            this.Sorted =
+                                this.Win.OrderByDescending(op1 => op1.Current)
+                                    .ThenByDescending(op1 => op1.Power)
+                                    .First();
+                            hasFlush = true;
+                        }
                     }
-                    else
-                    {
-                        player.Current = 5;
-                        player.Power = (int) spades.Max(card => card.Value) + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
-                        this.Sorted =
-                            this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                        hasFlush = true;
-                    }
-                }
 
-                if (player.PlayerCards[1].Suit != player.PlayerCards[0].Suit &&
-                    player.PlayerCards[1].Suit == spades[0].Suit)
-                {
-                    if (player.PlayerCards[1].Value > spades.Max(card => card.Value))
+                    if (player.PlayerCards[1].Suit != player.PlayerCards[0].Suit &&
+                        player.PlayerCards[1].Suit == spades[0].Suit)
                     {
-                        player.Current = 5;
-                        player.Power = (int) player.PlayerCards[1].Value + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
-                        this.Sorted =
-                            this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                        hasFlush = true;
-                    }
-                    else
-                    {
-                        player.Current = 5;
-                        player.Power = (int) spades.Max(card => card.Value) + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
-                        this.Sorted =
-                            this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
-                        hasFlush = true;
+                        if (player.PlayerCards[1].Value > spades.Max(card => card.Value))
+                        {
+                            player.Current = 5;
+                            player.Power = (int)player.PlayerCards[1].Value + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
+                            this.Sorted =
+                                this.Win.OrderByDescending(op1 => op1.Current)
+                                    .ThenByDescending(op1 => op1.Power)
+                                    .First();
+                            hasFlush = true;
+                        }
+                        else
+                        {
+                            player.Current = 5;
+                            player.Power = (int)spades.Max(card => card.Value) + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 5 });
+                            this.Sorted =
+                                this.Win.OrderByDescending(op1 => op1.Current)
+                                    .ThenByDescending(op1 => op1.Power)
+                                    .First();
+                            hasFlush = true;
+                        }
                     }
                 }
 
@@ -979,8 +988,8 @@ namespace Poker.Models.PokerManagement
                         player.PlayerCards[0].Value > spades.Min(card => card.Value))
                     {
                         player.Current = 5;
-                        player.Power = (int) player.PlayerCards[0].Value + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                        player.Power = (int)player.PlayerCards[0].Value + player.Current * 100;
+                        this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                         this.Sorted =
                             this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                         hasFlush = true;
@@ -990,8 +999,8 @@ namespace Poker.Models.PokerManagement
                         player.PlayerCards[1].Value > spades.Min(card => card.Value))
                     {
                         player.Current = 5;
-                        player.Power = (int) player.PlayerCards[1].Value + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                        player.Power = (int)player.PlayerCards[1].Value + player.Current * 100;
+                        this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                         this.Sorted =
                             this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                         hasFlush = true;
@@ -1002,8 +1011,8 @@ namespace Poker.Models.PokerManagement
                              player.PlayerCards[1].Value < spades.Min(card => card.Value))
                     {
                         player.Current = 5;
-                        player.Power = (int) spades.Max(card => card.Value) + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 5});
+                        player.Power = (int)spades.Max(card => card.Value) + player.Current * 100;
+                        this.Win.Add(new Type() { Power = player.Power, Current = 5 });
                         this.Sorted =
                             this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
                         hasFlush = true;
@@ -1017,7 +1026,7 @@ namespace Poker.Models.PokerManagement
                     {
                         player.Current = 5.5;
                         player.Power = 13 + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 5.5});
+                        this.Win.Add(new Type() { Power = player.Power, Current = 5.5 });
                         this.Sorted = this.Win
                             .OrderByDescending(op1 => op1.Current)
                             .ThenByDescending(op1 => op1.Power)
@@ -1029,7 +1038,7 @@ namespace Poker.Models.PokerManagement
                     {
                         player.Current = 5.5;
                         player.Power = 13 + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 5.5});
+                        this.Win.Add(new Type() { Power = player.Power, Current = 5.5 });
                         this.Sorted = this.Win
                             .OrderByDescending(op1 => op1.Current)
                             .ThenByDescending(op1 => op1.Power)
@@ -1044,7 +1053,7 @@ namespace Poker.Models.PokerManagement
                     {
                         player.Current = 5.5;
                         player.Power = 13 + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 5.5});
+                        this.Win.Add(new Type() { Power = player.Power, Current = 5.5 });
                         this.Sorted = this.Win
                             .OrderByDescending(op1 => op1.Current)
                             .ThenByDescending(op1 => op1.Power)
@@ -1056,7 +1065,7 @@ namespace Poker.Models.PokerManagement
                     {
                         player.Current = 5.5;
                         player.Power = 13 + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 5.5});
+                        this.Win.Add(new Type() { Power = player.Power, Current = 5.5 });
                         this.Sorted = this.Win
                             .OrderByDescending(op1 => op1.Current)
                             .ThenByDescending(op1 => op1.Power)
@@ -1071,7 +1080,7 @@ namespace Poker.Models.PokerManagement
                     {
                         player.Current = 5.5;
                         player.Power = 13 + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 5.5});
+                        this.Win.Add(new Type() { Power = player.Power, Current = 5.5 });
                         this.Sorted = this.Win
                             .OrderByDescending(op1 => op1.Current)
                             .ThenByDescending(op1 => op1.Power)
@@ -1083,7 +1092,7 @@ namespace Poker.Models.PokerManagement
                     {
                         player.Current = 5.5;
                         player.Power = 13 + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 5.5});
+                        this.Win.Add(new Type() { Power = player.Power, Current = 5.5 });
                         this.Sorted = this.Win
                             .OrderByDescending(op1 => op1.Current)
                             .ThenByDescending(op1 => op1.Power)
@@ -1098,7 +1107,7 @@ namespace Poker.Models.PokerManagement
                     {
                         player.Current = 5.5;
                         player.Power = 13 + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 5.5});
+                        this.Win.Add(new Type() { Power = player.Power, Current = 5.5 });
                         this.Sorted = this.Win
                             .OrderByDescending(op1 => op1.Current)
                             .ThenByDescending(op1 => op1.Power)
@@ -1110,7 +1119,7 @@ namespace Poker.Models.PokerManagement
                     {
                         player.Current = 5.5;
                         player.Power = 13 + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 5.5});
+                        this.Win.Add(new Type() { Power = player.Power, Current = 5.5 });
                         this.Sorted = this.Win
                             .OrderByDescending(op1 => op1.Current)
                             .ThenByDescending(op1 => op1.Power)
@@ -1122,7 +1131,7 @@ namespace Poker.Models.PokerManagement
 
         private void rStraight(IPlayer player, ICard[] allSevenCards)
         {
-            if (player.Current >= - 1)
+            if (player.Current >= -1)
             {
                 //ICard[] distinctCards = allSevenCards.Select(card => card.Value).Distinct().ToArray(); //op
                 //List<ICard> distinctCards = new List<ICard>();
@@ -1140,11 +1149,11 @@ namespace Poker.Models.PokerManagement
                 {
                     if (distinctCards[j].Value + 4 == distinctCards[j + 4].Value)
                     {
-                        if ((int) distinctCards.Max(card => card.Value) - 4 == (int) distinctCards[j].Value)
+                        if ((int)distinctCards.Max(card => card.Value) - 4 == (int)distinctCards[j].Value)
                         {
                             player.Current = 4;
-                            player.Power = (int) distinctCards.Max(card => card.Value) + player.Current * 100;
-                            this.Win.Add(new Type() {Power = player.Power, Current = 4});
+                            player.Power = (int)distinctCards.Max(card => card.Value) + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 4 });
                             this.Sorted = this.Win
                                 .OrderByDescending(op1 => op1.Current)
                                 .ThenByDescending(op1 => op1.Power)
@@ -1153,8 +1162,8 @@ namespace Poker.Models.PokerManagement
                         else
                         {
                             player.Current = 4;
-                            player.Power = (int) distinctCards[j + 4].Value + player.Current * 100;
-                            this.Win.Add(new Type() {Power = player.Power, Current = 4});
+                            player.Power = (int)distinctCards[j + 4].Value + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 4 });
                             this.Sorted = this.Win
                                 .OrderByDescending(op1 => op1.Current)
                                 .ThenByDescending(op1 => op1.Power)
@@ -1170,7 +1179,7 @@ namespace Poker.Models.PokerManagement
                     {
                         player.Current = 4;
                         player.Power = 13 + player.Current * 100;
-                        this.Win.Add(new Type() {Power = player.Power, Current = 4});
+                        this.Win.Add(new Type() { Power = player.Power, Current = 4 });
                         this.Sorted = this.Win
                             .OrderByDescending(op1 => op1.Current)
                             .ThenByDescending(op1 => op1.Power)
@@ -1182,12 +1191,12 @@ namespace Poker.Models.PokerManagement
 
         private void rThreeOfAKind(IPlayer player, ICard[] allSevenCards)
         {
-            if (player.Current >= - 1)
+            if (player.Current >= -1)
             {
                 for (int j = 0; j <= 12; j++)
                 {
 
-                    ICard[] equalCards = allSevenCards.Where(card => (int) card.Value == j).ToArray();
+                    ICard[] equalCards = allSevenCards.Where(card => (int)card.Value == j).ToArray();
                     if (equalCards.Length == 3)
                     {
 
@@ -1197,7 +1206,7 @@ namespace Poker.Models.PokerManagement
                         {
                             player.Current = 3;
                             player.Power = 13 * 3 + player.Current * 100;
-                            this.Win.Add(new Type() {Power = player.Power, Current = 3});
+                            this.Win.Add(new Type() { Power = player.Power, Current = 3 });
                             this.Sorted = this.Win
                                 .OrderByDescending(op => op.Current)
                                 .ThenByDescending(op => op.Power)
@@ -1206,9 +1215,9 @@ namespace Poker.Models.PokerManagement
                         else
                         {
                             player.Current = 3;
-                            player.Power = (int) equalCards[0].Value + (int) equalCards[1].Value +
-                                           (int) equalCards[2].Value + player.Current * 100;
-                            this.Win.Add(new Type() {Power = player.Power, Current = 3});
+                            player.Power = (int)equalCards[0].Value + (int)equalCards[1].Value +
+                                           (int)equalCards[2].Value + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 3 });
                             this.Sorted = this.Win
                                 .OrderByDescending(op => op.Current)
                                 .ThenByDescending(op => op.Power)
@@ -1221,7 +1230,7 @@ namespace Poker.Models.PokerManagement
 
         private void rTwoPair(IPlayer player)
         {
-            if (player.Current >= - 1)
+            if (player.Current >= -1)
             {
                 bool msgbox = false;
                 for (int tableCard = 4; tableCard >= 0; tableCard--)
@@ -1252,9 +1261,9 @@ namespace Poker.Models.PokerManagement
                                         if (player.PlayerCards[0].Value == ValueOfCard.Ace)
                                         {
                                             player.Current = 2;
-                                            player.Power = 13 * 4 + ((int) player.PlayerCards[1].Value) * 2 +
+                                            player.Power = 13 * 4 + ((int)player.PlayerCards[1].Value) * 2 +
                                                            player.Current * 100;
-                                            this.Win.Add(new Type() {Power = player.Power, Current = 2});
+                                            this.Win.Add(new Type() { Power = player.Power, Current = 2 });
                                             this.Sorted = this.Win
                                                 .OrderByDescending(op => op.Current)
                                                 .ThenByDescending(op => op.Power)
@@ -1264,9 +1273,9 @@ namespace Poker.Models.PokerManagement
                                         if (player.PlayerCards[1].Value == ValueOfCard.Ace)
                                         {
                                             player.Current = 2;
-                                            player.Power = 13 * 4 + ((int) player.PlayerCards[0].Value) * 2 +
+                                            player.Power = 13 * 4 + ((int)player.PlayerCards[0].Value) * 2 +
                                                            player.Current * 100;
-                                            this.Win.Add(new Type() {Power = player.Power, Current = 2});
+                                            this.Win.Add(new Type() { Power = player.Power, Current = 2 });
                                             this.Sorted = this.Win
                                                 .OrderByDescending(op => op.Current)
                                                 .ThenByDescending(op => op.Power)
@@ -1277,10 +1286,10 @@ namespace Poker.Models.PokerManagement
                                             player.PlayerCards[0].Value != ValueOfCard.Ace)
                                         {
                                             player.Current = 2;
-                                            player.Power = ((int) player.PlayerCards[0].Value) * 2 +
-                                                           ((int) player.PlayerCards[1].Value) * 2 +
+                                            player.Power = ((int)player.PlayerCards[0].Value) * 2 +
+                                                           ((int)player.PlayerCards[1].Value) * 2 +
                                                            player.Current * 100;
-                                            this.Win.Add(new Type() {Power = player.Power, Current = 2});
+                                            this.Win.Add(new Type() { Power = player.Power, Current = 2 });
                                             this.Sorted = this.Win
                                                 .OrderByDescending(op => op.Current)
                                                 .ThenByDescending(op => op.Power)
@@ -1298,7 +1307,7 @@ namespace Poker.Models.PokerManagement
 
         private void rPairTwoPair(IPlayer player)
         {
-            if (player.Current >= - 1)
+            if (player.Current >= -1)
             {
                 bool msgbox = false;
                 bool msgbox1 = false;
@@ -1328,9 +1337,9 @@ namespace Poker.Models.PokerManagement
                                         if (player.PlayerCards[1].Value == ValueOfCard.Ace)
                                         {
                                             player.Current = 2;
-                                            player.Power = ((int) player.PlayerCards[0].Value) * 2 + 13 * 4 +
+                                            player.Power = ((int)player.PlayerCards[0].Value) * 2 + 13 * 4 +
                                                            player.Current * 100;
-                                            this.Win.Add(new Type() {Power = player.Power, Current = 2});
+                                            this.Win.Add(new Type() { Power = player.Power, Current = 2 });
                                             this.Sorted = this.Win
                                                 .OrderByDescending(op => op.Current)
                                                 .ThenByDescending(op => op.Power)
@@ -1340,9 +1349,9 @@ namespace Poker.Models.PokerManagement
                                         if (player.PlayerCards[0].Value == ValueOfCard.Ace)
                                         {
                                             player.Current = 2;
-                                            player.Power = ((int) player.PlayerCards[1].Value) * 2 + 13 * 4 +
+                                            player.Power = ((int)player.PlayerCards[1].Value) * 2 + 13 * 4 +
                                                            player.Current * 100;
-                                            this.Win.Add(new Type() {Power = player.Power, Current = 2});
+                                            this.Win.Add(new Type() { Power = player.Power, Current = 2 });
                                             this.Sorted = this.Win
                                                 .OrderByDescending(op => op.Current)
                                                 .ThenByDescending(op => op.Power)
@@ -1352,11 +1361,11 @@ namespace Poker.Models.PokerManagement
                                         if (player.PlayerCards[1].Value != ValueOfCard.Ace)
                                         {
                                             player.Current = 2;
-                                            player.Power = ((int) DataBase.Instace.Table.CardsOnTable[tableCard].Value) *
+                                            player.Power = ((int)DataBase.Instace.Table.CardsOnTable[tableCard].Value) *
                                                            2 +
-                                                           ((int) player.PlayerCards[1].Value) * 2 +
+                                                           ((int)player.PlayerCards[1].Value) * 2 +
                                                            player.Current * 100;
-                                            this.Win.Add(new Type() {Power = player.Power, Current = 2});
+                                            this.Win.Add(new Type() { Power = player.Power, Current = 2 });
                                             this.Sorted = this.Win
                                                 .OrderByDescending(op => op.Current)
                                                 .ThenByDescending(op => op.Power)
@@ -1366,11 +1375,11 @@ namespace Poker.Models.PokerManagement
                                         if (player.PlayerCards[0].Value != ValueOfCard.Ace)
                                         {
                                             player.Current = 2;
-                                            player.Power = ((int) DataBase.Instace.Table.CardsOnTable[tableCard].Value) *
+                                            player.Power = ((int)DataBase.Instace.Table.CardsOnTable[tableCard].Value) *
                                                            2 +
-                                                           ((int) player.PlayerCards[0].Value) * 2 +
+                                                           ((int)player.PlayerCards[0].Value) * 2 +
                                                            player.Current * 100;
-                                            this.Win.Add(new Type() {Power = player.Power, Current = 2});
+                                            this.Win.Add(new Type() { Power = player.Power, Current = 2 });
                                             this.Sorted = this.Win
                                                 .OrderByDescending(op => op.Current)
                                                 .ThenByDescending(op => op.Power)
@@ -1380,7 +1389,7 @@ namespace Poker.Models.PokerManagement
                                     msgbox = true;
                                 }
 
-                                if (player.Current == - 1)
+                                if (player.Current == -1)
                                 {
                                     if (!msgbox1)
                                     {
@@ -1390,9 +1399,9 @@ namespace Poker.Models.PokerManagement
                                             if (DataBase.Instace.Table.CardsOnTable[tableCard].Value == ValueOfCard.Ace)
                                             {
                                                 player.Current = 0;
-                                                player.Power = 13 + (int) player.PlayerCards[0].Value +
+                                                player.Power = 13 + (int)player.PlayerCards[0].Value +
                                                                player.Current * 100;
-                                                this.Win.Add(new Type() {Power = player.Power, Current = 1});
+                                                this.Win.Add(new Type() { Power = player.Power, Current = 1 });
                                                 this.Sorted = this.Win
                                                     .OrderByDescending(op => op.Current)
                                                     .ThenByDescending(op => op.Power)
@@ -1402,9 +1411,9 @@ namespace Poker.Models.PokerManagement
                                             {
                                                 player.Current = 0;
                                                 player.Power =
-                                                    (int) DataBase.Instace.Table.CardsOnTable[tableCard].Value +
-                                                    (int) player.PlayerCards[0].Value + player.Current * 100;
-                                                this.Win.Add(new Type() {Power = player.Power, Current = 1});
+                                                    (int)DataBase.Instace.Table.CardsOnTable[tableCard].Value +
+                                                    (int)player.PlayerCards[0].Value + player.Current * 100;
+                                                this.Win.Add(new Type() { Power = player.Power, Current = 1 });
                                                 this.Sorted = this.Win
                                                     .OrderByDescending(op => op.Current)
                                                     .ThenByDescending(op => op.Power)
@@ -1416,9 +1425,9 @@ namespace Poker.Models.PokerManagement
                                             if (DataBase.Instace.Table.CardsOnTable[tableCard].Value == ValueOfCard.Ace)
                                             {
                                                 player.Current = 0;
-                                                player.Power = 13 + (int) player.PlayerCards[1].Value +
+                                                player.Power = 13 + (int)player.PlayerCards[1].Value +
                                                                player.Current * 100;
-                                                this.Win.Add(new Type() {Power = player.Power, Current = 1});
+                                                this.Win.Add(new Type() { Power = player.Power, Current = 1 });
                                                 this.Sorted = this.Win
                                                     .OrderByDescending(op => op.Current)
                                                     .ThenByDescending(op => op.Power)
@@ -1428,9 +1437,9 @@ namespace Poker.Models.PokerManagement
                                             {
                                                 player.Current = 0;
                                                 player.Power =
-                                                    (int) DataBase.Instace.Table.CardsOnTable[tableCard].Value +
-                                                    (int) player.PlayerCards[1].Value + player.Current * 100;
-                                                this.Win.Add(new Type() {Power = player.Power, Current = 1});
+                                                    (int)DataBase.Instace.Table.CardsOnTable[tableCard].Value +
+                                                    (int)player.PlayerCards[1].Value + player.Current * 100;
+                                                this.Win.Add(new Type() { Power = player.Power, Current = 1 });
                                                 this.Sorted = this.Win
                                                     .OrderByDescending(op => op.Current)
                                                     .ThenByDescending(op => op.Power)
@@ -1449,7 +1458,7 @@ namespace Poker.Models.PokerManagement
 
         private void rPairFromHand(IPlayer player)
         {
-            if (player.Current >= - 1)
+            if (player.Current >= -1)
             {
                 bool msgbox = false;
 
@@ -1462,7 +1471,7 @@ namespace Poker.Models.PokerManagement
                         {
                             player.Current = 1;
                             player.Power = 13 * 4 + player.Current * 100;
-                            this.Win.Add(new Type() {Power = player.Power, Current = 1});
+                            this.Win.Add(new Type() { Power = player.Power, Current = 1 });
                             this.Sorted = this.Win
                                 .OrderByDescending(op => op.Current)
                                 .ThenByDescending(op => op.Power)
@@ -1471,8 +1480,8 @@ namespace Poker.Models.PokerManagement
                         else
                         {
                             player.Current = 1;
-                            player.Power = ((int) player.PlayerCards[1].Value) * 4 + player.Current * 100;
-                            this.Win.Add(new Type() {Power = player.Power, Current = 1});
+                            player.Power = ((int)player.PlayerCards[1].Value) * 4 + player.Current * 100;
+                            this.Win.Add(new Type() { Power = player.Power, Current = 1 });
                             this.Sorted = this.Win
                                 .OrderByDescending(op => op.Current)
                                 .ThenByDescending(op => op.Power)
@@ -1493,8 +1502,8 @@ namespace Poker.Models.PokerManagement
                             if (player.PlayerCards[1].Value == ValueOfCard.Ace)
                             {
                                 player.Current = 1;
-                                player.Power = 13 * 4 + (int) player.PlayerCards[0].Value + player.Current * 100;
-                                this.Win.Add(new Type() {Power = player.Power, Current = 1});
+                                player.Power = 13 * 4 + (int)player.PlayerCards[0].Value + player.Current * 100;
+                                this.Win.Add(new Type() { Power = player.Power, Current = 1 });
                                 this.Sorted = this.Win
                                     .OrderByDescending(op => op.Current)
                                     .ThenByDescending(op => op.Power)
@@ -1503,9 +1512,9 @@ namespace Poker.Models.PokerManagement
                             else
                             {
                                 player.Current = 1;
-                                player.Power = ((int) player.PlayerCards[1].Value) * 4 +
-                                               (int) player.PlayerCards[0].Value + player.Current * 100;
-                                this.Win.Add(new Type() {Power = player.Power, Current = 1});
+                                player.Power = ((int)player.PlayerCards[1].Value) * 4 +
+                                               (int)player.PlayerCards[0].Value + player.Current * 100;
+                                this.Win.Add(new Type() { Power = player.Power, Current = 1 });
                                 this.Sorted = this.Win
                                     .OrderByDescending(op => op.Current)
                                     .ThenByDescending(op => op.Power)
@@ -1522,8 +1531,8 @@ namespace Poker.Models.PokerManagement
                             if (player.PlayerCards[0].Value == ValueOfCard.Ace)
                             {
                                 player.Current = 1;
-                                player.Power = 13 * 4 + (int) player.PlayerCards[1].Value + player.Current * 100;
-                                this.Win.Add(new Type() {Power = player.Power, Current = 1});
+                                player.Power = 13 * 4 + (int)player.PlayerCards[1].Value + player.Current * 100;
+                                this.Win.Add(new Type() { Power = player.Power, Current = 1 });
                                 this.Sorted = this.Win
                                     .OrderByDescending(op => op.Current)
                                     .ThenByDescending(op => op.Power)
@@ -1532,9 +1541,9 @@ namespace Poker.Models.PokerManagement
                             else
                             {
                                 player.Current = 1;
-                                player.Power = ((int) DataBase.Instace.Table.CardsOnTable[tableCard].Value) * 4 +
-                                               (int) player.PlayerCards[1].Value + player.Current * 100;
-                                this.Win.Add(new Type() {Power = player.Power, Current = 1});
+                                player.Power = ((int)DataBase.Instace.Table.CardsOnTable[tableCard].Value) * 4 +
+                                               (int)player.PlayerCards[1].Value + player.Current * 100;
+                                this.Win.Add(new Type() { Power = player.Power, Current = 1 });
                                 this.Sorted = this.Win
                                     .OrderByDescending(op => op.Current)
                                     .ThenByDescending(op => op.Power)
@@ -1549,15 +1558,15 @@ namespace Poker.Models.PokerManagement
 
         private void rHighCard(IPlayer player)
         {
-            if (player.Current == - 1)
+            if (player.Current == -1)
             {
                 //Check for bigger value from cards in hand
 
                 if (player.PlayerCards[0].Value > player.PlayerCards[1].Value)
                 {
-                    player.Current = - 1;
-                    player.Power = (int) player.PlayerCards[0].Value;
-                    this.Win.Add(new Type() {Power = player.Power, Current = - 1});
+                    player.Current = -1;
+                    player.Power = (int)player.PlayerCards[0].Value;
+                    this.Win.Add(new Type() { Power = player.Power, Current = -1 });
                     this.Sorted = this.Win
                         .OrderByDescending(op1 => op1.Current)
                         .ThenByDescending(op1 => op1.Power)
@@ -1565,9 +1574,9 @@ namespace Poker.Models.PokerManagement
                 }
                 else
                 {
-                    player.Current = - 1;
-                    player.Power = (int) player.PlayerCards[1].Value;
-                    this.Win.Add(new Type() {Power = player.Power, Current = - 1});
+                    player.Current = -1;
+                    player.Power = (int)player.PlayerCards[1].Value;
+                    this.Win.Add(new Type() { Power = player.Power, Current = -1 });
                     this.Sorted = this.Win
                         .OrderByDescending(op1 => op1.Current)
                         .ThenByDescending(op1 => op1.Power)
@@ -1576,9 +1585,9 @@ namespace Poker.Models.PokerManagement
 
                 if (player.PlayerCards[0].Value == ValueOfCard.Ace || player.PlayerCards[1].Value == ValueOfCard.Ace)
                 {
-                    player.Current = - 1;
+                    player.Current = -1;
                     player.Power = 13;
-                    this.Win.Add(new Type() {Power = player.Power, Current = - 1});
+                    this.Win.Add(new Type() { Power = player.Power, Current = -1 });
                     this.Sorted = this.Win
                         .OrderByDescending(op1 => op1.Current)
                         .ThenByDescending(op1 => op1.Power)

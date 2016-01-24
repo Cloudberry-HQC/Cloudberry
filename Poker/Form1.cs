@@ -2877,7 +2877,7 @@ namespace Poker
             
             
         }
-
+        //rrr
         void AI(Player player, int indexFirstCard, int indexSecondCard)
         {
             if (!player.FoldTurn)
