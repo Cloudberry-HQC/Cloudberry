@@ -123,7 +123,7 @@ namespace Poker
         private bool restart;
         private bool raising;
 
-        Type sorted;
+        Type sorted = new Type();
         string[] ImgLocation = Directory.GetFiles("..\\..\\Resources\\Assets\\Cards", "*.png", SearchOption.TopDirectoryOnly);
 
         private int[] availableCardsInGame = new int[17];
@@ -773,7 +773,7 @@ namespace Poker
                         //Rules(this.firstBot);
                         this.rules.CheckForHand(this.firstBot);
                         MessageBox.Show(this.firstBot.Name);
-                        AI(this.firstBot);
+                        AI(this.firstBot,2,3);
                         this.turnCount++;
                         this.last = 1;
                         this.firstBot.IsPlayerTurn = false;
@@ -804,7 +804,7 @@ namespace Poker
                         //Rules(this.secondBot);
                         this.rules.CheckForHand(this.secondBot);
                         MessageBox.Show(this.secondBot.Name);
-                        AI(this.secondBot);
+                        AI(this.secondBot,4,5);
                         this.turnCount++;
                         this.last = 2;
                         this.secondBot.IsPlayerTurn = false;
@@ -835,7 +835,7 @@ namespace Poker
                         //Rules(this.thirdBot);
                         this.rules.CheckForHand(this.thirdBot);
                         MessageBox.Show(this.thirdBot.Name);
-                        AI(this.thirdBot);
+                        AI(this.thirdBot,6,7);
                         this.turnCount++;
                         this.last = 3;
                         this.thirdBot.IsPlayerTurn = false;
@@ -866,7 +866,7 @@ namespace Poker
                         //Rules(this.fourthBot);
                         this.rules.CheckForHand(this.fourthBot);
                         MessageBox.Show(this.fourthBot.Name);
-                        AI(this.fourthBot);
+                        AI(this.fourthBot,8,9);
                         this.turnCount++;
                         this.last = 4;
                         this.fourthBot.IsPlayerTurn = false;
@@ -897,7 +897,7 @@ namespace Poker
                         //Rules(this.fifthBot);
                         this.rules.CheckForHand(this.fifthBot);
                         MessageBox.Show(this.fifthBot.Name);
-                        AI(this.fifthBot);
+                        AI(this.fifthBot,10,11);
                         this.turnCount++;
                         this.last = 5;
                         this.fifthBot.IsPlayerTurn = false;
@@ -2878,7 +2878,7 @@ namespace Poker
             
         }
 
-        void AI(Player player)
+        void AI(Player player, int indexFirstCard, int indexSecondCard)
         {
             if (!player.FoldTurn)
             {
@@ -2935,11 +2935,8 @@ namespace Poker
 
             if (player.FoldTurn)
             {
-                //this.cardsHolder[player.Cards[0]].Visible = false;
-                //this.cardsHolder[player.Cards[1]].Visible = false;
-
-                this.cardsHolder[0].Visible = false;
-                this.cardsHolder[1].Visible = false;
+                this.cardsHolder[indexFirstCard].Visible = false;
+                this.cardsHolder[indexSecondCard].Visible = false;
             }
         }
 
