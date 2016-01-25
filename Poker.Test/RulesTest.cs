@@ -17,35 +17,34 @@ using Poker.Models.PokerManagement;
 
 namespace Poker.Test
 {
-    
+
 
     [TestClass]
-  public class RulesTest
+    public class RulesTest
     {
-       
-       private Database db = Database.Instace;
-       
-       PokerTable table =new PokerTable();
 
-       
-        
+        private Database db = Database.Instace;
+
+        PokerTable table = new PokerTable();
+
+
         [TestMethod]
         public void CheckForHandTest_RHighCard()
         {
-            IRules rules=new Rules();
-            IPlayer player=new Human("player");
-            player.PlayerCards[0]=new Card(2);
+            IRules rules = new Rules();
+            IPlayer player = new Human("player");
+            player.PlayerCards[0] = new Card(2);
             player.PlayerCards[1] = new Card(51);
-            
+
             this.table.CardsOnTable[0] = new Card(37);
             this.table.CardsOnTable[1] = new Card(29);
             this.table.CardsOnTable[2] = new Card(12);
             this.table.CardsOnTable[3] = new Card(22);
             this.table.CardsOnTable[4] = new Card(42);
-            
+
             this.db.Table = this.table;
             rules.CheckForHand(player);
-            Assert.AreEqual(-1, player.Current,"Player.Current not correct");
+            Assert.AreEqual(-1, player.Current, "Player.Current not correct");
             Assert.AreEqual(13, player.Power, "Player.Power not correct");
             Assert.AreEqual(-1, rules.Win[0].Current, "Rules.win.current not correct");
             Assert.AreEqual(13, rules.Win[0].Power, "Rules.win.power not correct");
@@ -74,6 +73,7 @@ namespace Poker.Test
             Assert.AreEqual(1, rules.Win[0].Current, "Rules.win.current not correct");
             Assert.AreEqual(148, rules.Win[0].Power, "Rules.win.power not correct");
         }
+
         [TestMethod]
         public void CheckForHandTest_RPairFromHand_PairFromTableCards()
         {
@@ -117,6 +117,7 @@ namespace Poker.Test
             Assert.AreEqual(2, rules.Sorted.Current, "Rules.win.current not correct");
             Assert.AreEqual(234, rules.Sorted.Power, "Rules.win.power not correct");
         }
+
         [TestMethod]
         public void CheckForHandTest_RPairTwoPair_PairOnTables()
         {
@@ -139,5 +140,70 @@ namespace Poker.Test
             Assert.AreEqual(15, rules.Sorted.Power, "Rules.win.power not correct");
         }
 
+        [TestMethod]
+        public void CheckForHandTest_RThreeOfAKind_ThreeOfAKindOnTable()
+        {
+
+            IRules rules = new Rules();
+            IPlayer player1 = new Human("player");
+            player1.PlayerCards[0] = new Card(48);
+            player1.PlayerCards[1] = new Card(0);
+
+            this.table.CardsOnTable[0] = new Card(25);
+            this.table.CardsOnTable[1] = new Card(29);
+            this.table.CardsOnTable[2] = new Card(46);
+            this.table.CardsOnTable[3] = new Card(27);
+            this.table.CardsOnTable[4] = new Card(24);
+            this.db.Table = this.table;
+            rules.CheckForHand(player1);
+            Assert.AreEqual(3, player1.Current, "Player.Current not correct");
+            Assert.AreEqual(318, player1.Power, "Player.Power not correct");
+            Assert.AreEqual(3, rules.Sorted.Current, "Rules.win.current not correct");
+            Assert.AreEqual(318, rules.Sorted.Power, "Rules.win.power not correct");
+        }
+
+        [TestMethod]
+        public void CheckForHandTest_RThreeOfAKind_WithPairInHand()
+        {
+
+            IRules rules = new Rules();
+            IPlayer player1 = new Human("player");
+            player1.PlayerCards[0] = new Card(21);
+            player1.PlayerCards[1] = new Card(22);
+
+            this.table.CardsOnTable[0] = new Card(13);
+            this.table.CardsOnTable[1] = new Card(32);
+            this.table.CardsOnTable[2] = new Card(23);
+            this.table.CardsOnTable[3] = new Card(46);
+            this.table.CardsOnTable[4] = new Card(42);
+            this.db.Table = this.table;
+            rules.CheckForHand(player1);
+            Assert.AreEqual(3, player1.Current, "Player.Current not correct");
+            Assert.AreEqual(315, player1.Power, "Player.Power not correct");
+            Assert.AreEqual(3, rules.Sorted.Current, "Rules.win.current not correct");
+            Assert.AreEqual(315, rules.Sorted.Power, "Rules.win.power not correct");
+        }
+
+        [TestMethod]
+        public void CheckForHandTest_RThreeOfAKind_WithPairOnTable()
+        {
+
+            IRules rules = new Rules();
+            IPlayer player1 = new Human("player");
+            player1.PlayerCards[0] = new Card(41);
+            player1.PlayerCards[1] = new Card(37);
+
+            this.table.CardsOnTable[0] = new Card(1);
+            this.table.CardsOnTable[1] = new Card(40);
+            this.table.CardsOnTable[2] = new Card(43);
+            this.table.CardsOnTable[3] = new Card(20);
+            this.table.CardsOnTable[4] = new Card(10);
+            this.db.Table = this.table;
+            rules.CheckForHand(player1);
+            Assert.AreEqual(3, player1.Current, "Player.Current not correct");
+            Assert.AreEqual(330, player1.Power, "Player.Power not correct");
+            Assert.AreEqual(3, rules.Sorted.Current, "Rules.win.current not correct");
+            Assert.AreEqual(330, rules.Sorted.Power, "Rules.win.power not correct");
+        }
     }
 }
