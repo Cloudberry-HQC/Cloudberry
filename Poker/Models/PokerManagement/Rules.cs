@@ -6,7 +6,7 @@
     using Enums;
     using Interfaces;
     using System.Windows.Forms;
-    public class Rules
+    public class Rules:IRules
     {
         private List<Type> win;
         private Type sorted;
@@ -15,22 +15,22 @@
         private static Rules instance;
         private List<string> checkWinners = new List<string>();
 
-        private Rules()
+        public Rules()
         {
             this.win = new List<Type>();
         }
 
-        public static Rules Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new Rules();
-                }
-                return instance;
-            }
-        }
+        //public static Rules Instance
+        //{
+        //    get
+        //    {
+        //        if (instance == null)
+        //        {
+        //            instance = new Rules();
+        //        }
+        //        return instance;
+        //    }
+        //}
 
         public List<string> CheckWinners
         {
@@ -54,7 +54,7 @@
         public List<Type> Win
         {
             get { return this.win; }
-            private set { this.win = value; }
+            set { this.win = value; }
         }
 
         public Type Sorted

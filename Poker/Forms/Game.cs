@@ -28,7 +28,7 @@
 
         private readonly Database db = Database.Instace;
         private readonly PokerTable table;
-        private  Rules rules = Rules.Instance;
+        private  IRules rules = new Rules();
        // private readonly CardHandler cardHandler = new CardHandler();
 
         //private const int InitialValueOfChips = 10000;

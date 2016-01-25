@@ -62,6 +62,7 @@
     <Compile Include="GlobalConstants\GlobalConstants.cs" />
     <Compile Include="Interfaces\ICard.cs" />
     <Compile Include="Interfaces\IPlayer.cs" />
+    <Compile Include="Interfaces\IRules.cs" />
     <Compile Include="Launcher.cs" />
     <Compile Include="Models\Card\Card.cs" />
     <Compile Include="Models\Player\Bot.cs" />
