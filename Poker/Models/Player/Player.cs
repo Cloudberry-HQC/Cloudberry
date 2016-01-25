@@ -35,6 +35,7 @@ namespace Poker.Models.Player
             };
             this.chips = 10000;
             this.Name = name;
+            
             this.Status = new Label();
             this.playerCards = new ICard[NumberOfCards];
         }

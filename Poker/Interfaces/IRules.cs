@@ -5,7 +5,7 @@ using Poker.Models.PokerManagement;
 
 namespace Poker.Interfaces
 {
-    interface IRules
+  public  interface IRules
     {
         void FixWinners();
 

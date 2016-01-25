@@ -32,11 +32,6 @@
             return suit;
         }
 
-        internal static SuitOfCard GetSuit()
-        {
-            throw new NotImplementedException();
-        }
-
         public static ValueOfCard GetValue(int cardAsNumber)
         {
             int reminderValue = cardAsNumber / 4;

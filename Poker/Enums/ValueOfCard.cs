@@ -2,7 +2,7 @@
 {
     public enum ValueOfCard
     {
-        Ace = 0,
+        Ace = 13,
         Two = 1,
         Three = 2,
         Four = 3,

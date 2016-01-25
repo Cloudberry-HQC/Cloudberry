@@ -1714,7 +1714,7 @@
         //{
         //    if (player.Current >= -1)
         //    {
-        //        bool msgbox = false;
+        //        bool firstPairFound = false;
         //        for (int tc = 16; tc >= 12; tc--)
         //        {
         //            int max = tc - 12;
@@ -1733,7 +1733,7 @@
         //                            (this.availableCardsInGame[card + 1] / 4 == this.availableCardsInGame[tc] / 4 &&
         //                            this.availableCardsInGame[card] / 4 == this.availableCardsInGame[tc - k] / 4))
         //                        {
-        //                            if (!msgbox)
+        //                            if (!firstPairFound)
         //                            {
         //                                if (this.availableCardsInGame[card] / 4 == 0)
         //                                {
@@ -1759,7 +1759,7 @@
         //                                    this.sorted = this.Win.OrderByDescending(op => op.Current).ThenByDescending(op => op.Power).First();
         //                                }
         //                            }
-        //                            msgbox = true;
+        //                            firstPairFound = true;
         //                        }
         //                    }
         //                }
@@ -1772,8 +1772,8 @@
         //{
         //    if (player.Current >= -1)
         //    {
-        //        bool msgbox = false;
-        //        bool msgbox1 = false;
+        //        bool firstPairFound = false;
+        //        bool firstPairFound1 = false;
         //        for (int tc = 16; tc >= 12; tc--)
         //        {
         //            int max = tc - 12;
@@ -1791,7 +1791,7 @@
         //                        if (this.availableCardsInGame[tc] / 4 != this.availableCardsInGame[card] / 4 &&
         //                            this.availableCardsInGame[tc] / 4 != this.availableCardsInGame[card + 1] / 4 && player.Current == 1)
         //                        {
-        //                            if (!msgbox)
+        //                            if (!firstPairFound)
         //                            {
         //                                if (this.availableCardsInGame[card + 1] / 4 == 0)
         //                                {
@@ -1837,12 +1837,12 @@
         //                                        .First();
         //                                }
         //                            }
-        //                            msgbox = true;
+        //                            firstPairFound = true;
         //                        }
 
         //                        if (player.Current == -1)
         //                        {
-        //                            if (!msgbox1)
+        //                            if (!firstPairFound1)
         //                            {
         //                                if (this.availableCardsInGame[card] / 4 > this.availableCardsInGame[card + 1] / 4)
         //                                {
@@ -1891,7 +1891,7 @@
         //                                    }
         //                                }
         //                            }
-        //                            msgbox1 = true;
+        //                            firstPairFound1 = true;
         //                        }
         //                    }
         //                }
@@ -1904,10 +1904,10 @@
         //{
         //    if (player.Current >= -1)
         //    {
-        //        bool msgbox = false;
+        //        bool firstPairFound = false;
         //        if (this.availableCardsInGame[card] / 4 == this.availableCardsInGame[card + 1] / 4)
         //        {
-        //            if (!msgbox)
+        //            if (!firstPairFound)
         //            {
         //                if (this.availableCardsInGame[card] / 4 == 0)
         //                {
@@ -1930,14 +1930,14 @@
         //                        .First();
         //                }
         //            }
-        //            msgbox = true;
+        //            firstPairFound = true;
         //        }
 
         //        for (int tc = 16; tc >= 12; tc--)
         //        {
         //            if (this.availableCardsInGame[card + 1] / 4 == this.availableCardsInGame[tc] / 4)
         //            {
-        //                if (!msgbox)
+        //                if (!firstPairFound)
         //                {
         //                    if (this.availableCardsInGame[card + 1] / 4 == 0)
         //                    {
@@ -1960,12 +1960,12 @@
         //                            .First();
         //                    }
         //                }
-        //                msgbox = true;
+        //                firstPairFound = true;
         //            }
 
         //            if (this.availableCardsInGame[card] / 4 == this.availableCardsInGame[tc] / 4)
         //            {
-        //                if (!msgbox)
+        //                if (!firstPairFound)
         //                {
         //                    if (this.availableCardsInGame[card] / 4 == 0)
         //                    {
@@ -1985,7 +1985,7 @@
         //                        this.sorted = this.Win.OrderByDescending(op => op.Current).ThenByDescending(op => op.Power).First();
         //                    }
         //                }
-        //                msgbox = true;
+        //                firstPairFound = true;
         //            }
         //        }
         //    }

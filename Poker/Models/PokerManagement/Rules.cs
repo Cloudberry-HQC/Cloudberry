@@ -12,7 +12,6 @@
         private Type sorted;
         private double type;
         private int winners;
-        private static Rules instance;
         private List<string> checkWinners = new List<string>();
 
         public Rules()
@@ -20,17 +19,7 @@
             this.win = new List<Type>();
         }
 
-        //public static Rules Instance
-        //{
-        //    get
-        //    {
-        //        if (instance == null)
-        //        {
-        //            instance = new Rules();
-        //        }
-        //        return instance;
-        //    }
-        //}
+        
 
         public List<string> CheckWinners
         {
@@ -119,16 +108,16 @@
 
                 //Two Pair current = 2
                 this.RTwoPair(player); //ready
-                
+
                 //Three of a kind current = 3
                 this.RThreeOfAKind(player, sortedSevenCards); //ready
-                
+
                 //Straight current = 4
                 this.RStraight(player, sortedSevenCards); //ready
 
                 //Flush current = 5 || 5.5
                 this.RFlush(player, ref hasFlush); //ready
-                
+
                 //Full House current = 6
                 this.RFullHouse(player, ref hasTrips, sortedSevenCards); //ready
 
@@ -1193,7 +1182,7 @@
         {
             if (player.Current >= -1)
             {
-                bool msgbox = false;
+                bool firstPairFound = false;
                 for (int tableCard = 4; tableCard >= 0; tableCard--)
                 {
                     int max = tableCard - 0;
@@ -1211,13 +1200,11 @@
                             {
                                 //check for pair among all seven cards
                                 if ((player.PlayerCards[0].Value == Database.Instace.Table.CardsOnTable[tableCard].Value &&
-                                     player.PlayerCards[1].Value ==
-                                     Database.Instace.Table.CardsOnTable[tableCard - k].Value) ||
+                                     player.PlayerCards[1].Value == Database.Instace.Table.CardsOnTable[tableCard - k].Value) ||
                                     (player.PlayerCards[1].Value == Database.Instace.Table.CardsOnTable[tableCard].Value &&
-                                     player.PlayerCards[0].Value ==
-                                     Database.Instace.Table.CardsOnTable[tableCard - k].Value))
+                                     player.PlayerCards[0].Value == Database.Instace.Table.CardsOnTable[tableCard - k].Value))
                                 {
-                                    if (!msgbox)
+                                    if (!firstPairFound)
                                     {
                                         if (player.PlayerCards[0].Value == ValueOfCard.Ace)
                                         {
@@ -1257,7 +1244,7 @@
                                                 .First();
                                         }
                                     }
-                                    msgbox = true;
+                                    firstPairFound = true;
                                 }
                             }
                         }
@@ -1270,8 +1257,8 @@
         {
             if (player.Current >= -1)
             {
-                bool msgbox = false;
-                bool msgbox1 = false;
+                bool firstPairFound = false;
+                bool secondPairFound = false;
                 for (int tableCard = 4; tableCard >= 0; tableCard--)
                 {
                     int max = tableCard - 0;
@@ -1293,7 +1280,7 @@
                                     Database.Instace.Table.CardsOnTable[tableCard].Value != player.PlayerCards[1].Value &&
                                     player.Current == 1)
                                 {
-                                    if (!msgbox)
+                                    if (!firstPairFound)
                                     {
                                         if (player.PlayerCards[1].Value == ValueOfCard.Ace)
                                         {
@@ -1347,29 +1334,16 @@
                                                 .First();
                                         }
                                     }
-                                    msgbox = true;
+                                    firstPairFound = true;
                                 }
 
                                 if (player.Current == -1)
                                 {
-                                    if (!msgbox1)
+                                    if (!secondPairFound)
                                     {
                                         // Ckeck for bigger value of the card in hand of player
                                         if (player.PlayerCards[0].Value > player.PlayerCards[1].Value)
                                         {
-                                            if (Database.Instace.Table.CardsOnTable[tableCard].Value == ValueOfCard.Ace)
-                                            {
-                                                player.Current = 0;
-                                                player.Power = 13 + (int)player.PlayerCards[0].Value +
-                                                               player.Current * 100;
-                                                this.Win.Add(new Type() { Power = player.Power, Current = 1 });
-                                                this.Sorted = this.Win
-                                                    .OrderByDescending(op => op.Current)
-                                                    .ThenByDescending(op => op.Power)
-                                                    .First();
-                                            }
-                                            else
-                                            {
                                                 player.Current = 0;
                                                 player.Power =
                                                     (int)Database.Instace.Table.CardsOnTable[tableCard].Value +
@@ -1379,23 +1353,10 @@
                                                     .OrderByDescending(op => op.Current)
                                                     .ThenByDescending(op => op.Power)
                                                     .First();
-                                            }
                                         }
+
                                         else
                                         {
-                                            if (Database.Instace.Table.CardsOnTable[tableCard].Value == ValueOfCard.Ace)
-                                            {
-                                                player.Current = 0;
-                                                player.Power = 13 + (int)player.PlayerCards[1].Value +
-                                                               player.Current * 100;
-                                                this.Win.Add(new Type() { Power = player.Power, Current = 1 });
-                                                this.Sorted = this.Win
-                                                    .OrderByDescending(op => op.Current)
-                                                    .ThenByDescending(op => op.Power)
-                                                    .First();
-                                            }
-                                            else
-                                            {
                                                 player.Current = 0;
                                                 player.Power =
                                                     (int)Database.Instace.Table.CardsOnTable[tableCard].Value +
@@ -1405,10 +1366,9 @@
                                                     .OrderByDescending(op => op.Current)
                                                     .ThenByDescending(op => op.Power)
                                                     .First();
-                                            }
                                         }
                                     }
-                                    msgbox1 = true;
+                                    secondPairFound = true;
                                 }
                             }
                         }
@@ -1421,25 +1381,13 @@
         {
             if (player.Current >= -1)
             {
-                bool msgbox = false;
+                bool firstPairFound = false;
 
                 //Check for the rank from cards in hand....if value of the cards are equal (for example 5 and 5)
                 if (player.PlayerCards[0].Value == player.PlayerCards[1].Value)
                 {
-                    if (!msgbox)
+                    if (!firstPairFound)
                     {
-                        if (player.PlayerCards[0].Value == ValueOfCard.Ace)
-                        {
-                            player.Current = 1;
-                            player.Power = 13 * 4 + player.Current * 100;
-                            this.Win.Add(new Type { Power = player.Power, Current = 1 });
-                            this.Sorted = this.Win
-                                .OrderByDescending(op => op.Current)
-                                .ThenByDescending(op => op.Power)
-                                .First();
-                        }
-                        else
-                        {
                             player.Current = 1;
                             player.Power = (int)player.PlayerCards[1].Value * 4 + player.Current * 100;
                             this.Win.Add(new Type() { Power = player.Power, Current = 1 });
@@ -1447,9 +1395,9 @@
                                 .OrderByDescending(op => op.Current)
                                 .ThenByDescending(op => op.Power)
                                 .First();
-                        }
+                       
                     }
-                    msgbox = true;
+                    firstPairFound = true;
                 }
 
                 //Check if some cards on table are equal to the first card in hand of bot --> tc turns cards from table
@@ -1458,20 +1406,9 @@
                     //Check if the first card is equal to some card on table
                     if (player.PlayerCards[1].Value == Database.Instace.Table.CardsOnTable[tableCard].Value)
                     {
-                        if (!msgbox)
+                        if (!firstPairFound)
                         {
-                            if (player.PlayerCards[1].Value == ValueOfCard.Ace)
-                            {
-                                player.Current = 1;
-                                player.Power = 13 * 4 + (int)player.PlayerCards[0].Value + player.Current * 100;
-                                this.Win.Add(new Type { Power = player.Power, Current = 1 });
-                                this.Sorted = this.Win
-                                    .OrderByDescending(op => op.Current)
-                                    .ThenByDescending(op => op.Power)
-                                    .First();
-                            }
-                            else
-                            {
+                            
                                 player.Current = 1;
                                 player.Power = (int)player.PlayerCards[1].Value * 4 +
                                                (int)player.PlayerCards[0].Value + player.Current * 100;
@@ -1480,27 +1417,16 @@
                                     .OrderByDescending(op => op.Current)
                                     .ThenByDescending(op => op.Power)
                                     .First();
-                            }
-                        }
-                        msgbox = true;
+                          }
+
+                        firstPairFound = true;
                     }
+
                     //Check if some cards on table are equal to the second card in hand of bot --> tc turns cards from table
                     if (player.PlayerCards[0].Value == Database.Instace.Table.CardsOnTable[tableCard].Value)
                     {
-                        if (!msgbox)
+                        if (!firstPairFound)
                         {
-                            if (player.PlayerCards[0].Value == ValueOfCard.Ace)
-                            {
-                                player.Current = 1;
-                                player.Power = 13 * 4 + (int)player.PlayerCards[1].Value + player.Current * 100;
-                                this.Win.Add(new Type { Power = player.Power, Current = 1 });
-                                this.Sorted = this.Win
-                                    .OrderByDescending(op => op.Current)
-                                    .ThenByDescending(op => op.Power)
-                                    .First();
-                            }
-                            else
-                            {
                                 player.Current = 1;
                                 player.Power = (int)Database.Instace.Table.CardsOnTable[tableCard].Value * 4 +
                                                (int)player.PlayerCards[1].Value + player.Current * 100;
@@ -1509,9 +1435,8 @@
                                     .OrderByDescending(op => op.Current)
                                     .ThenByDescending(op => op.Power)
                                     .First();
-                            }
-                        }
-                        msgbox = true;
+                       }
+                        firstPairFound = true;
                     }
                 }
             }
@@ -1537,17 +1462,6 @@
                 {
                     player.Current = -1;
                     player.Power = (int)player.PlayerCards[1].Value;
-                    this.Win.Add(new Type { Power = player.Power, Current = -1 });
-                    this.Sorted = this.Win
-                        .OrderByDescending(op1 => op1.Current)
-                        .ThenByDescending(op1 => op1.Power)
-                        .First();
-                }
-
-                if (player.PlayerCards[0].Value == ValueOfCard.Ace || player.PlayerCards[1].Value == ValueOfCard.Ace)
-                {
-                    player.Current = -1;
-                    player.Power = 13;
                     this.Win.Add(new Type { Power = player.Power, Current = -1 });
                     this.Sorted = this.Win
                         .OrderByDescending(op1 => op1.Current)
