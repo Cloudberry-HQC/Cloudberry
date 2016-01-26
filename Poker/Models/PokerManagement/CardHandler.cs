@@ -1,13 +1,19 @@
 ﻿namespace Poker.Models.PokerManagement
 {
-    using System;
+    using Card;
     using Enums;
     using Interfaces;
 
+    /// <summary>
+    /// A static class that is used for creation of the card. 
+    /// </summary>
     public static class CardHandler
     {
-       
-
+        /// <summary>
+        /// Gets the suit of the card.
+        /// </summary>
+        /// <param name="cardAsNumber">Current value of the card as integer number.</param>
+        /// <returns>Returns the suit of the card according to the input integer number.</returns>
         public static SuitOfCard GetSuit(int cardAsNumber)
         {
             int reminderSuit = cardAsNumber % 4;
@@ -32,6 +38,11 @@
             return suit;
         }
 
+        /// <summary>
+        /// Gets the rank of the card.
+        /// </summary>
+        /// <param name="cardAsNumber">Current value of the card as integer number.</param>
+        /// <returns>Returns the rank of the card according to the input integer number.</returns>
         public static ValueOfCard GetValue(int cardAsNumber)
         {
             int reminderValue = cardAsNumber / 4;
@@ -80,6 +91,18 @@
                     break;
             }
             return value;
+        }
+
+        
+        /// <summary>
+        /// Gets the card as object.
+        /// </summary>
+        /// <param name="cardAsNumber">Current value of the card as integer number.</param>
+        /// <returns>Returns a new card.</returns>
+        public static ICard GetCard(int cardAsNumber)
+        {
+            ICard card = new Card(cardAsNumber);
+            return card;
         }
     }
 }

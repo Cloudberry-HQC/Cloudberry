@@ -105,7 +105,7 @@
         private int width;
 
     //    private int winners;
-        private readonly int flop = 1;
+        private int flop = 1;
         private int turn = 2;
         private int river = 3;
         private int end = 4;
@@ -114,7 +114,7 @@
         private int last = 123;
         private int raisedTurn = 1;
 
-        private readonly List<bool?> bools = new List<bool?>();
+        private readonly List<bool?> inactivePlayers = new List<bool?>();
      //   private readonly List<Type> Win = new List<Type>();
       //  private readonly List<string> CheckWinners = new List<string>();
         private readonly List<int> ints = new List<int>();
@@ -136,7 +136,7 @@
         private readonly Timer Updates = new Timer();
 
         private int t = 60;
-        private int globalShit;
+        //private int globalShit;
         private int defaultBigBlind = DefaultValueOfBigBlind;
         private int defaultSmallBlind = DefaultValueOfSmallBlind;
         private int up = 10000000;
@@ -144,7 +144,7 @@
 
         public Game()
         {
-            //bools.Add(PlayerFoldTturn); bools.Add(B1Fturn); bools.Add(B2Fturn); bools.Add(B3Fturn); bools.Add(B4Fturn); bools.Add(B5Fturn);
+            //inactivePlayers.Add(PlayerFoldTturn); inactivePlayers.Add(B1Fturn); inactivePlayers.Add(B2Fturn); inactivePlayers.Add(B3Fturn); inactivePlayers.Add(B4Fturn); inactivePlayers.Add(B5Fturn);
             this.db.Players[0] = this.humanPlayer;
             this.db.Players[1] = this.firstBot;
             this.db.Players[2] = this.secondbot;
@@ -262,15 +262,15 @@
 
         async Task Shuffle()
         {
-            //this.bools.Add(this.humanPlayerFoldTturn);
-            //this.bools.Add(this.B1Fturn);
-            //this.bools.Add(this.B2Fturn);
-            //this.bools.Add(this.B3Fturn);
-            //this.bools.Add(this.B4Fturn);
-            //this.bools.Add(this.B5Fturn);
+            //this.inactivePlayers.Add(this.humanPlayerFoldTturn);
+            //this.inactivePlayers.Add(this.B1Fturn);
+            //this.inactivePlayers.Add(this.B2Fturn);
+            //this.inactivePlayers.Add(this.B3Fturn);
+            //this.inactivePlayers.Add(this.B4Fturn);
+            //this.inactivePlayers.Add(this.B5Fturn);
             for (int i = 0; i < this.db.Players.Length; i++)
             {
-                this.bools.Add(this.db.Players[i].FoldTurn);
+                this.inactivePlayers.Add(this.db.Players[i].FoldTurn);
             }
             this.buttonCall.Enabled = false;
             this.buttonRaise.Enabled = false;
@@ -320,13 +320,15 @@
                         if (this.cardsHolder[0].Tag != null)
                         {
                             this.cardsHolder[1].Tag = int.Parse(this.ImgLocation[1]) - 1;
-                            this.humanPlayer.PlayerCards[1] = new Card((int)this.cardsHolder[1].Tag);
+                            //this.humanPlayer.PlayerCards[1] = new Card((int)this.cardsHolder[1].Tag);
+                            this.humanPlayer.PlayerCards[1] = CardHandler.GetCard((int)this.cardsHolder[1].Tag);
                             this.humanPlayer.PlayerCards[1].NumberInGame = cardsInGame;
                         }
                         else
                         {
                             this.cardsHolder[0].Tag = int.Parse(this.ImgLocation[0]) - 1;
-                            this.humanPlayer.PlayerCards[0] = new Card((int)this.cardsHolder[0].Tag);
+                            //this.humanPlayer.PlayerCards[0] = new Card((int)this.cardsHolder[0].Tag);
+                            this.humanPlayer.PlayerCards[0] = CardHandler.GetCard((int)this.cardsHolder[0].Tag);
                             this.humanPlayer.PlayerCards[0].NumberInGame = cardsInGame;
                         }
                         this.cardsHolder[cardsInGame].Image = this.cardsImageDeck[cardsInGame];
@@ -354,13 +356,15 @@
                             if (this.cardsHolder[2 * i].Tag != null)
                             {
                                 this.cardsHolder[2 * i + 1].Tag = int.Parse(this.ImgLocation[2 * i + 1]) - 1;
-                                this.db.Players[i].PlayerCards[1] = new Card((int)this.cardsHolder[2 * i + 1].Tag);
+                                //this.db.Players[i].PlayerCards[1] = new Card((int)this.cardsHolder[2 * i + 1].Tag);
+                                this.db.Players[i].PlayerCards[1] = CardHandler.GetCard((int)this.cardsHolder[2 * i + 1].Tag);
                                 this.db.Players[i].PlayerCards[1].NumberInGame = cardsInGame;
                             }
                             else
                             {
                                 this.cardsHolder[2 * i].Tag = int.Parse(this.ImgLocation[2 * i]) - 1;
-                                this.db.Players[i].PlayerCards[0] = new Card((int)this.cardsHolder[2 * i].Tag);
+                                //this.db.Players[i].PlayerCards[0] = new Card((int)this.cardsHolder[2 * i].Tag);
+                                this.db.Players[i].PlayerCards[0] = CardHandler.GetCard((int)this.cardsHolder[2 * i].Tag);
                                 this.db.Players[i].PlayerCards[0].NumberInGame = cardsInGame;
                             }
                             if (!check)
@@ -418,36 +422,44 @@
                 
                 if (cardsInGame >= 12)    // elica: cards on the table with index 12, 13, 14, 15, 16
                 {
-                  
 
-                    this.cardsHolder[12].Tag = int.Parse(this.ImgLocation[12]) - 1;
-                    this.table.CardsOnTable[0] = new Card((int)this.cardsHolder[12].Tag);
-                    this.table.CardsOnTable[0].NumberInGame = cardsInGame;
+                    if (cardsInGame == 12)
+                    {
+                        this.cardsHolder[12].Tag = int.Parse(this.ImgLocation[12]) - 1;
+                        //this.table.CardsOnTable[0] = new Card((int)this.cardsHolder[12].Tag);
+                        this.table.CardsOnTable[0] = CardHandler.GetCard((int)this.cardsHolder[12].Tag);
+                        this.table.CardsOnTable[0].NumberInGame = cardsInGame;
+                    }
+                    
                     if (cardsInGame == 13)
                     {
                         this.cardsHolder[13].Tag = int.Parse(this.ImgLocation[13]) - 1;
-                        this.table.CardsOnTable[1] = new Card((int)this.cardsHolder[13].Tag);
+                        //this.table.CardsOnTable[1] = new Card((int)this.cardsHolder[13].Tag);
+                        this.table.CardsOnTable[1] = CardHandler.GetCard((int)this.cardsHolder[13].Tag);
                         this.table.CardsOnTable[1].NumberInGame = cardsInGame;
                     }
 
-                    if (cardsInGame ==14)
+                    if (cardsInGame == 14)
                     {
                         this.cardsHolder[14].Tag = int.Parse(this.ImgLocation[14]) - 1;
-                        this.table.CardsOnTable[2] = new Card((int)this.cardsHolder[14].Tag);
+                        //this.table.CardsOnTable[2] = new Card((int)this.cardsHolder[14].Tag);
+                        this.table.CardsOnTable[2] = CardHandler.GetCard((int)this.cardsHolder[14].Tag);
                         this.table.CardsOnTable[2].NumberInGame = cardsInGame;
                     }
 
-                    if (cardsInGame ==15)
+                    if (cardsInGame == 15)
                     {
                         this.cardsHolder[15].Tag = int.Parse(this.ImgLocation[15]) - 1;
-                        this.table.CardsOnTable[3] = new Card((int)this.cardsHolder[15].Tag);
+                        //this.table.CardsOnTable[3] = new Card((int)this.cardsHolder[15].Tag);
+                        this.table.CardsOnTable[3] = CardHandler.GetCard((int)this.cardsHolder[15].Tag);
                         this.table.CardsOnTable[3].NumberInGame = cardsInGame;
                     }
 
-                    if (cardsInGame ==16)
+                    if (cardsInGame == 16)
                     {
                         this.cardsHolder[16].Tag = int.Parse(this.ImgLocation[16]) - 1;
-                        this.table.CardsOnTable[4] = new Card((int)this.cardsHolder[16].Tag);
+                        //this.table.CardsOnTable[4] = new Card((int)this.cardsHolder[16].Tag);
+                        this.table.CardsOnTable[4] = CardHandler.GetCard((int)this.cardsHolder[16].Tag);
                         this.table.CardsOnTable[4].NumberInGame = cardsInGame;
                     }
 
@@ -664,8 +676,8 @@
                     if (this.buttonCall.Text.Contains(GlobalConstants.AllInMessage) == false ||
                         this.buttonRaise.Text.Contains(GlobalConstants.AllInMessage) == false)
                     {
-                        this.bools.RemoveAt(0);
-                        this.bools.Insert(0, null);
+                        this.inactivePlayers.RemoveAt(0);
+                        this.inactivePlayers.Insert(0, null);
                         this.maxLeft--;
                         this.humanPlayer.HasPlayerFolded = true;
                     }
@@ -698,8 +710,8 @@
 
                 if (this.firstBot.FoldTurn && !this.firstBot.HasPlayerFolded)
                 {
-                    this.bools.RemoveAt(1);
-                    this.bools.Insert(1, null);
+                    this.inactivePlayers.RemoveAt(1);
+                    this.inactivePlayers.Insert(1, null);
                     this.maxLeft--;
                     this.firstBot.HasPlayerFolded = true;
                 }
@@ -729,8 +741,8 @@
 
                 if (this.secondbot.FoldTurn && !this.secondbot.HasPlayerFolded)
                 {
-                    this.bools.RemoveAt(2);
-                    this.bools.Insert(2, null);
+                    this.inactivePlayers.RemoveAt(2);
+                    this.inactivePlayers.Insert(2, null);
                     this.maxLeft--;
                     this.secondbot.HasPlayerFolded = true;
                 }
@@ -760,8 +772,8 @@
 
                 if (this.thirdbot.FoldTurn && !this.thirdbot.HasPlayerFolded)
                 {
-                    this.bools.RemoveAt(3);
-                    this.bools.Insert(3, null);
+                    this.inactivePlayers.RemoveAt(3);
+                    this.inactivePlayers.Insert(3, null);
                     this.maxLeft--;
                     this.thirdbot.HasPlayerFolded = true;
                 }
@@ -791,8 +803,8 @@
 
                 if (this.fourthBot.FoldTurn && !this.fourthBot.HasPlayerFolded)
                 {
-                    this.bools.RemoveAt(4);
-                    this.bools.Insert(4, null);
+                    this.inactivePlayers.RemoveAt(4);
+                    this.inactivePlayers.Insert(4, null);
                     this.maxLeft--;
                     this.fourthBot.HasPlayerFolded = true;
                 }
@@ -821,8 +833,8 @@
 
                 if (this.fifthBot.FoldTurn && !this.fifthBot.HasPlayerFolded)
                 {
-                    this.bools.RemoveAt(5);
-                    this.bools.Insert(5, null);
+                    this.inactivePlayers.RemoveAt(5);
+                    this.inactivePlayers.Insert(5, null);
                     this.maxLeft--;
                     this.fifthBot.HasPlayerFolded = true;
                 }
@@ -838,8 +850,8 @@
                     if (this.buttonCall.Text.Contains(GlobalConstants.AllInMessage) == false ||
                         this.buttonRaise.Text.Contains(GlobalConstants.AllInMessage) == false)
                     {
-                        this.bools.RemoveAt(0);
-                        this.bools.Insert(0, null);
+                        this.inactivePlayers.RemoveAt(0);
+                        this.inactivePlayers.Insert(0, null);
                         this.maxLeft--;
                         this.humanPlayer.HasPlayerFolded = true;
                     }
@@ -942,24 +954,24 @@
 
         //private void rStraightFlush( Player player, int[] st1, int[] st2, int[] st3, int[] st4)
         //{
-        //    if (player.Current >= -1)
+        //    if (player.HandFactor >= -1)
         //    {
         //        if (st1.Length >= 5)
         //        {
         //            if (st1[0] + 4 == st1[4])
         //            {
-        //                player.Current = 8;
-        //                player.Power = (st1.Max()) / 4 + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 8 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 8;
+        //                player.Power = (st1.Max()) / 4 + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 8 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //            }
 
         //            if (st1[0] == 0 && st1[1] == 9 && st1[2] == 10 && st1[3] == 11 && st1[0] + 12 == st1[4])
         //            {
-        //                player.Current = 9;
-        //                player.Power = (st1.Max()) / 4 + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 9 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 9;
+        //                player.Power = (st1.Max()) / 4 + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 9 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //            }
         //        }
 
@@ -967,18 +979,18 @@
         //        {
         //            if (st2[0] + 4 == st2[4])
         //            {
-        //                player.Current = 8;
-        //                player.Power = (st2.Max()) / 4 + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 8 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 8;
+        //                player.Power = (st2.Max()) / 4 + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 8 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //            }
 
         //            if (st2[0] == 0 && st2[1] == 9 && st2[2] == 10 && st2[3] == 11 && st2[0] + 12 == st2[4])
         //            {
-        //                player.Current = 9;
-        //                player.Power = (st2.Max()) / 4 + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 9 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 9;
+        //                player.Power = (st2.Max()) / 4 + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 9 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //            }
         //        }
 
@@ -986,18 +998,18 @@
         //        {
         //            if (st3[0] + 4 == st3[4])
         //            {
-        //                player.Current = 8;
-        //                player.Power = (st3.Max()) / 4 + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 8 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 8;
+        //                player.Power = (st3.Max()) / 4 + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 8 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //            }
 
         //            if (st3[0] == 0 && st3[1] == 9 && st3[2] == 10 && st3[3] == 11 && st3[0] + 12 == st3[4])
         //            {
-        //                player.Current = 9;
-        //                player.Power = (st3.Max()) / 4 + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 9 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 9;
+        //                player.Power = (st3.Max()) / 4 + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 9 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //            }
         //        }
 
@@ -1005,18 +1017,18 @@
         //        {
         //            if (st4[0] + 4 == st4[4])
         //            {
-        //                player.Current = 8;
-        //                player.Power = (st4.Max()) / 4 + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 8 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 8;
+        //                player.Power = (st4.Max()) / 4 + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 8 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //            }
 
         //            if (st4[0] == 0 && st4[1] == 9 && st4[2] == 10 && st4[3] == 11 && st4[0] + 12 == st4[4])
         //            {
-        //                player.Current = 9;
-        //                player.Power = (st4.Max()) / 4 + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 9 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 9;
+        //                player.Power = (st4.Max()) / 4 + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 9 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //            }
         //        }
         //    }
@@ -1024,25 +1036,25 @@
 
         //private void rFourOfAKind( Player player, int[] Straight)
         //{
-        //    if (player.Current >= -1)
+        //    if (player.HandFactor >= -1)
         //    {
         //        for (int j = 0; j <= 3; j++)
         //        {
         //            if (Straight[j] / 4 == Straight[j + 1] / 4 && Straight[j] / 4 == Straight[j + 2] / 4 &&
         //                Straight[j] / 4 == Straight[j + 3] / 4)
         //            {
-        //                player.Current = 7;
-        //                player.Power = (Straight[j] / 4) * 4 + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 7 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 7;
+        //                player.Power = (Straight[j] / 4) * 4 + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 7 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //            }
 
         //            if (Straight[j] / 4 == 0 && Straight[j + 1] / 4 == 0 && Straight[j + 2] / 4 == 0 && Straight[j + 3] / 4 == 0)
         //            {
-        //                player.Current = 7;
-        //                player.Power = 13 * 4 + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 7 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 7;
+        //                player.Power = 13 * 4 + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 7 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //            }
         //        }
         //    }
@@ -1050,7 +1062,7 @@
 
         //private void rFullHouse(Player player, ref bool done, int[] Straight)
         //{
-        //    if (player.Current >= -1)
+        //    if (player.HandFactor >= -1)
         //    {
         //        this.type = player.Power;
         //        for (int j = 0; j <= 12; j++)
@@ -1062,19 +1074,19 @@
         //                {
         //                    if (fh.Max() / 4 == 0)
         //                    {
-        //                        player.Current = 6;
-        //                        player.Power = 13 * 2 + player.Current * 100;
-        //                        this.Win.Add(new Type() { Power = player.Power, Current = 6 });
-        //                        this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                        player.HandFactor = 6;
+        //                        player.Power = 13 * 2 + player.HandFactor * 100;
+        //                        this.Win.Add(new Type() { Power = player.Power, HandFactor = 6 });
+        //                        this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                        break;
         //                    }
 
         //                    if (fh.Max() / 4 > 0)
         //                    {
-        //                        player.Current = 6;
-        //                        player.Power = fh.Max() / 4 * 2 + player.Current * 100;
-        //                        this.Win.Add(new Type() { Power = player.Power, Current = 6 });
-        //                        this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                        player.HandFactor = 6;
+        //                        player.Power = fh.Max() / 4 * 2 + player.HandFactor * 100;
+        //                        this.Win.Add(new Type() { Power = player.Power, HandFactor = 6 });
+        //                        this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                        break;
         //                    }
         //                }
@@ -1097,7 +1109,7 @@
         //            }
         //        }
 
-        //        if (player.Current != 6)
+        //        if (player.HandFactor != 6)
         //        {
         //            player.Power = this.type;
         //        }
@@ -1106,7 +1118,7 @@
 
         //private void rFlush(int card, Player player, ref bool vf, int[] Straight1)
         //{
-        //    if (player.Current >= -1)
+        //    if (player.HandFactor >= -1)
         //    {
         //        //addition cardsOnDesk = Streight1, f1=clubs, f2=diamonds, f3=hearts, f4=spades
         //        var clubs = Straight1.Where(o => o % 4 == 0).ToArray();    //clubs
@@ -1120,28 +1132,28 @@
         //            {
         //                if (this.availableCardsInGame[card] / 4 > clubs.Max() / 4)
         //                {
-        //                    player.Current = 5;
-        //                    player.Power = this.availableCardsInGame[card] + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                    player.HandFactor = 5;
+        //                    player.Power = this.availableCardsInGame[card] + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                    vf = true;
         //                }
 
         //                if (this.availableCardsInGame[card + 1] / 4 > clubs.Max() / 4)
         //                {
-        //                    player.Current = 5;
-        //                    player.Power = this.availableCardsInGame[card + 1] + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                    player.HandFactor = 5;
+        //                    player.Power = this.availableCardsInGame[card + 1] + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                    vf = true;
         //                }
         //                else if (this.availableCardsInGame[card] / 4 < clubs.Max() / 4 &&
         //                    this.availableCardsInGame[card + 1] / 4 < clubs.Max() / 4)
         //                {
-        //                    player.Current = 5;
-        //                    player.Power = clubs.Max() + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                    player.HandFactor = 5;
+        //                    player.Power = clubs.Max() + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                    vf = true;
         //                }
         //            }
@@ -1154,18 +1166,18 @@
         //            {
         //                if (this.availableCardsInGame[card] / 4 > clubs.Max() / 4)
         //                {
-        //                    player.Current = 5;
-        //                    player.Power = this.availableCardsInGame[card] + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                    player.HandFactor = 5;
+        //                    player.Power = this.availableCardsInGame[card] + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                    vf = true;
         //                }
         //                else
         //                {
-        //                    player.Current = 5;
-        //                    player.Power = clubs.Max() + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                    player.HandFactor = 5;
+        //                    player.Power = clubs.Max() + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                    vf = true;
         //                }
         //            }
@@ -1175,18 +1187,18 @@
         //            {
         //                if (this.availableCardsInGame[card + 1] / 4 > clubs.Max() / 4)
         //                {
-        //                    player.Current = 5;
-        //                    player.Power = this.availableCardsInGame[card + 1] + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                    player.HandFactor = 5;
+        //                    player.Power = this.availableCardsInGame[card + 1] + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                    vf = true;
         //                }
         //                else
         //                {
-        //                    player.Current = 5;
-        //                    player.Power = clubs.Max() + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                    player.HandFactor = 5;
+        //                    player.Power = clubs.Max() + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                    vf = true;
         //                }
         //            }
@@ -1197,29 +1209,29 @@
         //            if (this.availableCardsInGame[card] % 4 == clubs[0] % 4 &&
         //                this.availableCardsInGame[card] / 4 > clubs.Min() / 4)
         //            {
-        //                player.Current = 5;
-        //                player.Power = this.availableCardsInGame[card] + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 5;
+        //                player.Power = this.availableCardsInGame[card] + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                vf = true;
         //            }
 
         //            if (this.availableCardsInGame[card + 1] % 4 == clubs[0] % 4 &&
         //                this.availableCardsInGame[card + 1] / 4 > clubs.Min() / 4)
         //            {
-        //                player.Current = 5;
-        //                player.Power = this.availableCardsInGame[card + 1] + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 5;
+        //                player.Power = this.availableCardsInGame[card + 1] + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                vf = true;
         //            }
         //            else if (this.availableCardsInGame[card] / 4 < clubs.Min() / 4 &&
         //                this.availableCardsInGame[card + 1] / 4 < clubs.Min())
         //            {
-        //                player.Current = 5;
-        //                player.Power = clubs.Max() + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 5;
+        //                player.Power = clubs.Max() + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                vf = true;
         //            }
         //        }
@@ -1231,28 +1243,28 @@
         //            {
         //                if (this.availableCardsInGame[card] / 4 > diamonds.Max() / 4)
         //                {
-        //                    player.Current = 5;
-        //                    player.Power = this.availableCardsInGame[card] + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                    player.HandFactor = 5;
+        //                    player.Power = this.availableCardsInGame[card] + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                    vf = true;
         //                }
 
         //                if (this.availableCardsInGame[card + 1] / 4 > diamonds.Max() / 4)
         //                {
-        //                    player.Current = 5;
-        //                    player.Power = this.availableCardsInGame[card + 1] + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                    player.HandFactor = 5;
+        //                    player.Power = this.availableCardsInGame[card + 1] + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                    vf = true;
         //                }
         //                else if (this.availableCardsInGame[card] / 4 < diamonds.Max() / 4 &&
         //                    this.availableCardsInGame[card + 1] / 4 < diamonds.Max() / 4)
         //                {
-        //                    player.Current = 5;
-        //                    player.Power = diamonds.Max() + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                    player.HandFactor = 5;
+        //                    player.Power = diamonds.Max() + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                    vf = true;
         //                }
         //            }
@@ -1265,18 +1277,18 @@
         //            {
         //                if (this.availableCardsInGame[card] / 4 > diamonds.Max() / 4)
         //                {
-        //                    player.Current = 5;
-        //                    player.Power = this.availableCardsInGame[card] + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                    player.HandFactor = 5;
+        //                    player.Power = this.availableCardsInGame[card] + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                    vf = true;
         //                }
         //                else
         //                {
-        //                    player.Current = 5;
-        //                    player.Power = diamonds.Max() + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                    player.HandFactor = 5;
+        //                    player.Power = diamonds.Max() + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                    vf = true;
         //                }
         //            }
@@ -1286,18 +1298,18 @@
         //            {
         //                if (this.availableCardsInGame[card + 1] / 4 > diamonds.Max() / 4)
         //                {
-        //                    player.Current = 5;
-        //                    player.Power = this.availableCardsInGame[card + 1] + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                    player.HandFactor = 5;
+        //                    player.Power = this.availableCardsInGame[card + 1] + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                    vf = true;
         //                }
         //                else
         //                {
-        //                    player.Current = 5;
-        //                    player.Power = diamonds.Max() + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                    player.HandFactor = 5;
+        //                    player.Power = diamonds.Max() + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                    vf = true;
         //                }
         //            }
@@ -1308,29 +1320,29 @@
         //            if (this.availableCardsInGame[card] % 4 == diamonds[0] % 4 &&
         //                this.availableCardsInGame[card] / 4 > diamonds.Min() / 4)
         //            {
-        //                player.Current = 5;
-        //                player.Power = this.availableCardsInGame[card] + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 5;
+        //                player.Power = this.availableCardsInGame[card] + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                vf = true;
         //            }
 
         //            if (this.availableCardsInGame[card + 1] % 4 == diamonds[0] % 4 &&
         //                this.availableCardsInGame[card + 1] / 4 > diamonds.Min() / 4)
         //            {
-        //                player.Current = 5;
-        //                player.Power = this.availableCardsInGame[card + 1] + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 5;
+        //                player.Power = this.availableCardsInGame[card + 1] + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                vf = true;
         //            }
         //            else if (this.availableCardsInGame[card] / 4 < diamonds.Min() / 4 &&
         //                this.availableCardsInGame[card + 1] / 4 < diamonds.Min())
         //            {
-        //                player.Current = 5;
-        //                player.Power = diamonds.Max() + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 5;
+        //                player.Power = diamonds.Max() + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                vf = true;
         //            }
         //        }
@@ -1342,28 +1354,28 @@
         //            {
         //                if (this.availableCardsInGame[card] / 4 > hearts.Max() / 4)
         //                {
-        //                    player.Current = 5;
-        //                    player.Power = this.availableCardsInGame[card] + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                    player.HandFactor = 5;
+        //                    player.Power = this.availableCardsInGame[card] + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                    vf = true;
         //                }
 
         //                if (this.availableCardsInGame[card + 1] / 4 > hearts.Max() / 4)
         //                {
-        //                    player.Current = 5;
-        //                    player.Power = this.availableCardsInGame[card + 1] + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                    player.HandFactor = 5;
+        //                    player.Power = this.availableCardsInGame[card + 1] + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                    vf = true;
         //                }
         //                else if (this.availableCardsInGame[card] / 4 < hearts.Max() / 4 &&
         //                    this.availableCardsInGame[card + 1] / 4 < hearts.Max() / 4)
         //                {
-        //                    player.Current = 5;
-        //                    player.Power = hearts.Max() + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                    player.HandFactor = 5;
+        //                    player.Power = hearts.Max() + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                    vf = true;
         //                }
         //            }
@@ -1376,18 +1388,18 @@
         //            {
         //                if (this.availableCardsInGame[card] / 4 > hearts.Max() / 4)
         //                {
-        //                    player.Current = 5;
-        //                    player.Power = this.availableCardsInGame[card] + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                    player.HandFactor = 5;
+        //                    player.Power = this.availableCardsInGame[card] + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                    vf = true;
         //                }
         //                else
         //                {
-        //                    player.Current = 5;
-        //                    player.Power = hearts.Max() + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                    player.HandFactor = 5;
+        //                    player.Power = hearts.Max() + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                    vf = true;
         //                }
         //            }
@@ -1397,18 +1409,18 @@
         //            {
         //                if (this.availableCardsInGame[card + 1] / 4 > hearts.Max() / 4)
         //                {
-        //                    player.Current = 5;
-        //                    player.Power = this.availableCardsInGame[card + 1] + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                    player.HandFactor = 5;
+        //                    player.Power = this.availableCardsInGame[card + 1] + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                    vf = true;
         //                }
         //                else
         //                {
-        //                    player.Current = 5;
-        //                    player.Power = hearts.Max() + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                    player.HandFactor = 5;
+        //                    player.Power = hearts.Max() + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                    vf = true;
         //                }
         //            }
@@ -1419,29 +1431,29 @@
         //            if (this.availableCardsInGame[card] % 4 == hearts[0] % 4 &&
         //                this.availableCardsInGame[card] / 4 > hearts.Min() / 4)
         //            {
-        //                player.Current = 5;
-        //                player.Power = this.availableCardsInGame[card] + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 5;
+        //                player.Power = this.availableCardsInGame[card] + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                vf = true;
         //            }
 
         //            if (this.availableCardsInGame[card + 1] % 4 == hearts[0] % 4 &&
         //                this.availableCardsInGame[card + 1] / 4 > hearts.Min() / 4)
         //            {
-        //                player.Current = 5;
-        //                player.Power = this.availableCardsInGame[card + 1] + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 5;
+        //                player.Power = this.availableCardsInGame[card + 1] + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                vf = true;
         //            }
         //            else if (this.availableCardsInGame[card] / 4 < hearts.Min() / 4 &&
         //                this.availableCardsInGame[card + 1] / 4 < hearts.Min())
         //            {
-        //                player.Current = 5;
-        //                player.Power = hearts.Max() + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 5;
+        //                player.Power = hearts.Max() + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                vf = true;
         //            }
         //        }
@@ -1453,28 +1465,28 @@
         //            {
         //                if (this.availableCardsInGame[card] / 4 > spades.Max() / 4)
         //                {
-        //                    player.Current = 5;
-        //                    player.Power = this.availableCardsInGame[card] + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                    player.HandFactor = 5;
+        //                    player.Power = this.availableCardsInGame[card] + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                    vf = true;
         //                }
 
         //                if (this.availableCardsInGame[card + 1] / 4 > spades.Max() / 4)
         //                {
-        //                    player.Current = 5;
-        //                    player.Power = this.availableCardsInGame[card + 1] + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                    player.HandFactor = 5;
+        //                    player.Power = this.availableCardsInGame[card + 1] + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                    vf = true;
         //                }
         //                else if (this.availableCardsInGame[card] / 4 < spades.Max() / 4 &&
         //                    this.availableCardsInGame[card] / 4 < spades.Max() / 4)
         //                {
-        //                    player.Current = 5;
-        //                    player.Power = spades.Max() + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                    player.HandFactor = 5;
+        //                    player.Power = spades.Max() + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                    vf = true;
         //                }
         //            }
@@ -1487,18 +1499,18 @@
         //            {
         //                if (this.availableCardsInGame[card] / 4 > spades.Max() / 4)
         //                {
-        //                    player.Current = 5;
-        //                    player.Power = this.availableCardsInGame[card] + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                    player.HandFactor = 5;
+        //                    player.Power = this.availableCardsInGame[card] + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                    vf = true;
         //                }
         //                else
         //                {
-        //                    player.Current = 5;
-        //                    player.Power = spades.Max() + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                    player.HandFactor = 5;
+        //                    player.Power = spades.Max() + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                    vf = true;
         //                }
         //            }
@@ -1508,18 +1520,18 @@
         //            {
         //                if (this.availableCardsInGame[card + 1] / 4 > spades.Max() / 4)
         //                {
-        //                    player.Current = 5;
-        //                    player.Power = this.availableCardsInGame[card + 1] + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                    player.HandFactor = 5;
+        //                    player.Power = this.availableCardsInGame[card + 1] + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                    vf = true;
         //                }
         //                else
         //                {
-        //                    player.Current = 5;
-        //                    player.Power = spades.Max() + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                    player.HandFactor = 5;
+        //                    player.Power = spades.Max() + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                    vf = true;
         //                }
         //            }
@@ -1530,29 +1542,29 @@
         //            if (this.availableCardsInGame[card] % 4 == spades[0] % 4 &&
         //                this.availableCardsInGame[card] / 4 > spades.Min() / 4)
         //            {
-        //                player.Current = 5;
-        //                player.Power = this.availableCardsInGame[card] + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 5;
+        //                player.Power = this.availableCardsInGame[card] + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                vf = true;
         //            }
 
         //            if (this.availableCardsInGame[card + 1] % 4 == spades[0] % 4 &&
         //                this.availableCardsInGame[card + 1] / 4 > spades.Min() / 4)
         //            {
-        //                player.Current = 5;
-        //                player.Power = this.availableCardsInGame[card + 1] + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 5;
+        //                player.Power = this.availableCardsInGame[card + 1] + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                vf = true;
         //            }
         //            else if (this.availableCardsInGame[card] / 4 < spades.Min() / 4 &&
         //                this.availableCardsInGame[card + 1] / 4 < spades.Min())
         //            {
-        //                player.Current = 5;
-        //                player.Power = spades.Max() + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 5 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 5;
+        //                player.Power = spades.Max() + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 5 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                vf = true;
         //            }
         //        }
@@ -1562,19 +1574,19 @@
         //            if (this.availableCardsInGame[card] / 4 == 0 &&
         //                this.availableCardsInGame[card] % 4 == clubs[0] % 4 && vf && clubs.Length > 0)
         //            {
-        //                player.Current = 5.5;
-        //                player.Power = 13 + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 5.5 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 5.5;
+        //                player.Power = 13 + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 5.5 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //            }
 
         //            if (this.availableCardsInGame[card + 1] / 4 == 0 &&
         //                this.availableCardsInGame[card + 1] % 4 == clubs[0] % 4 && vf && clubs.Length > 0)
         //            {
-        //                player.Current = 5.5;
-        //                player.Power = 13 + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 5.5 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 5.5;
+        //                player.Power = 13 + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 5.5 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //            }
         //        }
 
@@ -1583,19 +1595,19 @@
         //            if (this.availableCardsInGame[card] / 4 == 0 &&
         //                this.availableCardsInGame[card] % 4 == diamonds[0] % 4 && vf && diamonds.Length > 0)
         //            {
-        //                player.Current = 5.5;
-        //                player.Power = 13 + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 5.5 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 5.5;
+        //                player.Power = 13 + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 5.5 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //            }
 
         //            if (this.availableCardsInGame[card + 1] / 4 == 0 &&
         //                this.availableCardsInGame[card + 1] % 4 == diamonds[0] % 4 && vf && diamonds.Length > 0)
         //            {
-        //                player.Current = 5.5;
-        //                player.Power = 13 + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 5.5 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 5.5;
+        //                player.Power = 13 + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 5.5 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //            }
         //        }
 
@@ -1604,19 +1616,19 @@
         //            if (this.availableCardsInGame[card] / 4 == 0 &&
         //                this.availableCardsInGame[card] % 4 == hearts[0] % 4 && vf && hearts.Length > 0)
         //            {
-        //                player.Current = 5.5;
-        //                player.Power = 13 + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 5.5 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 5.5;
+        //                player.Power = 13 + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 5.5 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //            }
 
         //            if (this.availableCardsInGame[card + 1] / 4 == 0 &&
         //                this.availableCardsInGame[card + 1] % 4 == hearts[0] % 4 && vf && hearts.Length > 0)
         //            {
-        //                player.Current = 5.5;
-        //                player.Power = 13 + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 5.5 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 5.5;
+        //                player.Power = 13 + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 5.5 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //            }
         //        }
 
@@ -1625,19 +1637,19 @@
         //            if (this.availableCardsInGame[card] / 4 == 0 &&
         //                this.availableCardsInGame[card] % 4 == spades[0] % 4 && vf && spades.Length > 0)
         //            {
-        //                player.Current = 5.5;
-        //                player.Power = 13 + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 5.5 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 5.5;
+        //                player.Power = 13 + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 5.5 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //            }
 
         //            if (this.availableCardsInGame[card + 1] / 4 == 0 &&
         //                this.availableCardsInGame[card + 1] % 4 == spades[0] % 4 && vf)
         //            {
-        //                player.Current = 5.5;
-        //                player.Power = 13 + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 5.5 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 5.5;
+        //                player.Power = 13 + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 5.5 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //            }
         //        }
         //    }
@@ -1645,7 +1657,7 @@
 
         //private void rStraight( Player player, int[] Straight)
         //{
-        //    if (player.Current >= -1)
+        //    if (player.HandFactor >= -1)
         //    {
         //        var op = Straight.Select(o => o / 4).Distinct().ToArray();
         //        for (int j = 0; j < op.Length - 4; j++)
@@ -1654,26 +1666,26 @@
         //            {
         //                if (op.Max() - 4 == op[j])
         //                {
-        //                    player.Current = 4;
-        //                    player.Power = op.Max() + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 4 });
-        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                    player.HandFactor = 4;
+        //                    player.Power = op.Max() + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 4 });
+        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                }
         //                else
         //                {
-        //                    player.Current = 4;
-        //                    player.Power = op[j + 4] + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 4 });
-        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                    player.HandFactor = 4;
+        //                    player.Power = op[j + 4] + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 4 });
+        //                    this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //                }
         //            }
 
         //            if (op[j] == 0 && op[j + 1] == 9 && op[j + 2] == 10 && op[j + 3] == 11 && op[j + 4] == 12)
         //            {
-        //                player.Current = 4;
-        //                player.Power = 13 + player.Current * 100;
-        //                this.Win.Add(new Type() { Power = player.Power, Current = 4 });
-        //                this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //                player.HandFactor = 4;
+        //                player.Power = 13 + player.HandFactor * 100;
+        //                this.Win.Add(new Type() { Power = player.Power, HandFactor = 4 });
+        //                this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //            }
         //        }
         //    }
@@ -1681,7 +1693,7 @@
 
         //private void rThreeOfAKind( Player player, int[] Straight)
         //{
-        //    if (player.Current >= -1)
+        //    if (player.HandFactor >= -1)
         //    {
         //        for (int j = 0; j <= 12; j++)
         //        {
@@ -1690,20 +1702,20 @@
         //            {
         //                if (fh.Max() / 4 == 0)
         //                {
-        //                    player.Current = 3;
-        //                    player.Power = 13 * 3 + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 3 });
+        //                    player.HandFactor = 3;
+        //                    player.Power = 13 * 3 + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 3 });
         //                    this.sorted = this.Win
-        //                        .OrderByDescending(op => op.Current)
+        //                        .OrderByDescending(op => op.HandFactor)
         //                        .ThenByDescending(op => op.Power)
         //                        .First();
         //                }
         //                else
         //                {
-        //                    player.Current = 3;
-        //                    player.Power = fh[0] / 4 + fh[1] / 4 + fh[2] / 4 + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 3 });
-        //                    this.sorted = this.Win.OrderByDescending(op => op.Current).ThenByDescending(op => op.Power).First();
+        //                    player.HandFactor = 3;
+        //                    player.Power = fh[0] / 4 + fh[1] / 4 + fh[2] / 4 + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 3 });
+        //                    this.sorted = this.Win.OrderByDescending(op => op.HandFactor).ThenByDescending(op => op.Power).First();
         //                }
         //            }
         //        }
@@ -1712,7 +1724,7 @@
 
         //private void rTwoPair(int card,  Player player)
         //{
-        //    if (player.Current >= -1)
+        //    if (player.HandFactor >= -1)
         //    {
         //        bool firstPairFound = false;
         //        for (int tc = 16; tc >= 12; tc--)
@@ -1737,26 +1749,26 @@
         //                            {
         //                                if (this.availableCardsInGame[card] / 4 == 0)
         //                                {
-        //                                    player.Current = 2;
-        //                                    player.Power = 13 * 4 + (this.availableCardsInGame[card + 1] / 4) * 2 + player.Current * 100;
-        //                                    this.Win.Add(new Type() { Power = player.Power, Current = 2 });
-        //                                    this.sorted = this.Win.OrderByDescending(op => op.Current).ThenByDescending(op => op.Power).First();
+        //                                    player.HandFactor = 2;
+        //                                    player.Power = 13 * 4 + (this.availableCardsInGame[card + 1] / 4) * 2 + player.HandFactor * 100;
+        //                                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 2 });
+        //                                    this.sorted = this.Win.OrderByDescending(op => op.HandFactor).ThenByDescending(op => op.Power).First();
         //                                }
 
         //                                if (this.availableCardsInGame[card + 1] / 4 == 0)
         //                                {
-        //                                    player.Current = 2;
-        //                                    player.Power = 13 * 4 + (this.availableCardsInGame[card] / 4) * 2 + player.Current * 100;
-        //                                    this.Win.Add(new Type() { Power = player.Power, Current = 2 });
-        //                                    this.sorted = this.Win.OrderByDescending(op => op.Current).ThenByDescending(op => op.Power).First();
+        //                                    player.HandFactor = 2;
+        //                                    player.Power = 13 * 4 + (this.availableCardsInGame[card] / 4) * 2 + player.HandFactor * 100;
+        //                                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 2 });
+        //                                    this.sorted = this.Win.OrderByDescending(op => op.HandFactor).ThenByDescending(op => op.Power).First();
         //                                }
 
         //                                if (this.availableCardsInGame[card + 1] / 4 != 0 && this.availableCardsInGame[card] / 4 != 0)
         //                                {
-        //                                    player.Current = 2;
-        //                                    player.Power = (this.availableCardsInGame[card] / 4) * 2 + (this.availableCardsInGame[card + 1] / 4) * 2 + player.Current * 100;
-        //                                    this.Win.Add(new Type() { Power = player.Power, Current = 2 });
-        //                                    this.sorted = this.Win.OrderByDescending(op => op.Current).ThenByDescending(op => op.Power).First();
+        //                                    player.HandFactor = 2;
+        //                                    player.Power = (this.availableCardsInGame[card] / 4) * 2 + (this.availableCardsInGame[card + 1] / 4) * 2 + player.HandFactor * 100;
+        //                                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 2 });
+        //                                    this.sorted = this.Win.OrderByDescending(op => op.HandFactor).ThenByDescending(op => op.Power).First();
         //                                }
         //                            }
         //                            firstPairFound = true;
@@ -1770,7 +1782,7 @@
 
         //private void rPairTwoPair(int card,  Player player )
         //{
-        //    if (player.Current >= -1)
+        //    if (player.HandFactor >= -1)
         //    {
         //        bool firstPairFound = false;
         //        bool firstPairFound1 = false;
@@ -1789,50 +1801,50 @@
         //                    if (this.availableCardsInGame[tc] / 4 == this.availableCardsInGame[tc - k] / 4)
         //                    {
         //                        if (this.availableCardsInGame[tc] / 4 != this.availableCardsInGame[card] / 4 &&
-        //                            this.availableCardsInGame[tc] / 4 != this.availableCardsInGame[card + 1] / 4 && player.Current == 1)
+        //                            this.availableCardsInGame[tc] / 4 != this.availableCardsInGame[card + 1] / 4 && player.HandFactor == 1)
         //                        {
         //                            if (!firstPairFound)
         //                            {
         //                                if (this.availableCardsInGame[card + 1] / 4 == 0)
         //                                {
-        //                                    player.Current = 2;
-        //                                    player.Power = (this.availableCardsInGame[card] / 4) * 2 + 13 * 4 + player.Current * 100;
-        //                                    this.Win.Add(new Type() { Power = player.Power, Current = 2 });
+        //                                    player.HandFactor = 2;
+        //                                    player.Power = (this.availableCardsInGame[card] / 4) * 2 + 13 * 4 + player.HandFactor * 100;
+        //                                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 2 });
         //                                    this.sorted = this.Win
-        //                                        .OrderByDescending(op => op.Current)
+        //                                        .OrderByDescending(op => op.HandFactor)
         //                                        .ThenByDescending(op => op.Power)
         //                                        .First();
         //                                }
 
         //                                if (this.availableCardsInGame[card] / 4 == 0)
         //                                {
-        //                                    player.Current = 2;
-        //                                    player.Power = (this.availableCardsInGame[card + 1] / 4) * 2 + 13 * 4 + player.Current * 100;
-        //                                    this.Win.Add(new Type() { Power = player.Power, Current = 2 });
+        //                                    player.HandFactor = 2;
+        //                                    player.Power = (this.availableCardsInGame[card + 1] / 4) * 2 + 13 * 4 + player.HandFactor * 100;
+        //                                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 2 });
         //                                    this.sorted = this.Win
-        //                                        .OrderByDescending(op => op.Current)
+        //                                        .OrderByDescending(op => op.HandFactor)
         //                                        .ThenByDescending(op => op.Power)
         //                                        .First();
         //                                }
 
         //                                if (this.availableCardsInGame[card + 1] / 4 != 0)
         //                                {
-        //                                    player.Current = 2;
-        //                                    player.Power = (this.availableCardsInGame[tc] / 4) * 2 + (this.availableCardsInGame[card + 1] / 4) * 2 + player.Current * 100;
-        //                                    this.Win.Add(new Type() { Power = player.Power, Current = 2 });
+        //                                    player.HandFactor = 2;
+        //                                    player.Power = (this.availableCardsInGame[tc] / 4) * 2 + (this.availableCardsInGame[card + 1] / 4) * 2 + player.HandFactor * 100;
+        //                                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 2 });
         //                                    this.sorted = this.Win
-        //                                        .OrderByDescending(op => op.Current)
+        //                                        .OrderByDescending(op => op.HandFactor)
         //                                        .ThenByDescending(op => op.Power)
         //                                        .First();
         //                                }
 
         //                                if (this.availableCardsInGame[card] / 4 != 0)
         //                                {
-        //                                    player.Current = 2;
-        //                                    player.Power = (this.availableCardsInGame[tc] / 4) * 2 + (this.availableCardsInGame[card] / 4) * 2 + player.Current * 100;
-        //                                    this.Win.Add(new Type() { Power = player.Power, Current = 2 });
+        //                                    player.HandFactor = 2;
+        //                                    player.Power = (this.availableCardsInGame[tc] / 4) * 2 + (this.availableCardsInGame[card] / 4) * 2 + player.HandFactor * 100;
+        //                                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 2 });
         //                                    this.sorted = this.Win
-        //                                        .OrderByDescending(op => op.Current)
+        //                                        .OrderByDescending(op => op.HandFactor)
         //                                        .ThenByDescending(op => op.Power)
         //                                        .First();
         //                                }
@@ -1840,7 +1852,7 @@
         //                            firstPairFound = true;
         //                        }
 
-        //                        if (player.Current == -1)
+        //                        if (player.HandFactor == -1)
         //                        {
         //                            if (!firstPairFound1)
         //                            {
@@ -1848,21 +1860,21 @@
         //                                {
         //                                    if (this.availableCardsInGame[tc] / 4 == 0)
         //                                    {
-        //                                        player.Current = 0;
-        //                                        player.Power = 13 + this.availableCardsInGame[card] / 4 + player.Current * 100;
-        //                                        this.Win.Add(new Type() { Power = player.Power, Current = 1 });
+        //                                        player.HandFactor = 0;
+        //                                        player.Power = 13 + this.availableCardsInGame[card] / 4 + player.HandFactor * 100;
+        //                                        this.Win.Add(new Type() { Power = player.Power, HandFactor = 1 });
         //                                        this.sorted = this.Win
-        //                                            .OrderByDescending(op => op.Current)
+        //                                            .OrderByDescending(op => op.HandFactor)
         //                                            .ThenByDescending(op => op.Power)
         //                                            .First();
         //                                    }
         //                                    else
         //                                    {
-        //                                        player.Current = 0;
-        //                                        player.Power = this.availableCardsInGame[tc] / 4 + this.availableCardsInGame[card] / 4 + player.Current * 100;
-        //                                        this.Win.Add(new Type() { Power = player.Power, Current = 1 });
+        //                                        player.HandFactor = 0;
+        //                                        player.Power = this.availableCardsInGame[tc] / 4 + this.availableCardsInGame[card] / 4 + player.HandFactor * 100;
+        //                                        this.Win.Add(new Type() { Power = player.Power, HandFactor = 1 });
         //                                        this.sorted = this.Win
-        //                                            .OrderByDescending(op => op.Current)
+        //                                            .OrderByDescending(op => op.HandFactor)
         //                                            .ThenByDescending(op => op.Power)
         //                                            .First();
         //                                    }
@@ -1871,21 +1883,21 @@
         //                                {
         //                                    if (this.availableCardsInGame[tc] / 4 == 0)
         //                                    {
-        //                                        player.Current = 0;
-        //                                        player.Power = 13 + this.availableCardsInGame[card + 1] + player.Current * 100;
-        //                                        this.Win.Add(new Type() { Power = player.Power, Current = 1 });
+        //                                        player.HandFactor = 0;
+        //                                        player.Power = 13 + this.availableCardsInGame[card + 1] + player.HandFactor * 100;
+        //                                        this.Win.Add(new Type() { Power = player.Power, HandFactor = 1 });
         //                                        this.sorted = this.Win
-        //                                            .OrderByDescending(op => op.Current)
+        //                                            .OrderByDescending(op => op.HandFactor)
         //                                            .ThenByDescending(op => op.Power)
         //                                            .First();
         //                                    }
         //                                    else
         //                                    {
-        //                                        player.Current = 0;
-        //                                        player.Power = this.availableCardsInGame[tc] / 4 + this.availableCardsInGame[card + 1] / 4 + player.Current * 100;
-        //                                        this.Win.Add(new Type() { Power = player.Power, Current = 1 });
+        //                                        player.HandFactor = 0;
+        //                                        player.Power = this.availableCardsInGame[tc] / 4 + this.availableCardsInGame[card + 1] / 4 + player.HandFactor * 100;
+        //                                        this.Win.Add(new Type() { Power = player.Power, HandFactor = 1 });
         //                                        this.sorted = this.Win
-        //                                            .OrderByDescending(op => op.Current)
+        //                                            .OrderByDescending(op => op.HandFactor)
         //                                            .ThenByDescending(op => op.Power)
         //                                            .First();
         //                                    }
@@ -1902,7 +1914,7 @@
 
         //private void rPairFromHand(int card,  Player player)
         //{
-        //    if (player.Current >= -1)
+        //    if (player.HandFactor >= -1)
         //    {
         //        bool firstPairFound = false;
         //        if (this.availableCardsInGame[card] / 4 == this.availableCardsInGame[card + 1] / 4)
@@ -1911,21 +1923,21 @@
         //            {
         //                if (this.availableCardsInGame[card] / 4 == 0)
         //                {
-        //                    player.Current = 1;
-        //                    player.Power = 13 * 4 + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 1 });
+        //                    player.HandFactor = 1;
+        //                    player.Power = 13 * 4 + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 1 });
         //                    this.sorted = this.Win
-        //                        .OrderByDescending(op => op.Current)
+        //                        .OrderByDescending(op => op.HandFactor)
         //                        .ThenByDescending(op => op.Power)
         //                        .First();
         //                }
         //                else
         //                {
-        //                    player.Current = 1;
-        //                    player.Power = (this.availableCardsInGame[card + 1] / 4) * 4 + player.Current * 100;
-        //                    this.Win.Add(new Type() { Power = player.Power, Current = 1 });
+        //                    player.HandFactor = 1;
+        //                    player.Power = (this.availableCardsInGame[card + 1] / 4) * 4 + player.HandFactor * 100;
+        //                    this.Win.Add(new Type() { Power = player.Power, HandFactor = 1 });
         //                    this.sorted = this.Win
-        //                        .OrderByDescending(op => op.Current)
+        //                        .OrderByDescending(op => op.HandFactor)
         //                        .ThenByDescending(op => op.Power)
         //                        .First();
         //                }
@@ -1941,21 +1953,21 @@
         //                {
         //                    if (this.availableCardsInGame[card + 1] / 4 == 0)
         //                    {
-        //                        player.Current = 1;
-        //                        player.Power = 13 * 4 + this.availableCardsInGame[card] / 4 + player.Current * 100;
-        //                        this.Win.Add(new Type() { Power = player.Power, Current = 1 });
+        //                        player.HandFactor = 1;
+        //                        player.Power = 13 * 4 + this.availableCardsInGame[card] / 4 + player.HandFactor * 100;
+        //                        this.Win.Add(new Type() { Power = player.Power, HandFactor = 1 });
         //                        this.sorted = this.Win
-        //                            .OrderByDescending(op => op.Current)
+        //                            .OrderByDescending(op => op.HandFactor)
         //                            .ThenByDescending(op => op.Power)
         //                            .First();
         //                    }
         //                    else
         //                    {
-        //                        player.Current = 1;
-        //                        player.Power = (this.availableCardsInGame[card + 1] / 4) * 4 + this.availableCardsInGame[card] / 4 + player.Current * 100;
-        //                        this.Win.Add(new Type() { Power = player.Power, Current = 1 });
+        //                        player.HandFactor = 1;
+        //                        player.Power = (this.availableCardsInGame[card + 1] / 4) * 4 + this.availableCardsInGame[card] / 4 + player.HandFactor * 100;
+        //                        this.Win.Add(new Type() { Power = player.Power, HandFactor = 1 });
         //                        this.sorted = this.Win
-        //                            .OrderByDescending(op => op.Current)
+        //                            .OrderByDescending(op => op.HandFactor)
         //                            .ThenByDescending(op => op.Power)
         //                            .First();
         //                    }
@@ -1969,20 +1981,20 @@
         //                {
         //                    if (this.availableCardsInGame[card] / 4 == 0)
         //                    {
-        //                        player.Current = 1;
-        //                        player.Power = 13 * 4 + this.availableCardsInGame[card + 1] / 4 + player.Current * 100;
-        //                        this.Win.Add(new Type() { Power = player.Power, Current = 1 });
+        //                        player.HandFactor = 1;
+        //                        player.Power = 13 * 4 + this.availableCardsInGame[card + 1] / 4 + player.HandFactor * 100;
+        //                        this.Win.Add(new Type() { Power = player.Power, HandFactor = 1 });
         //                        this.sorted = this.Win
-        //                            .OrderByDescending(op => op.Current)
+        //                            .OrderByDescending(op => op.HandFactor)
         //                            .ThenByDescending(op => op.Power)
         //                            .First();
         //                    }
         //                    else
         //                    {
-        //                        player.Current = 1;
-        //                        player.Power = (this.availableCardsInGame[tc] / 4) * 4 + this.availableCardsInGame[card + 1] / 4 + player.Current * 100;
-        //                        this.Win.Add(new Type() { Power = player.Power, Current = 1 });
-        //                        this.sorted = this.Win.OrderByDescending(op => op.Current).ThenByDescending(op => op.Power).First();
+        //                        player.HandFactor = 1;
+        //                        player.Power = (this.availableCardsInGame[tc] / 4) * 4 + this.availableCardsInGame[card + 1] / 4 + player.HandFactor * 100;
+        //                        this.Win.Add(new Type() { Power = player.Power, HandFactor = 1 });
+        //                        this.sorted = this.Win.OrderByDescending(op => op.HandFactor).ThenByDescending(op => op.Power).First();
         //                    }
         //                }
         //                firstPairFound = true;
@@ -1993,29 +2005,29 @@
 
         //private void rHighCard(int card,  Player player)
         //{
-        //    if (player.Current == -1)
+        //    if (player.HandFactor == -1)
         //    {
         //        if (this.availableCardsInGame[card] / 4 > this.availableCardsInGame[card + 1] / 4)
         //        {
-        //            player.Current = -1;
+        //            player.HandFactor = -1;
         //            player.Power = this.availableCardsInGame[card] / 4;
-        //            this.Win.Add(new Type() { Power = player.Power, Current = -1 });
-        //            this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //            this.Win.Add(new Type() { Power = player.Power, HandFactor = -1 });
+        //            this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //        }
         //        else
         //        {
-        //            player.Current = -1;
+        //            player.HandFactor = -1;
         //            player.Power = this.availableCardsInGame[card + 1] / 4;
-        //            this.Win.Add(new Type() { Power = player.Power, Current = -1 });
-        //            this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //            this.Win.Add(new Type() { Power = player.Power, HandFactor = -1 });
+        //            this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //        }
 
         //        if (this.availableCardsInGame[card] / 4 == 0 || this.availableCardsInGame[card + 1] / 4 == 0)
         //        {
-        //            player.Current = -1;
+        //            player.HandFactor = -1;
         //            player.Power = 13;
-        //            this.Win.Add(new Type() { Power = player.Power, Current = -1 });
-        //            this.sorted = this.Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+        //            this.Win.Add(new Type() { Power = player.Power, HandFactor = -1 });
+        //            this.sorted = this.Win.OrderByDescending(op1 => op1.HandFactor).ThenByDescending(op1 => op1.Power).First();
         //        }
         //    }
         //}
@@ -2037,7 +2049,7 @@
 
         //    }
 
-        //    if (player.Current == this.sorted.Current)
+        //    if (player.HandFactor == this.sorted.HandFactor)
         //    {
         //        if (player.Power == this.sorted.Power)
         //        {
@@ -2045,52 +2057,52 @@
         //            this.CheckWinners.Add(player.Name);
 
         //            //TODO if statement to switch
-        //            if (player.Current == -1)
+        //            if (player.HandFactor == -1)
         //            {
         //                MessageBox.Show(player.Name + " High Card ");
         //            }
 
-        //            if (player.Current == 1 || player.Current == 0)
+        //            if (player.HandFactor == 1 || player.HandFactor == 0)
         //            {
         //                MessageBox.Show(player.Name + " Pair ");
         //            }
 
-        //            if (player.Current == 2)
+        //            if (player.HandFactor == 2)
         //            {
         //                MessageBox.Show(player.Name + " Two Pair ");
         //            }
 
-        //            if (player.Current == 3)
+        //            if (player.HandFactor == 3)
         //            {
         //                MessageBox.Show(player.Name + " Three of a Kind ");
         //            }
 
-        //            if (player.Current == 4)
+        //            if (player.HandFactor == 4)
         //            {
         //                MessageBox.Show(player.Name + " Straight ");
         //            }
 
-        //            if (player.Current == 5 || player.Current == 5.5)
+        //            if (player.HandFactor == 5 || player.HandFactor == 5.5)
         //            {
         //                MessageBox.Show(player.Name + " Flush ");
         //            }
 
-        //            if (player.Current == 6)
+        //            if (player.HandFactor == 6)
         //            {
         //                MessageBox.Show(player.Name + " Full House ");
         //            }
 
-        //            if (player.Current == 7)
+        //            if (player.HandFactor == 7)
         //            {
         //                MessageBox.Show(player.Name + " Four of a Kind ");
         //            }
 
-        //            if (player.Current == 8)
+        //            if (player.HandFactor == 8)
         //            {
         //                MessageBox.Show(player.Name + " Straight Flush ");
         //            }
 
-        //            if (player.Current == 9)
+        //            if (player.HandFactor == 9)
         //            {
         //                MessageBox.Show(player.Name + " Royal Flush ! ");
         //            }
@@ -2334,14 +2346,14 @@
 
                 if (this.humanPlayer.Chips <= 0)
                 {
-                    AddChips f2 = new AddChips();
-                    f2.ShowDialog();
-                    if (f2.a != 0)
+                    AddChips addChips = new AddChips();
+                    addChips.ShowDialog();
+                    if (addChips.amountOfChips != 0)
                     {
-                        this.humanPlayer.Chips = f2.a;
+                        this.humanPlayer.Chips = addChips.amountOfChips;
                         for (int i = 1; i < this.db.Players.Length; i++)
                         {
-                            this.db.Players[i].Chips += f2.a;
+                            this.db.Players[i].Chips += addChips.amountOfChips;
                         }
                         //this.firstBotChips += f2.a;
                         //this.secondbotChips += f2.a;
@@ -2393,7 +2405,7 @@
                     GlobalConstants.PlayingCardsWithPngExtension,
                     SearchOption.TopDirectoryOnly);
 
-                this.bools.Clear();
+                this.inactivePlayers.Clear();
                 this.rounds = 0;
                 //this.humanPlayerPower = 0;
                 //this.humanPlayerType = -1;
@@ -2416,7 +2428,7 @@
                 //this.CheckWinners.Clear();
                 //this.winners = 0;
                 //this.Win.Clear();
-                //this.sorted.Current = 0;
+                //this.sorted.HandFactor = 0;
                 //this.sorted.Power = 0;
 
                 for (int os = 0; os < 17; os++)
@@ -2558,12 +2570,12 @@
             }
             #endregion
 
-            var abc = this.bools.Count(x => x == false);
+            var countOfActivePlayers = this.inactivePlayers.Count(x => x == false);
 
             #region LastManStanding
-            if (abc == 1)
+            if (countOfActivePlayers == 1)
             {
-                int index = this.bools.IndexOf(false);
+                int index = this.inactivePlayers.IndexOf(false);
 
                 // TODO if statement to switch
                 if (index == 0)
@@ -2625,7 +2637,7 @@
             #endregion
 
             #region FiveOrLessLeft
-            if (abc < 6 && abc > 1 && this.rounds >= this.end)
+            if (countOfActivePlayers < 6 && countOfActivePlayers > 1 && this.rounds >= this.end)
             {
                 await this.Finish(2);
             }
@@ -2730,12 +2742,12 @@
             this.maxLeft = 6;
             this.last = 123;
             this.raisedTurn = 1;
-            this.bools.Clear();
+            this.inactivePlayers.Clear();
             this.rules.CheckWinners.Clear();
 
             this.ints.Clear();
             this.rules.Win.Clear();
-            this.rules.Sorted.Current = 0;
+            this.rules.Sorted.HandFactor = 0;
             this.rules.Sorted.Power = 0;
             this.textBoxPot.Text = "0";
             this.t = 60;
@@ -2749,16 +2761,16 @@
             //this.fifthBotStatus.Text = "";
             if (this.humanPlayer.Chips <= 0)
             {
-                AddChips f2 = new AddChips();
-                f2.ShowDialog();
-                if (f2.a != 0)
+                AddChips addChips = new AddChips();
+                addChips.ShowDialog();
+                if (addChips.amountOfChips != 0)
                 {
-                    this.humanPlayer.Chips = f2.a;
-                    this.firstBot.Chips += f2.a;
-                    this.secondbot.Chips += f2.a;
-                    this.thirdbot.Chips += f2.a;
-                    this.fourthBot.Chips += f2.a;
-                    this.fifthBot.Chips += f2.a;
+                    this.humanPlayer.Chips = addChips.amountOfChips;
+                    this.firstBot.Chips += addChips.amountOfChips;
+                    this.secondbot.Chips += addChips.amountOfChips;
+                    this.thirdbot.Chips += addChips.amountOfChips;
+                    this.fourthBot.Chips += addChips.amountOfChips;
+                    this.fifthBot.Chips += addChips.amountOfChips;
                     this.humanPlayer.FoldTurn = false;
                     this.humanPlayer.IsPlayerTurn = true;
                     this.buttonRaise.Enabled = true;
@@ -2784,7 +2796,7 @@
         //void FixWinners()
         //{
         //    this.Win.Clear();
-        //    this.sorted.Current = 0;
+        //    this.sorted.HandFactor = 0;
         //    this.sorted.Power = 0;
         //    string fixedLast = String.Empty; //"qwerty";
 
@@ -2806,52 +2818,52 @@
         //{
         //    if (!player.FoldTurn)
         //    {
-        //        if (player.Current == -1)
+        //        if (player.HandFactor == -1)
         //        {
         //            this.HighCard(player);
         //        }
 
-        //        if (player.Current == 0)
+        //        if (player.HandFactor == 0)
         //        {
         //            this.PairTable(player);
         //        }
 
-        //        if (player.Current == 1)
+        //        if (player.HandFactor == 1)
         //        {
         //            this.PairHand(player);
         //        }
 
-        //        if (player.Current == 2)
+        //        if (player.HandFactor == 2)
         //        {
         //            this.TwoPair(player);
         //        }
 
-        //        if (player.Current == 3)
+        //        if (player.HandFactor == 3)
         //        {
         //            this.ThreeOfAKind(player);
         //        }
 
-        //        if (player.Current == 4)
+        //        if (player.HandFactor == 4)
         //        {
         //            this.Straight(player);
         //        }
 
-        //        if (player.Current == 5 || player.Current == 5.5)
+        //        if (player.HandFactor == 5 || player.HandFactor == 5.5)
         //        {
         //            this.Flush(player);
         //        }
 
-        //        if (player.Current == 6)
+        //        if (player.HandFactor == 6)
         //        {
         //            this.FullHouse(player);
         //        }
 
-        //        if (player.Current == 7)
+        //        if (player.HandFactor == 7)
         //        {
         //            this.FourOfAKind(player);
         //        }
 
-        //        if (player.Current == 8 || player.Current == 9)
+        //        if (player.HandFactor == 8 || player.HandFactor == 9)
         //        {
         //            this.StraightFlush(player);
         //        }

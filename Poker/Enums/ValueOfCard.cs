@@ -1,5 +1,8 @@
 ﻿namespace Poker.Enums
 {
+    /// <summary>
+    /// An enumeration that holds the rank of the cards with their corresponding integer value.
+    /// </summary>
     public enum ValueOfCard
     {
         Ace = 13,

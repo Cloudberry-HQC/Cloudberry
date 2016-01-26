@@ -1,16 +1,25 @@
-﻿
-
-using System.Collections.Generic;
-using Poker.Models.PokerManagement;
-
-namespace Poker.Interfaces
+﻿namespace Poker.Interfaces
 {
-  public  interface IRules
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// This interface gives the ability for identifying the player's hand and determines the winner.
+    /// </summary>
+    public interface IRules
     {
         void FixWinners();
-
+         
+        /// <summary>
+        /// Determines the winner.
+        /// </summary>
+        /// <param name="player">Current player.</param>
+        /// <param name="lastly">String parameter.</param>
         void Winner(IPlayer player, string lastly);
-
+        
+        /// <summary>
+        /// Checks the type of the player's hand
+        /// </summary>
+        /// <param name="player">Current player.</param>
         void CheckForHand(IPlayer player);
 
         List<string> CheckWinners { get; set; }
@@ -22,9 +31,6 @@ namespace Poker.Interfaces
         List<Type> Win { get; set; }
 
         int Winners { get; set; }
-
-        
-        
-
+      
     }
 }

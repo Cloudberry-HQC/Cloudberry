@@ -51,7 +51,9 @@
       <DependentUpon>AddChips.cs</DependentUpon>
     </Compile>
     <Compile Include="Core\Database.cs" />
+    <Compile Include="Enums\GameRound.cs" />
     <Compile Include="Enums\SuitOfCard.cs" />
+    <Compile Include="Enums\TypeOfTheHand.cs" />
     <Compile Include="Enums\ValueOfCard.cs" />
     <Compile Include="Forms\Game.cs">
       <SubType>Form</SubType>

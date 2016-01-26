@@ -6,7 +6,7 @@
 
     public partial class AddChips : Form
     {
-        public int a;
+        public int amountOfChips;
         public AddChips()
         {
             FontFamily fontFamily = new FontFamily("Arial");
@@ -31,8 +31,8 @@
             }
             else if (int.TryParse(this.textBox1.Text, out parsedValue) && int.Parse(this.textBox1.Text) <= 100000000)
             {
-                this.a = int.Parse(this.textBox1.Text);
-                Close();
+                this.amountOfChips = int.Parse(this.textBox1.Text);
+                this.Close();
             }
         }
         private void button2_Click(object sender, EventArgs e)

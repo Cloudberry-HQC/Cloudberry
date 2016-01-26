@@ -1,11 +1,13 @@
-﻿using System;
-
-namespace Poker.Models.Player
+﻿namespace Poker.Models.Player
 {
+    using System;
     using System.Drawing;
     using System.Windows.Forms;
     using Interfaces;
 
+    /// <summary>
+    /// Abstract class that holds the common behaviour of the real and artificial player.
+    /// </summary>
     public abstract class Player : IPlayer
     {
         private const int NumberOfCards = 2;
@@ -179,7 +181,7 @@ namespace Poker.Models.Player
             }
         }
 
-      public void PlayerFold()
+        public void PlayerFold()
         {
             Launcher.Poker.Raising = false;
             this.Status.Text = "Fold";

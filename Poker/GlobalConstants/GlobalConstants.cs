@@ -1,7 +1,7 @@
 ﻿namespace Poker.GlobalConstants
 {
     /// <summary>
-    /// Holds all constant values in the project
+    /// Holds all constant values in the project.
     /// </summary>
     public class GlobalConstants
     {
