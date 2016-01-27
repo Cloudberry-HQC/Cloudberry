@@ -142,6 +142,8 @@
             }
         }
 
+        //TODO plamen : method have to be modified to satisfy
+        //TODO         the test CheckForHandTest_CheckForStraightFlushOfClubsFromTwoToSixWithJackOfClubs
         private void CheckForStraightFlush(IPlayer player, ICard[] allSevenCards)
         {
             ICard[] clubs = allSevenCards.Where(card => card.Suit == SuitOfCard.Clubs).ToArray();
@@ -178,31 +180,51 @@
                 
                 if (distinctValueOfClubs.Length >= 5)
                 {
-                    if (distinctValueOfClubs[0].Value + 4 == distinctValueOfClubs[4].Value)
+                    //implement a new logic to satisfy the test with straight flush and another card from the same suit but greater value
+
+                    for (int i = distinctValueOfClubs.Length - 1; i - 4 >= 0; i--)
                     {
-                        player.Current = 8;
-                        player.Power = (int)distinctValueOfClubs.Max(card => card.Value) + player.Current * FactorForCalculatingThePower;
-                        this.Win.Add(new Type { Power = player.Power, HandFactor = 8 });
-                        this.Sorted = this.Win
-                            .OrderByDescending(op1 => op1.HandFactor)
-                            .ThenByDescending(op1 => op1.Power)
-                            .First();
+                        if (distinctValueOfClubs[i].Value - 4 == distinctValueOfClubs[i - 4].Value)
+                        {
+                            player.Current = distinctValueOfClubs[i].Value == ValueOfCard.Ace ? 9 : 8;
+
+                            player.Power = (int)distinctValueOfClubs[i].Value + player.Current * FactorForCalculatingThePower;
+                            this.Win.Add(new Type { Power = player.Power, HandFactor = player.Current });
+                            this.Sorted = this.Win
+                                .OrderByDescending(op1 => op1.HandFactor)
+                                .ThenByDescending(op1 => op1.Power)
+                                .First();
+
+                            break;
+                        }
                     }
 
-                    if (distinctValueOfClubs[0].Value == ValueOfCard.Ten &&
-                        distinctValueOfClubs[1].Value == ValueOfCard.Jack &&
-                        distinctValueOfClubs[2].Value == ValueOfCard.Queen &&
-                        distinctValueOfClubs[3].Value == ValueOfCard.King &&
-                        distinctValueOfClubs[4].Value == ValueOfCard.Ace)
-                    {
-                        player.Current = 9;
-                        player.Power = (int)distinctValueOfClubs.Max(card => card.Value) + player.Current * FactorForCalculatingThePower;
-                        this.Win.Add(new Type { Power = player.Power, HandFactor = 9 });
-                        this.Sorted = this.Win
-                            .OrderByDescending(op1 => op1.HandFactor)
-                            .ThenByDescending(op1 => op1.Power)
-                            .First();
-                    }
+
+                    //if (distinctValueOfClubs[0].Value + 4 == distinctValueOfClubs[4].Value)
+                    //{
+                    //    player.Current = 8;
+                    //    player.Power = (int)distinctValueOfClubs.Max(card => card.Value) + player.Current * FactorForCalculatingThePower;
+                    //    this.Win.Add(new Type { Power = player.Power, HandFactor = 8 });
+                    //    this.Sorted = this.Win
+                    //        .OrderByDescending(op1 => op1.HandFactor)
+                    //        .ThenByDescending(op1 => op1.Power)
+                    //        .First();
+                    //}
+
+                    //if (distinctValueOfClubs[0].Value == ValueOfCard.Ten &&
+                    //    distinctValueOfClubs[1].Value == ValueOfCard.Jack &&
+                    //    distinctValueOfClubs[2].Value == ValueOfCard.Queen &&
+                    //    distinctValueOfClubs[3].Value == ValueOfCard.King &&
+                    //    distinctValueOfClubs[4].Value == ValueOfCard.Ace)
+                    //{
+                    //    player.Current = 9;
+                    //    player.Power = (int)distinctValueOfClubs.Max(card => card.Value) + player.Current * FactorForCalculatingThePower;
+                    //    this.Win.Add(new Type { Power = player.Power, HandFactor = 9 });
+                    //    this.Sorted = this.Win
+                    //        .OrderByDescending(op1 => op1.HandFactor)
+                    //        .ThenByDescending(op1 => op1.Power)
+                    //        .First();
+                    //}
                     //TODO elica : here the ace is equal to zero and the max value of this hand is five
                     if (distinctValueOfClubs[0].Value == ValueOfCard.Two &&
                         distinctValueOfClubs[1].Value == ValueOfCard.Three &&
@@ -223,32 +245,50 @@
 
                 if (distinctValueOfDiamonds.Length >= 5)
                 {
-                   
-                    if (distinctValueOfDiamonds[0].Value + 4 == distinctValueOfDiamonds[4].Value)
+                    //implement a new logic to satisfy the test with straight flush and another card from the same suit but greater value
+
+                    for (int i = distinctValueOfDiamonds.Length - 1; i - 4 >= 0; i--)
                     {
-                        player.Current = 8;
-                        player.Power = (int)distinctValueOfDiamonds.Max(card => card.Value) + player.Current * FactorForCalculatingThePower;
-                        this.Win.Add(new Type { Power = player.Power, HandFactor = 8 });
-                        this.Sorted = this.Win
-                            .OrderByDescending(op1 => op1.HandFactor)
-                            .ThenByDescending(op1 => op1.Power)
-                            .First();
+                        if (distinctValueOfDiamonds[i].Value - 4 == distinctValueOfDiamonds[i - 4].Value)
+                        {
+                            player.Current = distinctValueOfDiamonds[i].Value == ValueOfCard.Ace ? 9 : 8;
+
+                            player.Power = (int)distinctValueOfDiamonds[i].Value + player.Current * FactorForCalculatingThePower;
+                            this.Win.Add(new Type { Power = player.Power, HandFactor = player.Current });
+                            this.Sorted = this.Win
+                                .OrderByDescending(op1 => op1.HandFactor)
+                                .ThenByDescending(op1 => op1.Power)
+                                .First();
+
+                            break;
+                        }
                     }
 
-                    if (distinctValueOfDiamonds[0].Value == ValueOfCard.Ten &&
-                        distinctValueOfDiamonds[1].Value == ValueOfCard.Jack &&
-                        distinctValueOfDiamonds[2].Value == ValueOfCard.Queen &&
-                        distinctValueOfDiamonds[3].Value == ValueOfCard.King &&
-                        distinctValueOfDiamonds[4].Value == ValueOfCard.Ace)
-                    {
-                        player.Current = 9;
-                        player.Power = (int)distinctValueOfDiamonds.Max(card => card.Value) + player.Current * FactorForCalculatingThePower;
-                        this.Win.Add(new Type { Power = player.Power, HandFactor = 9 });
-                        this.Sorted = this.Win
-                            .OrderByDescending(op1 => op1.HandFactor)
-                            .ThenByDescending(op1 => op1.Power)
-                            .First();
-                    }
+                    //if (distinctValueOfDiamonds[0].Value + 4 == distinctValueOfDiamonds[4].Value)
+                    //{
+                    //    player.Current = 8;
+                    //    player.Power = (int)distinctValueOfDiamonds.Max(card => card.Value) + player.Current * FactorForCalculatingThePower;
+                    //    this.Win.Add(new Type { Power = player.Power, HandFactor = 8 });
+                    //    this.Sorted = this.Win
+                    //        .OrderByDescending(op1 => op1.HandFactor)
+                    //        .ThenByDescending(op1 => op1.Power)
+                    //        .First();
+                    //}
+
+                    //if (distinctValueOfDiamonds[0].Value == ValueOfCard.Ten &&
+                    //    distinctValueOfDiamonds[1].Value == ValueOfCard.Jack &&
+                    //    distinctValueOfDiamonds[2].Value == ValueOfCard.Queen &&
+                    //    distinctValueOfDiamonds[3].Value == ValueOfCard.King &&
+                    //    distinctValueOfDiamonds[4].Value == ValueOfCard.Ace)
+                    //{
+                    //    player.Current = 9;
+                    //    player.Power = (int)distinctValueOfDiamonds.Max(card => card.Value) + player.Current * FactorForCalculatingThePower;
+                    //    this.Win.Add(new Type { Power = player.Power, HandFactor = 9 });
+                    //    this.Sorted = this.Win
+                    //        .OrderByDescending(op1 => op1.HandFactor)
+                    //        .ThenByDescending(op1 => op1.Power)
+                    //        .First();
+                    //}
                     //TODO elica : here the ace is equal to zero and the max value of this hand is five
                     if (distinctValueOfDiamonds[0].Value == ValueOfCard.Two &&
                         distinctValueOfDiamonds[1].Value == ValueOfCard.Three &&
@@ -269,32 +309,50 @@
 
                 if (distinctValueOfHearts.Length >= 5)
                 {
-                    
-                    if (distinctValueOfHearts[0].Value + 4 == distinctValueOfHearts[4].Value)
+                    //implement a new logic to satisfy the test with straight flush and another card from the same suit but greater value
+
+                    for (int i = distinctValueOfHearts.Length - 1; i - 4 >= 0; i--)
                     {
-                        player.Current = 8;
-                        player.Power = (int)distinctValueOfHearts.Max(card => card.Value) + player.Current * FactorForCalculatingThePower;
-                        this.Win.Add(new Type { Power = player.Power, HandFactor = 8 });
-                        this.Sorted = this.Win
-                            .OrderByDescending(op1 => op1.HandFactor)
-                            .ThenByDescending(op1 => op1.Power)
-                            .First();
+                        if (distinctValueOfHearts[i].Value - 4 == distinctValueOfHearts[i - 4].Value)
+                        {
+                            player.Current = distinctValueOfHearts[i].Value == ValueOfCard.Ace ? 9 : 8;
+
+                            player.Power = (int)distinctValueOfHearts[i].Value + player.Current * FactorForCalculatingThePower;
+                            this.Win.Add(new Type { Power = player.Power, HandFactor = player.Current });
+                            this.Sorted = this.Win
+                                .OrderByDescending(op1 => op1.HandFactor)
+                                .ThenByDescending(op1 => op1.Power)
+                                .First();
+
+                            break;
+                        }
                     }
 
-                    if (distinctValueOfHearts[0].Value == ValueOfCard.Ten &&
-                        distinctValueOfHearts[1].Value == ValueOfCard.Jack &&
-                        distinctValueOfHearts[2].Value == ValueOfCard.Queen &&
-                        distinctValueOfHearts[3].Value == ValueOfCard.King &&
-                        distinctValueOfHearts[4].Value == ValueOfCard.Ace)
-                    {
-                        player.Current = 9;
-                        player.Power = (int)distinctValueOfHearts.Max(card => card.Value) + player.Current * FactorForCalculatingThePower;
-                        this.Win.Add(new Type { Power = player.Power, HandFactor = 9 });
-                        this.Sorted = this.Win
-                            .OrderByDescending(op1 => op1.HandFactor)
-                            .ThenByDescending(op1 => op1.Power)
-                            .First();
-                    }
+                    //if (distinctValueOfHearts[0].Value + 4 == distinctValueOfHearts[4].Value)
+                    //{
+                    //    player.Current = 8;
+                    //    player.Power = (int)distinctValueOfHearts.Max(card => card.Value) + player.Current * FactorForCalculatingThePower;
+                    //    this.Win.Add(new Type { Power = player.Power, HandFactor = 8 });
+                    //    this.Sorted = this.Win
+                    //        .OrderByDescending(op1 => op1.HandFactor)
+                    //        .ThenByDescending(op1 => op1.Power)
+                    //        .First();
+                    //}
+
+                    //if (distinctValueOfHearts[0].Value == ValueOfCard.Ten &&
+                    //    distinctValueOfHearts[1].Value == ValueOfCard.Jack &&
+                    //    distinctValueOfHearts[2].Value == ValueOfCard.Queen &&
+                    //    distinctValueOfHearts[3].Value == ValueOfCard.King &&
+                    //    distinctValueOfHearts[4].Value == ValueOfCard.Ace)
+                    //{
+                    //    player.Current = 9;
+                    //    player.Power = (int)distinctValueOfHearts.Max(card => card.Value) + player.Current * FactorForCalculatingThePower;
+                    //    this.Win.Add(new Type { Power = player.Power, HandFactor = 9 });
+                    //    this.Sorted = this.Win
+                    //        .OrderByDescending(op1 => op1.HandFactor)
+                    //        .ThenByDescending(op1 => op1.Power)
+                    //        .First();
+                    //}
                     //TODO elica : here the ace is equal to zero and the max value of this hand is five
                     if (distinctValueOfHearts[0].Value == ValueOfCard.Two &&
                         distinctValueOfHearts[1].Value == ValueOfCard.Three &&
@@ -314,32 +372,50 @@
 
                 if (distinctValueOfSpades.Length >= 5)
                 {
-                   
-                    if (distinctValueOfSpades[0].Value + 4 == distinctValueOfSpades[4].Value)
+                    //implement a new logic to satisfy the test with straight flush and another card from the same suit but greater value
+
+                    for (int i = distinctValueOfSpades.Length - 1; i - 4 >= 0; i--)
                     {
-                        player.Current = 8;
-                        player.Power = (int)distinctValueOfSpades.Max(card => card.Value) + player.Current * FactorForCalculatingThePower;
-                        this.Win.Add(new Type { Power = player.Power, HandFactor = 8 });
-                        this.Sorted = this.Win
-                            .OrderByDescending(op1 => op1.HandFactor)
-                            .ThenByDescending(op1 => op1.Power)
-                            .First();
+                        if (distinctValueOfSpades[i].Value - 4 == distinctValueOfSpades[i - 4].Value)
+                        {
+                            player.Current = distinctValueOfSpades[i].Value == ValueOfCard.Ace ? 9 : 8;
+
+                            player.Power = (int)distinctValueOfSpades[i].Value + player.Current * FactorForCalculatingThePower;
+                            this.Win.Add(new Type { Power = player.Power, HandFactor = player.Current });
+                            this.Sorted = this.Win
+                                .OrderByDescending(op1 => op1.HandFactor)
+                                .ThenByDescending(op1 => op1.Power)
+                                .First();
+
+                            break;
+                        }
                     }
 
-                    if (distinctValueOfSpades[0].Value == ValueOfCard.Ten &&
-                        distinctValueOfSpades[1].Value == ValueOfCard.Jack &&
-                        distinctValueOfSpades[2].Value == ValueOfCard.Queen &&
-                        distinctValueOfSpades[3].Value == ValueOfCard.King &&
-                        distinctValueOfSpades[4].Value == ValueOfCard.Ace)
-                    {
-                        player.Current = 9;
-                        player.Power = (int)distinctValueOfSpades.Max(card => card.Value) + player.Current * FactorForCalculatingThePower;
-                        this.Win.Add(new Type { Power = player.Power, HandFactor = 9 });
-                        this.Sorted = this.Win
-                            .OrderByDescending(op1 => op1.HandFactor)
-                            .ThenByDescending(op1 => op1.Power)
-                            .First();
-                    }
+                    //if (distinctValueOfSpades[0].Value + 4 == distinctValueOfSpades[4].Value)
+                    //{
+                    //    player.Current = 8;
+                    //    player.Power = (int)distinctValueOfSpades.Max(card => card.Value) + player.Current * FactorForCalculatingThePower;
+                    //    this.Win.Add(new Type { Power = player.Power, HandFactor = 8 });
+                    //    this.Sorted = this.Win
+                    //        .OrderByDescending(op1 => op1.HandFactor)
+                    //        .ThenByDescending(op1 => op1.Power)
+                    //        .First();
+                    //}
+
+                    //if (distinctValueOfSpades[0].Value == ValueOfCard.Ten &&
+                    //    distinctValueOfSpades[1].Value == ValueOfCard.Jack &&
+                    //    distinctValueOfSpades[2].Value == ValueOfCard.Queen &&
+                    //    distinctValueOfSpades[3].Value == ValueOfCard.King &&
+                    //    distinctValueOfSpades[4].Value == ValueOfCard.Ace)
+                    //{
+                    //    player.Current = 9;
+                    //    player.Power = (int)distinctValueOfSpades.Max(card => card.Value) + player.Current * FactorForCalculatingThePower;
+                    //    this.Win.Add(new Type { Power = player.Power, HandFactor = 9 });
+                    //    this.Sorted = this.Win
+                    //        .OrderByDescending(op1 => op1.HandFactor)
+                    //        .ThenByDescending(op1 => op1.Power)
+                    //        .First();
+                    //}
 
                     //TODO elica : here the ace is equal to zero and the max value of this hand is five
                     if (distinctValueOfSpades[0].Value == ValueOfCard.Two &&
