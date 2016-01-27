@@ -316,6 +316,72 @@ namespace Poker.Test
             Assert.AreEqual(805, rules.Sorted.Power, "Rules.win.power not correct");
         }
 
+        [TestMethod]
+        public void CheckForHandTest_CheckForStraightFlushOfClubsFromAceToFive()
+        {
+            IRules rules = new Rules();
+            IPlayer player1 = new Human("player");
+            player1.PlayerCards[0] = new Card(0);
+            player1.PlayerCards[1] = new Card(16);
+
+            this.table.CardsOnTable[0] = new Card(12);
+            this.table.CardsOnTable[1] = new Card(33);
+            this.table.CardsOnTable[2] = new Card(4);
+            this.table.CardsOnTable[3] = new Card(8);
+            this.table.CardsOnTable[4] = new Card(46);
+            this.db.Table = this.table;
+            rules.CheckForHand(player1);
+
+            Assert.AreEqual(8, player1.Current, "Player.HandFactor not correct");
+            Assert.AreEqual(804, player1.Power, "Player.Power not correct");
+            Assert.AreEqual(8, rules.Sorted.HandFactor, "Rules.win.current not correct");
+            Assert.AreEqual(804, rules.Sorted.Power, "Rules.win.power not correct");
+        }
+
+        [TestMethod]
+        public void CheckForHandTest_CheckForStraightFlushOfClubsFromTwoToSixWithJackOfClubs()
+        {
+            IRules rules = new Rules();
+            IPlayer player1 = new Human("player");
+            player1.PlayerCards[0] = new Card(40);
+            player1.PlayerCards[1] = new Card(16);
+
+            this.table.CardsOnTable[0] = new Card(12);
+            this.table.CardsOnTable[1] = new Card(33);
+            this.table.CardsOnTable[2] = new Card(4);
+            this.table.CardsOnTable[3] = new Card(8);
+            this.table.CardsOnTable[4] = new Card(20);
+            this.db.Table = this.table;
+            rules.CheckForHand(player1);
+
+            Assert.AreEqual(8, player1.Current, "Player.HandFactor not correct");
+            Assert.AreEqual(805, player1.Power, "Player.Power not correct");
+            Assert.AreEqual(8, rules.Sorted.HandFactor, "Rules.win.current not correct");
+            Assert.AreEqual(805, rules.Sorted.Power, "Rules.win.power not correct");
+        }
+
+        [TestMethod]
+        public void CheckForHandTest_CheckForStraightFlushOfDiamondsFromFourToEightWithAceOfDiamonds()
+        {
+            IRules rules = new Rules();
+            IPlayer player1 = new Human("player");
+            player1.PlayerCards[0] = new Card(1);
+            player1.PlayerCards[1] = new Card(17);
+
+            this.table.CardsOnTable[0] = new Card(46);
+            this.table.CardsOnTable[1] = new Card(13);
+            this.table.CardsOnTable[2] = new Card(21);
+            this.table.CardsOnTable[3] = new Card(29);
+            this.table.CardsOnTable[4] = new Card(25);
+            this.db.Table = this.table;
+            rules.CheckForHand(player1);
+
+            Assert.AreEqual(8, player1.Current, "Player.HandFactor not correct");
+            Assert.AreEqual(807, player1.Power, "Player.Power not correct");
+            Assert.AreEqual(8, rules.Sorted.HandFactor, "Rules.win.current not correct");
+            Assert.AreEqual(807, rules.Sorted.Power, "Rules.win.power not correct");
+        }
+
 
     }
 }
