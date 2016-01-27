@@ -4,9 +4,13 @@
     using System.Drawing;
     using System.Windows.Forms;
 
+    /// <summary>
+    /// Class for adding chips in the game.
+    /// </summary>
     public partial class AddChips : Form
     {
         public int amountOfChips;
+
         public AddChips()
         {
             FontFamily fontFamily = new FontFamily("Arial");
@@ -15,7 +19,12 @@
             this.label1.BorderStyle = BorderStyle.FixedSingle;
         }
 
-        public void button1_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Method is executed when the button for adding chips was clicked.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">Parameters of the event.</param>
+        public void Button1_Click(object sender, EventArgs e)
         {
             int parsedValue;
             if (int.Parse(this.textBox1.Text) > 100000000)
@@ -35,7 +44,13 @@
                 this.Close();
             }
         }
-        private void button2_Click(object sender, EventArgs e)
+
+        /// <summary>
+        /// Method is executed when the button for exit from the game was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Button2_Click(object sender, EventArgs e)
         {
             var message = "Are you sure?";
             var title = "Quit";

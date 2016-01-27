@@ -19,6 +19,19 @@
     {
         //ProgressBar asd = new ProgressBar(); //elica: It is never used!!!
         //public int Nm;
+        private const int CountOfTheAvailableCardsInGame = 17;
+        private const int PlayerPanelCoordinateX = 580;
+        private const int PlayerPanelCoordinateY = 480;
+        private const int FirstBotPanelCoordinateX = 15;
+        private const int FirstBotPanelCoordinateY = 420;
+        private const int SecondBotPanelCoordinateX = 75;
+        private const int SecondBotPanelCoordinateY = 65;
+        private const int ThirdBotPanelCoordinateX = 590;
+        private const int ThirdBotPanelCoordinateY = 25;
+        private const int FourthBotPanelCoordinateX = 1115;
+        private const int FourthBotPanelCoordinateY = 65;
+        private const int FifthBotPanelCoordinateX = 1160;
+        private const int FifthBotPanelCoordinateY = 420;
         private readonly IPlayer humanPlayer = new Human(GlobalConstants.HumanPlayerName);
         private readonly IPlayer firstBot = new Bot(GlobalConstants.FirstBotPlayerName);
         private readonly IPlayer secondBot = new Bot(GlobalConstants.SecondbotPlayerName);
@@ -26,10 +39,10 @@
         private readonly IPlayer fourthBot = new Bot(GlobalConstants.FourthBotPlayerName);
         private readonly IPlayer fifthBot = new Bot(GlobalConstants.FifthBotPlayerName);
 
-        private readonly Database db = Database.Instace;
+        private readonly Database dataBase = Database.Instace;
         private readonly PokerTable table;
-        private  IRules rules = new Rules();
-       // private readonly CardHandler cardHandler = new CardHandler();
+        private IRules rules = new Rules();
+        // private readonly CardHandler cardHandler = new CardHandler();
 
         //private const int InitialValueOfChips = 10000;
         private const int DefaultValueOfBigBlind = 500;
@@ -50,7 +63,7 @@
         //private int fourthBotChips = InitialValueOfChips;
         //private int fifthBotChips = InitialValueOfChips;
 
-      //  private double type;
+        //  private double type;
         private double rounds;
         private double raise;
         //private double firstBotPower;
@@ -104,7 +117,7 @@
         private int height;
         private int width;
 
-    //    private int winners;
+        //    private int winners;
         private int flop = 1;
         private int turn = 2;
         private int river = 3;
@@ -115,8 +128,8 @@
         private int raisedTurn = 1;
 
         private readonly List<bool?> inactivePlayers = new List<bool?>();
-     //   private readonly List<Type> Win = new List<Type>();
-      //  private readonly List<string> CheckWinners = new List<string>();
+        //   private readonly List<Type> Win = new List<Type>();
+        //  private readonly List<string> CheckWinners = new List<string>();
         private readonly List<int> ints = new List<int>();
 
         //private bool PlayerFoldTturn;
@@ -124,7 +137,7 @@
         private bool restart;
         private bool raising;
 
-      //  readonly Type sorted = new Type();
+        //  readonly Type sorted = new Type();
         string[] ImgLocation = Directory.GetFiles(GlobalConstants.PlayingCardsDirectoryPath,
             GlobalConstants.PlayingCardsWithPngExtension,
             SearchOption.TopDirectoryOnly);
@@ -145,21 +158,21 @@
         public Game()
         {
             //inactivePlayers.Add(PlayerFoldTturn); inactivePlayers.Add(B1Fturn); inactivePlayers.Add(B2Fturn); inactivePlayers.Add(B3Fturn); inactivePlayers.Add(B4Fturn); inactivePlayers.Add(B5Fturn);
-            this.db.Players[0] = this.humanPlayer;
-            this.db.Players[1] = this.firstBot;
-            this.db.Players[2] = this.secondBot;
-            this.db.Players[3] = this.thirdBot;
-            this.db.Players[4] = this.fourthBot;
-            this.db.Players[5] = this.fifthBot;
+            this.dataBase.Players[0] = this.humanPlayer;
+            this.dataBase.Players[1] = this.firstBot;
+            this.dataBase.Players[2] = this.secondBot;
+            this.dataBase.Players[3] = this.thirdBot;
+            this.dataBase.Players[4] = this.fourthBot;
+            this.dataBase.Players[5] = this.fifthBot;
 
-            //for (int i = 0; i < this.db.Players.Length; i++)
+            //for (int i = 0; i < this.dataBase.Players.Length; i++)
             //{
-            //    this.db.Players[i].Cards[0] = 2*i;
-            //    this.db.Players[i].Cards[1] = 2*i + 1;
+            //    this.dataBase.Players[i].Cards[0] = 2*i;
+            //    this.dataBase.Players[i].Cards[1] = 2*i + 1;
             //}
 
             this.table = new PokerTable();
-            this.db.Table = this.table;
+            this.dataBase.Table = this.table;
             this.call = this.defaultBigBlind;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -184,7 +197,7 @@
             this.textBoxBotChips5.Text = "chips : " + this.fifthBot.Chips;
 
             this.timer.Interval = 1 * 1 * 1000;
-            this.timer.Tick += this.timer_Tick;
+            this.timer.Tick += this.Timer_Tick;
             this.Updates.Interval = 1 * 1 * 100;
             this.Updates.Tick += this.Update_Tick;
             //this.textBoxBigBlind.Visible = true;     //elica: repeating..next few line they become false!!
@@ -203,26 +216,33 @@
         }
 
         public Button ButtonCall
-        { get { return this.buttonCall; } }
+        {
+            get { return this.buttonCall; }
+        }
 
         public TextBox TextBoxPot
-        { get { return this.textBoxPot; } }
+        {
+            get { return this.textBoxPot; }
+        }
 
         public double Rounds
         {
             get { return this.rounds; }
+
             set { this.rounds = value; }
         }
 
         public bool Raising
         {
             get { return this.raising; }
+
             set { this.raising = value; }
         }
 
         public double Raise
         {
             get { return this.raise; }
+
             set { this.raise = value; }
         }
 
@@ -234,8 +254,10 @@
         public int CallValue
         {
             get { return this.call; }
+
             set { this.call = value; }
         }
+
         public PictureBox[] CardsHolder
         {
             get { return this.cardsHolder; }
@@ -260,7 +282,11 @@
             }
         }
 
-        async Task Shuffle()
+        /// <summary>
+        /// Deals cards to all players and the community cards.
+        /// Enables card controls and panel controls for the players.
+        /// </summary>
+        public async Task Shuffle()
         {
             //this.inactivePlayers.Add(this.humanPlayerFoldTturn);
             //this.inactivePlayers.Add(this.B1Fturn);
@@ -268,9 +294,9 @@
             //this.inactivePlayers.Add(this.B3Fturn);
             //this.inactivePlayers.Add(this.B4Fturn);
             //this.inactivePlayers.Add(this.B5Fturn);
-            for (int i = 0; i < this.db.Players.Length; i++)
+            for (int i = 0; i < this.dataBase.Players.Length; i++)
             {
-                this.inactivePlayers.Add(this.db.Players[i].FoldTurn);
+                this.inactivePlayers.Add(this.dataBase.Players[i].FoldTurn);
             }
             this.buttonCall.Enabled = false;
             this.buttonRaise.Enabled = false;
@@ -280,11 +306,11 @@
             this.MinimizeBox = false;
             bool check = false;
             Bitmap backImage = new Bitmap(GlobalConstants.PlayingCardsBackPath);
-            int horizontal = 580;
-            int vertical = 480;
+            int horizontal = PlayerPanelCoordinateX;
+            int vertical = PlayerPanelCoordinateY;
             Random random = new Random();
 
-            //elica: the method swapped places the cards
+            
             for (int countOfCards = this.ImgLocation.Length; countOfCards > 0; countOfCards--)
             {
                 int randomNumber = random.Next(countOfCards);
@@ -293,11 +319,14 @@
                 this.ImgLocation[countOfCards - 1] = pathToCard;
             }
 
-            for (int cardsInGame = 0; cardsInGame < 17; cardsInGame++)
+            for (int cardsInGame = 0; cardsInGame < CountOfTheAvailableCardsInGame; cardsInGame++)
             {
                 this.cardsImageDeck[cardsInGame] = Image.FromFile(this.ImgLocation[cardsInGame]);
-                var charsToRemove = new string[] { GlobalConstants.PlayingCardsPath,
-                    GlobalConstants.PlayingCardsExtension };
+                var charsToRemove = new string[]
+                {
+                    GlobalConstants.PlayingCardsPath,
+                    GlobalConstants.PlayingCardsExtension
+                };
 
                 foreach (var c in charsToRemove)
                 {
@@ -312,6 +341,7 @@
                 this.Controls.Add(this.cardsHolder[cardsInGame]);
                 this.cardsHolder[cardsInGame].Name = "pb" + cardsInGame.ToString();
                 await Task.Delay(200);
+
                 #region Throwing Cards
 
                 if (cardsInGame < 2)
@@ -321,14 +351,14 @@
                         {
                             this.cardsHolder[1].Tag = int.Parse(this.ImgLocation[1]) - 1;
                             //this.humanPlayer.PlayerCards[1] = new Card((int)this.cardsHolder[1].Tag);
-                            this.humanPlayer.PlayerCards[1] = CardHandler.GetCard((int)this.cardsHolder[1].Tag);
+                            this.humanPlayer.PlayerCards[1] = CardHandler.GetCard((int) this.cardsHolder[1].Tag);
                             this.humanPlayer.PlayerCards[1].NumberInGame = cardsInGame;
                         }
                         else
                         {
                             this.cardsHolder[0].Tag = int.Parse(this.ImgLocation[0]) - 1;
                             //this.humanPlayer.PlayerCards[0] = new Card((int)this.cardsHolder[0].Tag);
-                            this.humanPlayer.PlayerCards[0] = CardHandler.GetCard((int)this.cardsHolder[0].Tag);
+                            this.humanPlayer.PlayerCards[0] = CardHandler.GetCard((int) this.cardsHolder[0].Tag);
                             this.humanPlayer.PlayerCards[0].NumberInGame = cardsInGame;
                         }
                         this.cardsHolder[cardsInGame].Image = this.cardsImageDeck[cardsInGame];
@@ -337,17 +367,18 @@
                         this.cardsHolder[cardsInGame].Location = new Point(horizontal, vertical);
                         horizontal += this.cardsHolder[cardsInGame].Width;
                         this.Controls.Add(this.humanPlayer.Panel);
-                        this.humanPlayer.Panel.Location = new Point(this.cardsHolder[0].Left - 10, this.cardsHolder[0].Top - 10);
+                        this.humanPlayer.Panel.Location = new Point(this.cardsHolder[0].Left - 10,
+                            this.cardsHolder[0].Top - 10);
                         //this.humanPlayer.Panel.BackColor = Color.DarkBlue;
                         //this.humanPlayer.Panel.Height = 150;
                         //this.humanPlayer.Panel.Width = 180;
                         //this.humanPlayer.Panel.Visible = false;
                     }
 
-             
-                for (int i = 1; i < this.db.Players.Length; i++)
+
+                for (int i = 1; i < this.dataBase.Players.Length; i++)
                 {
-                    if (this.db.Players[i].Chips > 0)
+                    if (this.dataBase.Players[i].Chips > 0)
                     {
                         this.foldedPlayers--;
 
@@ -356,45 +387,47 @@
                             if (this.cardsHolder[2 * i].Tag != null)
                             {
                                 this.cardsHolder[2 * i + 1].Tag = int.Parse(this.ImgLocation[2 * i + 1]) - 1;
-                                //this.db.Players[i].PlayerCards[1] = new Card((int)this.cardsHolder[2 * i + 1].Tag);
-                                this.db.Players[i].PlayerCards[1] = CardHandler.GetCard((int)this.cardsHolder[2 * i + 1].Tag);
-                                this.db.Players[i].PlayerCards[1].NumberInGame = cardsInGame;
+                                //this.dataBase.Players[i].PlayerCards[1] = new Card((int)this.cardsHolder[2 * i + 1].Tag);
+                                this.dataBase.Players[i].PlayerCards[1] =
+                                    CardHandler.GetCard((int) this.cardsHolder[2 * i + 1].Tag);
+                                this.dataBase.Players[i].PlayerCards[1].NumberInGame = cardsInGame;
                             }
                             else
                             {
                                 this.cardsHolder[2 * i].Tag = int.Parse(this.ImgLocation[2 * i]) - 1;
-                                //this.db.Players[i].PlayerCards[0] = new Card((int)this.cardsHolder[2 * i].Tag);
-                                this.db.Players[i].PlayerCards[0] = CardHandler.GetCard((int)this.cardsHolder[2 * i].Tag);
-                                this.db.Players[i].PlayerCards[0].NumberInGame = cardsInGame;
+                                //this.dataBase.Players[i].PlayerCards[0] = new Card((int)this.cardsHolder[2 * i].Tag);
+                                this.dataBase.Players[i].PlayerCards[0] =
+                                    CardHandler.GetCard((int) this.cardsHolder[2 * i].Tag);
+                                this.dataBase.Players[i].PlayerCards[0].NumberInGame = cardsInGame;
                             }
                             if (!check)
                             {
                                 switch (i)
                                 {
                                     case 1:
-                                        horizontal = 15;
-                                        vertical = 420;
+                                        horizontal = FirstBotPanelCoordinateX;
+                                        vertical = FirstBotPanelCoordinateY;
 
                                         break;
                                     case 2:
-                                        horizontal = 75;
-                                        vertical = 65;
+                                        horizontal = SecondBotPanelCoordinateX;
+                                        vertical = SecondBotPanelCoordinateY;
 
                                         break;
                                     case 3:
-                                        horizontal = 590;
-                                        vertical = 25;
+                                        horizontal = ThirdBotPanelCoordinateX;
+                                        vertical = ThirdBotPanelCoordinateY;
 
                                         break;
                                     case 4:
-                                        horizontal = 1115;
-                                        vertical = 65;
+                                        horizontal = FourthBotPanelCoordinateX;
+                                        vertical = FourthBotPanelCoordinateY;
 
                                         break;
 
                                     case 5:
-                                        horizontal = 1160;
-                                        vertical = 420;
+                                        horizontal = FifthBotPanelCoordinateX;
+                                        vertical = FifthBotPanelCoordinateY;
 
                                         break;
                                 }
@@ -406,8 +439,9 @@
                             this.cardsHolder[cardsInGame].Location = new Point(horizontal, vertical);
                             horizontal += this.cardsHolder[cardsInGame].Width;
                             this.cardsHolder[cardsInGame].Visible = true;
-                            this.Controls.Add(this.db.Players[i].Panel);
-                            this.db.Players[i].Panel.Location = new Point(this.cardsHolder[2 * i].Left - 10, this.cardsHolder[2 * i].Top - 10);
+                            this.Controls.Add(this.dataBase.Players[i].Panel);
+                            this.dataBase.Players[i].Panel.Location = new Point(this.cardsHolder[2 * i].Left - 10,
+                                this.cardsHolder[2 * i].Top - 10);
 
                             if (cardsInGame == 2 * i + 1)
                             {
@@ -419,23 +453,23 @@
 
 
                 // TODO if statement to switch
-                
-                if (cardsInGame >= 12)    // elica: cards on the table with index 12, 13, 14, 15, 16
+
+                if (cardsInGame >= 12) // elica: cards on the table with index 12, 13, 14, 15, 16
                 {
 
                     if (cardsInGame == 12)
                     {
                         this.cardsHolder[12].Tag = int.Parse(this.ImgLocation[12]) - 1;
                         //this.table.CardsOnTable[0] = new Card((int)this.cardsHolder[12].Tag);
-                        this.table.CardsOnTable[0] = CardHandler.GetCard((int)this.cardsHolder[12].Tag);
+                        this.table.CardsOnTable[0] = CardHandler.GetCard((int) this.cardsHolder[12].Tag);
                         this.table.CardsOnTable[0].NumberInGame = cardsInGame;
                     }
-                    
+
                     if (cardsInGame == 13)
                     {
                         this.cardsHolder[13].Tag = int.Parse(this.ImgLocation[13]) - 1;
                         //this.table.CardsOnTable[1] = new Card((int)this.cardsHolder[13].Tag);
-                        this.table.CardsOnTable[1] = CardHandler.GetCard((int)this.cardsHolder[13].Tag);
+                        this.table.CardsOnTable[1] = CardHandler.GetCard((int) this.cardsHolder[13].Tag);
                         this.table.CardsOnTable[1].NumberInGame = cardsInGame;
                     }
 
@@ -443,7 +477,7 @@
                     {
                         this.cardsHolder[14].Tag = int.Parse(this.ImgLocation[14]) - 1;
                         //this.table.CardsOnTable[2] = new Card((int)this.cardsHolder[14].Tag);
-                        this.table.CardsOnTable[2] = CardHandler.GetCard((int)this.cardsHolder[14].Tag);
+                        this.table.CardsOnTable[2] = CardHandler.GetCard((int) this.cardsHolder[14].Tag);
                         this.table.CardsOnTable[2].NumberInGame = cardsInGame;
                     }
 
@@ -451,7 +485,7 @@
                     {
                         this.cardsHolder[15].Tag = int.Parse(this.ImgLocation[15]) - 1;
                         //this.table.CardsOnTable[3] = new Card((int)this.cardsHolder[15].Tag);
-                        this.table.CardsOnTable[3] = CardHandler.GetCard((int)this.cardsHolder[15].Tag);
+                        this.table.CardsOnTable[3] = CardHandler.GetCard((int) this.cardsHolder[15].Tag);
                         this.table.CardsOnTable[3].NumberInGame = cardsInGame;
                     }
 
@@ -459,7 +493,7 @@
                     {
                         this.cardsHolder[16].Tag = int.Parse(this.ImgLocation[16]) - 1;
                         //this.table.CardsOnTable[4] = new Card((int)this.cardsHolder[16].Tag);
-                        this.table.CardsOnTable[4] = CardHandler.GetCard((int)this.cardsHolder[16].Tag);
+                        this.table.CardsOnTable[4] = CardHandler.GetCard((int) this.cardsHolder[16].Tag);
                         this.table.CardsOnTable[4].NumberInGame = cardsInGame;
                     }
 
@@ -483,20 +517,20 @@
 
                 #endregion
 
-                //for (int i = 1; i <this.db.Players.Length; i++)
+                //for (int i = 1; i <this.dataBase.Players.Length; i++)
                 //{
-                //    if (db.Players[i].Chips<=0 )
+                //    if (dataBase.Players[i].Chips<=0 )
                 //    {
-                //        this.db.Players[i].FoldTurn = true;
+                //        this.dataBase.Players[i].FoldTurn = true;
                 //        this.cardsHolder[i*2].Visible = false;
                 //        this.cardsHolder[(i * 2)+1].Visible = false;
                 //    }
                 //}
-                for (int i = 1; i < this.db.Players.Length; i++)
+                for (int i = 1; i < this.dataBase.Players.Length; i++)
                 {
-                    if (this.db.Players[i].Chips <= 0)
+                    if (this.dataBase.Players[i].Chips <= 0)
                     {
-                        this.db.Players[i].FoldTurn = true;
+                        this.dataBase.Players[i].FoldTurn = true;
                         this.cardsHolder[2 * i].Visible = false;
                         this.cardsHolder[2 * i + 1].Visible = false;
                     }
@@ -612,7 +646,7 @@
                     }
                     this.timer.Start();
                 }
-            }  //elica: end of the second loop
+            } //elica: end of the second loop
 
             if (this.foldedPlayers == 5)
             {
@@ -646,9 +680,16 @@
             //}
         }
 
-        async Task Turns()
+        /// <summary>
+        /// Rotates through all the players until the game is finished
+        /// (restart = false).
+        /// Updates all player's data.
+        /// Each player makes a decision according to the current hand.
+        /// </summary>
+        public async Task Turns()
         {
-            #region Rotating
+             //Rotating
+
             if (!this.humanPlayer.FoldTurn)
             {
                 if (this.humanPlayer.IsPlayerTurn)
@@ -855,9 +896,8 @@
                         this.maxLeft--;
                         this.humanPlayer.HasPlayerFolded = true;
                     }
-                }
+                }  
 
-                #endregion
                 await this.AllIn();
                 if (!this.restart)
                 {
@@ -865,7 +905,7 @@
                 }
                 this.restart = false;
             }
-        } //elica: end of method turns
+        } 
 
         //void Rules(Player player)
         //{
@@ -2056,7 +2096,7 @@
         //            this.winners++;
         //            this.CheckWinners.Add(player.Name);
 
-        //            //TODO if statement to switch
+        //            
         //            if (player.HandFactor == -1)
         //            {
         //                MessageBox.Show(player.Name + " High Card ");
@@ -2206,7 +2246,15 @@
         //    }
         //}
 
-        async Task CheckRaise(int currentTurn)
+
+        /// <summary>
+        /// This method is called each turn, if needed.
+        /// Checks if bet is raised in the current turn.
+        /// After last round determines the winners 
+        /// and finalizes the game.
+        /// </summary>
+        /// <param name="currentTurn">The current turn</param>
+        public async Task CheckRaise(int currentTurn)
         {
             if (this.raising)
             {
@@ -2220,7 +2268,8 @@
                 //maxLeft-playerLeft(callnebager)
                 if (this.turnCount >= this.maxLeft - 1 || !this.changed && this.turnCount == this.maxLeft)
                 {
-                    if (currentTurn == this.raisedTurn - 1 || !this.changed && this.turnCount == this.maxLeft || this.raisedTurn == 0 && currentTurn == 5)
+                    if (currentTurn == this.raisedTurn - 1 || !this.changed && this.turnCount == this.maxLeft ||
+                        this.raisedTurn == 0 && currentTurn == 5)
                     {
                         this.changed = false;
                         this.turnCount = 0;
@@ -2229,7 +2278,7 @@
                         this.raisedTurn = 123;
                         this.rounds++;
 
-                        foreach (var item in this.db.Players)
+                        foreach (var item in this.dataBase.Players)
                         {
                             item.Status.Text = String.Empty;
                         }
@@ -2244,7 +2293,7 @@
                     if (this.cardsHolder[j].Image != this.cardsImageDeck[j])
                     {
                         this.cardsHolder[j].Image = this.cardsImageDeck[j];
-                        foreach (var item in this.db.Players)
+                        foreach (var item in this.dataBase.Players)
                         {
                             item.Call = 0;
                             item.Raise = 0;
@@ -2261,7 +2310,7 @@
                     if (this.cardsHolder[j].Image != this.cardsImageDeck[j])
                     {
                         this.cardsHolder[j].Image = this.cardsImageDeck[j];
-                        foreach (var item in this.db.Players)
+                        foreach (var item in this.dataBase.Players)
                         {
                             item.Call = 0;
                             item.Raise = 0;
@@ -2290,7 +2339,7 @@
                     if (this.cardsHolder[j].Image != this.cardsImageDeck[j])
                     {
                         this.cardsHolder[j].Image = this.cardsImageDeck[j];
-                        foreach (var item in this.db.Players)
+                        foreach (var item in this.dataBase.Players)
                         {
                             item.Call = 0;
                             item.Raise = 0;
@@ -2316,7 +2365,7 @@
             {
                 string fixedLast = String.Empty; //= "qwerty";
 
-                foreach (var player in this.db.Players)
+                foreach (var player in this.dataBase.Players)
                 {
                     if (!player.Status.Text.Contains(GlobalConstants.FoldMessage))
                     {
@@ -2351,9 +2400,9 @@
                     if (addChips.amountOfChips != 0)
                     {
                         this.humanPlayer.Chips = addChips.amountOfChips;
-                        for (int i = 1; i < this.db.Players.Length; i++)
+                        for (int i = 1; i < this.dataBase.Players.Length; i++)
                         {
-                            this.db.Players[i].Chips += addChips.amountOfChips;
+                            this.dataBase.Players[i].Chips += addChips.amountOfChips;
                         }
                         //this.firstBotChips += f2.a;
                         //this.secondbotChips += f2.a;
@@ -2375,13 +2424,13 @@
                 //this.thirdbotPanel.Visible = false;
                 //this.fourthBotPanel.Visible = false;
                 //this.fifthBot.Panel.Visible = false;
-                foreach (var player in this.db.Players)
+                foreach (var player in this.dataBase.Players)
                 {
                     player.Panel.Visible = false;
                     player.Call = 0;
                     player.Raise = 0;
                     player.Power = 0;
-                    player.Current = -1;
+                    player.Current = - 1;
                 }
                 //this.humanPlayerCall = 0;
                 //this.firstBotCall = 0;
@@ -2424,7 +2473,7 @@
                 //this.fifthBotType = -1;
 
                 this.ints.Clear();
-               
+
                 //this.CheckWinners.Clear();
                 //this.winners = 0;
                 //this.Win.Clear();
@@ -2444,8 +2493,16 @@
                 await this.Turns();
             }
         }
-
-        void FixCall(IPlayer player, int options)
+         
+        /// <summary>
+        /// Adjusts player's raise and call statistics with 2 options.
+        /// Option 1 - adjustments are made based on the choice the player
+        /// has made the previous turn, if there was a previous turn.
+        /// Option 2 - adjustments are made based on current game statistics.
+        /// </summary>
+        /// <param name="player">The current player with his status.</param>
+        /// <param name="options">The options parameter</param>        
+        public void FixCall(IPlayer player, int options)
         {
             if (this.rounds != 4)
             {
@@ -2492,9 +2549,17 @@
             }
         }
 
-        async Task AllIn()
+        /// <summary>
+        /// Checks for players who haven't folded or made an all in.
+        /// If all players have made an all in, waits for the final round and determines winners.
+        /// If some players have folded and 2 or more players are all in,
+        /// waits for the final round and determines winners.
+        /// If only one player has not folded gives him the winnings.
+        /// </summary>    
+        public async Task AllIn()
         {
             #region All in
+
             if (this.humanPlayer.Chips <= 0 && !this.intsadded)
             {
                 if (this.humanPlayer.Status.Text.Contains(GlobalConstants.RaiseMessage))
@@ -2568,11 +2633,13 @@
             {
                 this.ints.Clear();
             }
+
             #endregion
 
             var countOfActivePlayers = this.inactivePlayers.Count(x => x == false);
 
             #region LastManStanding
+
             if (countOfActivePlayers == 1)
             {
                 int index = this.inactivePlayers.IndexOf(false);
@@ -2634,19 +2701,27 @@
             }
 
             this.intsadded = false;
+
             #endregion
 
             #region FiveOrLessLeft
+
             if (countOfActivePlayers < 6 && countOfActivePlayers > 1 && this.rounds >= this.end)
             {
                 await this.Finish(2);
             }
+
             #endregion
 
 
         }
 
-        async Task Finish(int n)
+        /// <summary>
+        /// Reinitializes variables, disables players panels, 
+        /// clears lists and text messages.
+        /// </summary>
+        /// <param name="n">The n parameter.</param>
+        public async Task Finish(int n)
         {
             if (n == 2)
             {
@@ -2674,18 +2749,18 @@
 
             //this.humanPlayerType = -1;
             this.raise = 0;
-            foreach (var player in this.db.Players)
+            foreach (var player in this.dataBase.Players)
             {
-                player.Current = -1;
+                player.Current = - 1;
                 player.Call = 0;
                 player.Raise = 0;
                 player.FoldTurn = false;
                 player.HasPlayerFolded = false;
                 player.Status.Text = String.Empty;
             }
-            for (int i = 1; i < this.db.Players.Length; i++)
+            for (int i = 1; i < this.dataBase.Players.Length; i++)
             {
-                this.db.Players[i].IsPlayerTurn = false;
+                this.dataBase.Players[i].IsPlayerTurn = false;
             }
             this.humanPlayer.IsPlayerTurn = true;
             //this.firstBotType = -1;
@@ -2800,7 +2875,7 @@
         //    this.sorted.Power = 0;
         //    string fixedLast = String.Empty; //"qwerty";
 
-        //    foreach (var player in this.db.Players)
+        //    foreach (var player in this.dataBase.Players)
         //    {
         //        if (!player.Status.Text.Contains(GlobalConstants.FoldMessage))
         //        {
@@ -2813,7 +2888,7 @@
 
 
         //}
-        
+
         //void Ai(IPlayer player, int indexFirstCard, int indexSecondCard)
         //{
         //    if (!player.FoldTurn)
@@ -3314,7 +3389,14 @@
         //}
 
         #region UI
-        private async void timer_Tick(object sender, object e)
+
+        /// <summary>
+        /// Checks if human player's time is expired.
+        /// If the player time is expired it is considered "Fold".
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">Parameters of the event.</param>        
+        private async void Timer_Tick(object sender, object e)
         {
             if (this.pokerBetTimer.Value <= 0)
             {
@@ -3329,10 +3411,15 @@
             }
         }
 
+        /// <summary>
+        /// Updates status for all players, every tick of the timer.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">Parameters of the event.</param>        
         private void Update_Tick(object sender, object e)
         {
 
-
+             
             this.textBoxChips.Text = "chips : " + this.humanPlayer.Chips.ToString();
             this.textBoxBotChips1.Text = "chips : " + this.firstBot.Chips.ToString();
             this.textBoxBotChips2.Text = "chips : " + this.secondBot.Chips.ToString();
@@ -3369,7 +3456,7 @@
             {
                 this.buttonCheck.Enabled = false;
             }
-            else           //elica: change  if (call <= 0) with else
+            else //elica: change  if (call <= 0) with else
             {
                 this.buttonCheck.Enabled = true;
                 this.buttonCall.Text = GlobalConstants.CallMessage;
@@ -3401,7 +3488,12 @@
             }
         }
 
-        private async void buttonFold_IsClicked(object sender, EventArgs e)
+        /// <summary>
+        /// Event for the button "Fold". 
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">Parameters of the event.</param>       
+        private async void ButtonFold_IsClicked(object sender, EventArgs e)
         {
             this.humanPlayer.Status.Text = GlobalConstants.FoldMessage;
             this.humanPlayer.IsPlayerTurn = false;
@@ -3409,7 +3501,12 @@
             await this.Turns();
         }
 
-        private async void buttonCheck_IsClicked(object sender, EventArgs e)
+        /// <summary>
+        /// Event for the button "Check".
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">Parameters of the event.</param>       
+        private async void ButtonCheck_IsClicked(object sender, EventArgs e)
         {
             if (this.call <= 0)
             {
@@ -3425,7 +3522,12 @@
             await this.Turns();
         }
 
-        private async void buttonCall_IsClicked(object sender, EventArgs e)
+        /// <summary>
+        /// Event for the button "Call".
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">Parameters of the event.</param>        
+        private async void ButtonCall_IsClicked(object sender, EventArgs e)
         {
             //Rules(this.humanPlayer);
             this.rules.CheckForHand(this.humanPlayer);
@@ -3460,7 +3562,12 @@
             await this.Turns();
         }
 
-        private async void buttonRaise_IsClicked(object sender, EventArgs e)
+        /// <summary> 
+        /// Event for the button "Raise".
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">Parameters of the event.</param>        
+        private async void ButtonRaise_IsClicked(object sender, EventArgs e)
         {
             //Rules(this.humanPlayer);
             this.rules.CheckForHand(this.humanPlayer);
@@ -3512,7 +3619,12 @@
             await this.Turns();
         }
 
-        private void buttonAddChips_IsClicked(object sender, EventArgs e)
+        /// <summary>
+        /// Event for the button "AddChips".
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">Parameters of the event.</param>        
+        private void ButtonAddChips_IsClicked(object sender, EventArgs e)
         {
             //if (this.tbAdd.Text == String.Empty)
             //{
@@ -3560,7 +3672,12 @@
             this.textBoxChips.Text = "chips : " + this.humanPlayer.Chips.ToString();
         }
 
-        private void buttonOptions_IsClicked(object sender, EventArgs e)
+        /// <summary>
+        /// Event for the button "Options".
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">Parameters of the event.</param>     
+        private void ButtonOptions_IsClicked(object sender, EventArgs e)
         {
             this.textBoxBigBlind.Text = this.defaultBigBlind.ToString();
             this.textBoxSmallBlind.Text = this.defaultSmallBlind.ToString();
@@ -3581,7 +3698,12 @@
             }
         }
 
-        private void buttonSmallBlind_IsClicked(object sender, EventArgs e)
+        /// <summary>
+        /// Event for the button "Small Blind".
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">Parameters of the event.</param>        
+        private void ButtonSmallBlind_IsClicked(object sender, EventArgs e)
         {
             int parsedValue;
             if (this.textBoxSmallBlind.Text.Contains(",") || this.textBoxSmallBlind.Text.Contains("."))
@@ -3614,7 +3736,12 @@
             }
         }
 
-        private void buttonBigBlind_IsClicked(object sender, EventArgs e)
+        /// <summary>
+        /// Event for the button "Big Blind".
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">Parameters of the event.</param> 
+        private void ButtonBigBlind_IsClicked(object sender, EventArgs e)
         {
             int parsedValue;
             if (this.textBoxBigBlind.Text.Contains(",") || this.textBoxBigBlind.Text.Contains("."))
@@ -3647,18 +3774,19 @@
             }
         }
 
+        /// <summary>
+        /// Layout change event.
+        /// Describes changes in layout dimensions.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">Parameters of the event.</param>       
         private void Layout_Change(object sender, LayoutEventArgs e)
         {
             this.width = this.Width;
             this.height = this.Height;
         }
+
         #endregion
 
-        //private ICard SetCard(int card)
-        //{
-        //    var suit = this.cardHandler.GetSuit(card);
-        //    var value = this.cardHandler.GetValue(card);
-        //    return new Card(suit, value);
-        //}
     }
 }
