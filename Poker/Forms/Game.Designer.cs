@@ -269,11 +269,11 @@
             // 
             // thirdbotStatus
             // 
-            this.thirdbot.Status.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.thirdbot.Status.Location = new System.Drawing.Point(755, 107);
-            this.thirdbot.Status.Name = "thirdbotStatus";
-            this.thirdbot.Status.Size = new System.Drawing.Size(125, 32);
-            this.thirdbot.Status.TabIndex = 28;
+            this.thirdBot.Status.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.thirdBot.Status.Location = new System.Drawing.Point(755, 107);
+            this.thirdBot.Status.Name = "thirdbotStatus";
+            this.thirdBot.Status.Size = new System.Drawing.Size(125, 32);
+            this.thirdBot.Status.TabIndex = 28;
             // 
             // firstBotStatus
             // 
@@ -293,10 +293,10 @@
             // 
             // secondbotStatus
             // 
-            this.secondbot.Status.Location = new System.Drawing.Point(276, 107);
-            this.secondbot.Status.Name = "secondbotStatus";
-            this.secondbot.Status.Size = new System.Drawing.Size(133, 32);
-            this.secondbot.Status.TabIndex = 31;
+            this.secondBot.Status.Location = new System.Drawing.Point(276, 107);
+            this.secondBot.Status.Name = "secondbotStatus";
+            this.secondBot.Status.Size = new System.Drawing.Size(133, 32);
+            this.secondBot.Status.TabIndex = 31;
             // 
             // label1
             // 
@@ -325,10 +325,10 @@
             this.ClientSize = new System.Drawing.Size(1350, 729);
             this.Controls.Add(this.textBoxRaise);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.secondbot.Status);
+            this.Controls.Add(this.secondBot.Status);
             this.Controls.Add(this.humanPlayer.Status);
             this.Controls.Add(this.firstBot.Status);
-            this.Controls.Add(this.thirdbot.Status);
+            this.Controls.Add(this.thirdBot.Status);
             this.Controls.Add(this.fourthBot.Status);
             this.Controls.Add(this.fifthBot.Status);
             this.Controls.Add(this.textBoxBigBlind);

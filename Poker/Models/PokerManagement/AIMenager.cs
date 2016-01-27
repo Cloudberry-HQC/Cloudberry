@@ -252,7 +252,7 @@
             double value = Math.Round((currentChips / n) / 100d, 0) * 100;
             return value;
         }
-          
+
         //A choice generator for bots. This generator is used when bot has only high card or table pair hand         
         private static void HP(IPlayer player, int n, int n1)
         {
@@ -269,7 +269,7 @@
                 {
                     if (Launcher.Poker.CallValue <= BotChoiceFormula(player.Chips, n))
                     {
-                        player.PlayerCall(); ;
+                        player.PlayerCall();
                     }
                     else
                     {
@@ -281,7 +281,7 @@
                 {
                     if (Launcher.Poker.CallValue <= BotChoiceFormula(player.Chips, n1))
                     {
-                        player.PlayerCall(); ;
+                        player.PlayerCall(); 
                     }
                     else
                     {
@@ -292,23 +292,32 @@
 
             if (rnd == 3)
             {
-                if (Launcher.Poker.Raise == 0)
+                //TODO elica: Added check for callvalue=0 
+                if (Launcher.Poker.CallValue <= 0)
                 {
-                    Launcher.Poker.Raise = Launcher.Poker.CallValue * 2;
-                    player.PlayerRaised();
+                    player.PlayerCheck();
                 }
                 else
                 {
-                    if (Launcher.Poker.Raise <= BotChoiceFormula(player.Chips, n))
+                    if (Launcher.Poker.Raise == 0)
                     {
-                        Launcher.Poker.Raise = Launcher.Poker.CallValue * 2;
+                        Launcher.Poker.Raise = Launcher.Poker.CallValue * 2;   
                         player.PlayerRaised();
                     }
                     else
                     {
-                        player.PlayerFold();
+                        if (Launcher.Poker.Raise <= BotChoiceFormula(player.Chips, n))
+                        {
+                            Launcher.Poker.Raise = Launcher.Poker.CallValue * 2;
+                            player.PlayerRaised();
+                        }
+                        else
+                        {
+                            player.PlayerFold();
+                        }
                     }
                 }
+
             }
 
             if (player.Chips <= 0)
@@ -316,7 +325,7 @@
                 player.FoldTurn = true;
             }
         }
-        
+
         //Choice maker for bots if they have a hand which is a pair or two pairs
         private static void PH(IPlayer player, int n, int n1, int r)
         {
@@ -343,12 +352,14 @@
 
                     if (!player.FoldTurn)
                     {
-                        if (Launcher.Poker.CallValue >= BotChoiceFormula(player.Chips, n) && Launcher.Poker.CallValue <= BotChoiceFormula(player.Chips, n1))
+                        if (Launcher.Poker.CallValue >= BotChoiceFormula(player.Chips, n) &&
+                            Launcher.Poker.CallValue <= BotChoiceFormula(player.Chips, n1))
                         {
                             player.PlayerCall();
                         }
 
-                        if (Launcher.Poker.Raise <= BotChoiceFormula(player.Chips, n) && Launcher.Poker.Raise >= (BotChoiceFormula(player.Chips, n)) / 2)
+                        if (Launcher.Poker.Raise <= BotChoiceFormula(player.Chips, n) &&
+                            Launcher.Poker.Raise >= (BotChoiceFormula(player.Chips, n)) / 2)
                         {
                             player.PlayerCall();
                         }
@@ -387,12 +398,14 @@
 
                     if (!player.FoldTurn)
                     {
-                        if (Launcher.Poker.CallValue >= BotChoiceFormula(player.Chips, n - rnd) && Launcher.Poker.CallValue <= BotChoiceFormula(player.Chips, n1 - rnd))
+                        if (Launcher.Poker.CallValue >= BotChoiceFormula(player.Chips, n - rnd) &&
+                            Launcher.Poker.CallValue <= BotChoiceFormula(player.Chips, n1 - rnd))
                         {
                             player.PlayerCall();
                         }
 
-                        if (Launcher.Poker.Raise <= BotChoiceFormula(player.Chips, n - rnd) && Launcher.Poker.Raise >= (BotChoiceFormula(player.Chips, n - rnd)) / 2)
+                        if (Launcher.Poker.Raise <= BotChoiceFormula(player.Chips, n - rnd) &&
+                            Launcher.Poker.Raise >= (BotChoiceFormula(player.Chips, n - rnd)) / 2)
                         {
                             player.PlayerCall();
                         }
@@ -425,7 +438,7 @@
                 player.FoldTurn = true;
             }
         }
-         
+
         //Choice maker for bots with a hand three of a kind or higher
         private static void Smooth(IPlayer player, int n)
         {
@@ -461,7 +474,6 @@
 
                         if (player.Chips >= Launcher.Poker.Raise * 2)
                         {
-
                             player.PlayerRaised();
                         }
                         else

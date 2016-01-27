@@ -21,8 +21,8 @@
         //public int Nm;
         private readonly IPlayer humanPlayer = new Human(GlobalConstants.HumanPlayerName);
         private readonly IPlayer firstBot = new Bot(GlobalConstants.FirstBotPlayerName);
-        private readonly IPlayer secondbot = new Bot(GlobalConstants.SecondbotPlayerName);
-        private readonly IPlayer thirdbot = new Bot(GlobalConstants.ThirdbotPlayerName);
+        private readonly IPlayer secondBot = new Bot(GlobalConstants.SecondbotPlayerName);
+        private readonly IPlayer thirdBot = new Bot(GlobalConstants.ThirdbotPlayerName);
         private readonly IPlayer fourthBot = new Bot(GlobalConstants.FourthBotPlayerName);
         private readonly IPlayer fifthBot = new Bot(GlobalConstants.FifthBotPlayerName);
 
@@ -36,7 +36,7 @@
         private const int DefaultValueOfSmallBlind = 250;
         //private Panel player.Panel = new Panel();
         //private Panel firstBot.Panel = new Panel();
-        //private Panel secondbot.Panel = new Panel();
+        //private Panel secondBot.Panel = new Panel();
         //private Panel thirdbotPanel = new Panel();
         //private Panel fourthBotPanel = new Panel();
         //private Panel fifthBot.Panel = new Panel();
@@ -147,8 +147,8 @@
             //inactivePlayers.Add(PlayerFoldTturn); inactivePlayers.Add(B1Fturn); inactivePlayers.Add(B2Fturn); inactivePlayers.Add(B3Fturn); inactivePlayers.Add(B4Fturn); inactivePlayers.Add(B5Fturn);
             this.db.Players[0] = this.humanPlayer;
             this.db.Players[1] = this.firstBot;
-            this.db.Players[2] = this.secondbot;
-            this.db.Players[3] = this.thirdbot;
+            this.db.Players[2] = this.secondBot;
+            this.db.Players[3] = this.thirdBot;
             this.db.Players[4] = this.fourthBot;
             this.db.Players[5] = this.fifthBot;
 
@@ -178,8 +178,8 @@
 
             this.textBoxChips.Text = "chips : " + this.humanPlayer.Chips;
             this.textBoxBotChips1.Text = "chips : " + this.firstBot.Chips;
-            this.textBoxBotChips2.Text = "chips : " + this.secondbot.Chips;
-            this.textBoxBotChips3.Text = "chips : " + this.thirdbot.Chips;
+            this.textBoxBotChips2.Text = "chips : " + this.secondBot.Chips;
+            this.textBoxBotChips3.Text = "chips : " + this.thirdBot.Chips;
             this.textBoxBotChips4.Text = "chips : " + this.fourthBot.Chips;
             this.textBoxBotChips5.Text = "chips : " + this.fifthBot.Chips;
 
@@ -704,7 +704,7 @@
                         this.turnCount++;
                         this.last = 1;
                         this.firstBot.IsPlayerTurn = false;
-                        this.secondbot.IsPlayerTurn = true;
+                        this.secondBot.IsPlayerTurn = true;
                     }
                 }
 
@@ -719,66 +719,66 @@
                 if (this.firstBot.FoldTurn || !this.firstBot.IsPlayerTurn)
                 {
                     await this.CheckRaise(1);
-                    this.secondbot.IsPlayerTurn = true;
+                    this.secondBot.IsPlayerTurn = true;
                 }
 
-                if (!this.secondbot.FoldTurn)
+                if (!this.secondBot.FoldTurn)
                 {
-                    if (this.secondbot.IsPlayerTurn)
+                    if (this.secondBot.IsPlayerTurn)
                     {
-                        this.FixCall(this.secondbot, 1);
-                        this.FixCall(this.secondbot, 2);
-                        //Rules(this.secondbot);
-                        this.rules.CheckForHand(this.secondbot);
-                        MessageBox.Show(this.secondbot.Name);
-                        AiMenager.CheckHand(this.secondbot);
+                        this.FixCall(this.secondBot, 1);
+                        this.FixCall(this.secondBot, 2);
+                        //Rules(this.secondBot);
+                        this.rules.CheckForHand(this.secondBot);
+                        MessageBox.Show(this.secondBot.Name);
+                        AiMenager.CheckHand(this.secondBot);
                         this.turnCount++;
                         this.last = 2;
-                        this.secondbot.IsPlayerTurn = false;
-                        this.thirdbot.IsPlayerTurn = true;
+                        this.secondBot.IsPlayerTurn = false;
+                        this.thirdBot.IsPlayerTurn = true;
                     }
                 }
 
-                if (this.secondbot.FoldTurn && !this.secondbot.HasPlayerFolded)
+                if (this.secondBot.FoldTurn && !this.secondBot.HasPlayerFolded)
                 {
                     this.inactivePlayers.RemoveAt(2);
                     this.inactivePlayers.Insert(2, null);
                     this.maxLeft--;
-                    this.secondbot.HasPlayerFolded = true;
+                    this.secondBot.HasPlayerFolded = true;
                 }
 
-                if (this.secondbot.FoldTurn || !this.secondbot.IsPlayerTurn)
+                if (this.secondBot.FoldTurn || !this.secondBot.IsPlayerTurn)
                 {
                     await this.CheckRaise(2);
-                    this.thirdbot.IsPlayerTurn = true;
+                    this.thirdBot.IsPlayerTurn = true;
                 }
 
-                if (!this.thirdbot.FoldTurn)
+                if (!this.thirdBot.FoldTurn)
                 {
-                    if (this.thirdbot.IsPlayerTurn)
+                    if (this.thirdBot.IsPlayerTurn)
                     {
-                        this.FixCall(this.thirdbot, 1);
-                        this.FixCall(this.thirdbot, 2);
-                        //Rules(this.thirdbot);
-                        this.rules.CheckForHand(this.thirdbot);
-                        MessageBox.Show(this.thirdbot.Name);
-                        AiMenager.CheckHand(this.thirdbot);
+                        this.FixCall(this.thirdBot, 1);
+                        this.FixCall(this.thirdBot, 2);
+                        //Rules(this.thirdBot);
+                        this.rules.CheckForHand(this.thirdBot);
+                        MessageBox.Show(this.thirdBot.Name);
+                        AiMenager.CheckHand(this.thirdBot);
                         this.turnCount++;
                         this.last = 3;
-                        this.thirdbot.IsPlayerTurn = false;
+                        this.thirdBot.IsPlayerTurn = false;
                         this.fourthBot.IsPlayerTurn = true;
                     }
                 }
 
-                if (this.thirdbot.FoldTurn && !this.thirdbot.HasPlayerFolded)
+                if (this.thirdBot.FoldTurn && !this.thirdBot.HasPlayerFolded)
                 {
                     this.inactivePlayers.RemoveAt(3);
                     this.inactivePlayers.Insert(3, null);
                     this.maxLeft--;
-                    this.thirdbot.HasPlayerFolded = true;
+                    this.thirdBot.HasPlayerFolded = true;
                 }
 
-                if (this.thirdbot.FoldTurn || !this.thirdbot.IsPlayerTurn)
+                if (this.thirdBot.FoldTurn || !this.thirdBot.IsPlayerTurn)
                 {
                     await this.CheckRaise(3);
                     this.fourthBot.IsPlayerTurn = true;
@@ -2128,17 +2128,17 @@
         //                //firstBot.Panel.Visible = true;
         //            }
 
-        //            if (this.CheckWinners.Contains(this.secondbot.Name))
+        //            if (this.CheckWinners.Contains(this.secondBot.Name))
         //            {
-        //                this.secondbot.Chips += int.Parse(this.textBoxPot.Text) / this.winners;
-        //                this.textBoxBotChips2.Text = this.secondbot.Chips.ToString();
-        //                //secondbot.Panel.Visible = true;
+        //                this.secondBot.Chips += int.Parse(this.textBoxPot.Text) / this.winners;
+        //                this.textBoxBotChips2.Text = this.secondBot.Chips.ToString();
+        //                //secondBot.Panel.Visible = true;
         //            }
 
-        //            if (this.CheckWinners.Contains(this.thirdbot.Name))
+        //            if (this.CheckWinners.Contains(this.thirdBot.Name))
         //            {
-        //                this.thirdbot.Chips += int.Parse(this.textBoxPot.Text) / this.winners;
-        //                this.textBoxBotChips3.Text = this.thirdbot.Chips.ToString();
+        //                this.thirdBot.Chips += int.Parse(this.textBoxPot.Text) / this.winners;
+        //                this.textBoxBotChips3.Text = this.thirdBot.Chips.ToString();
         //                //thirdbotPanel.Visible = true;
         //            }
 
@@ -2175,16 +2175,16 @@
         //                //firstBot.Panel.Visible = true;
         //            }
 
-        //            if (this.CheckWinners.Contains(this.secondbot.Name))
+        //            if (this.CheckWinners.Contains(this.secondBot.Name))
         //            {
-        //                this.secondbot.Chips += int.Parse(this.textBoxPot.Text);
+        //                this.secondBot.Chips += int.Parse(this.textBoxPot.Text);
 
-        //                //secondbot.Panel.Visible = true;
+        //                //secondBot.Panel.Visible = true;
         //            }
 
-        //            if (this.CheckWinners.Contains(this.thirdbot.Name))
+        //            if (this.CheckWinners.Contains(this.thirdBot.Name))
         //            {
-        //                this.thirdbot.Chips += int.Parse(this.textBoxPot.Text);
+        //                this.thirdBot.Chips += int.Parse(this.textBoxPot.Text);
 
         //                //thirdbotPanel.Visible = true;
         //            }
@@ -2371,7 +2371,7 @@
 
                 //this.humanPlayer.Panel.Visible = false;
                 //this.firstBot.Panel.Visible = false;
-                //this.secondbot.Panel.Visible = false;
+                //this.secondBot.Panel.Visible = false;
                 //this.thirdbotPanel.Visible = false;
                 //this.fourthBotPanel.Visible = false;
                 //this.fifthBot.Panel.Visible = false;
@@ -2521,21 +2521,21 @@
                 this.intsadded = false;
             }
 
-            if (this.secondbot.Chips <= 0 && !this.secondbot.FoldTurn)
+            if (this.secondBot.Chips <= 0 && !this.secondBot.FoldTurn)
             {
                 if (!this.intsadded)
                 {
-                    this.ints.Add(this.secondbot.Chips);
+                    this.ints.Add(this.secondBot.Chips);
                     this.intsadded = true;
                 }
                 this.intsadded = false;
             }
 
-            if (this.thirdbot.Chips <= 0 && !this.thirdbot.FoldTurn)
+            if (this.thirdBot.Chips <= 0 && !this.thirdBot.FoldTurn)
             {
                 if (!this.intsadded)
                 {
-                    this.ints.Add(this.thirdbot.Chips);
+                    this.ints.Add(this.thirdBot.Chips);
                     this.intsadded = true;
                 }
                 this.intsadded = false;
@@ -2596,17 +2596,17 @@
 
                 if (index == 2)
                 {
-                    this.secondbot.Chips += int.Parse(this.textBoxPot.Text);
-                    this.textBoxChips.Text = this.secondbot.Chips.ToString();
-                    this.secondbot.Panel.Visible = true;
+                    this.secondBot.Chips += int.Parse(this.textBoxPot.Text);
+                    this.textBoxChips.Text = this.secondBot.Chips.ToString();
+                    this.secondBot.Panel.Visible = true;
                     MessageBox.Show(GlobalConstants.SecondbotPlayerWinMessage);
                 }
 
                 if (index == 3)
                 {
-                    this.thirdbot.Chips += int.Parse(this.textBoxPot.Text);
-                    this.textBoxChips.Text = this.thirdbot.Chips.ToString();
-                    this.thirdbot.Panel.Visible = true;
+                    this.thirdBot.Chips += int.Parse(this.textBoxPot.Text);
+                    this.textBoxChips.Text = this.thirdBot.Chips.ToString();
+                    this.thirdBot.Panel.Visible = true;
                     MessageBox.Show(GlobalConstants.ThirdbotPlayerWinMessage);
                 }
 
@@ -2654,8 +2654,8 @@
             }
             this.humanPlayer.Panel.Visible = false;
             this.firstBot.Panel.Visible = false;
-            this.secondbot.Panel.Visible = false;
-            this.thirdbot.Panel.Visible = false;
+            this.secondBot.Panel.Visible = false;
+            this.thirdBot.Panel.Visible = false;
             this.fourthBot.Panel.Visible = false;
             this.fifthBot.Panel.Visible = false;
 
@@ -2666,8 +2666,8 @@
             this.rounds = 0;
 
             this.firstBot.Power = 0;
-            this.secondbot.Power = 0;
-            this.thirdbot.Power = 0;
+            this.secondBot.Power = 0;
+            this.thirdBot.Power = 0;
             this.fourthBot.Power = 0;
             this.fifthBot.Power = 0;
             this.humanPlayer.Power = 0;
@@ -2767,8 +2767,8 @@
                 {
                     this.humanPlayer.Chips = addChips.amountOfChips;
                     this.firstBot.Chips += addChips.amountOfChips;
-                    this.secondbot.Chips += addChips.amountOfChips;
-                    this.thirdbot.Chips += addChips.amountOfChips;
+                    this.secondBot.Chips += addChips.amountOfChips;
+                    this.thirdBot.Chips += addChips.amountOfChips;
                     this.fourthBot.Chips += addChips.amountOfChips;
                     this.fifthBot.Chips += addChips.amountOfChips;
                     this.humanPlayer.FoldTurn = false;
@@ -3335,8 +3335,8 @@
 
             this.textBoxChips.Text = "chips : " + this.humanPlayer.Chips.ToString();
             this.textBoxBotChips1.Text = "chips : " + this.firstBot.Chips.ToString();
-            this.textBoxBotChips2.Text = "chips : " + this.secondbot.Chips.ToString();
-            this.textBoxBotChips3.Text = "chips : " + this.thirdbot.Chips.ToString();
+            this.textBoxBotChips2.Text = "chips : " + this.secondBot.Chips.ToString();
+            this.textBoxBotChips3.Text = "chips : " + this.thirdBot.Chips.ToString();
             this.textBoxBotChips4.Text = "chips : " + this.fourthBot.Chips.ToString();
             this.textBoxBotChips5.Text = "chips : " + this.fifthBot.Chips.ToString();
 
@@ -3514,18 +3514,47 @@
 
         private void buttonAddChips_IsClicked(object sender, EventArgs e)
         {
-            if (this.tbAdd.Text == String.Empty)
+            //if (this.tbAdd.Text == String.Empty)
+            //{
+            //    //elica Empty if statement
+            //}
+            //else
+            //{
+            //    this.humanPlayer.Chips += int.Parse(this.tbAdd.Text);
+            //    this.firstBot.Chips += int.Parse(this.tbAdd.Text);
+            //    this.secondBot.Chips += int.Parse(this.tbAdd.Text);
+            //    this.thirdBot.Chips += int.Parse(this.tbAdd.Text);
+            //    this.fourthBot.Chips += int.Parse(this.tbAdd.Text);
+            //    this.fifthBot.Chips += int.Parse(this.tbAdd.Text);
+            //}
+
+            //this.textBoxChips.Text = "chips : " + this.humanPlayer.Chips.ToString();
+            //TODO elica: Added new validation for button add chips
+            int parsedValue;
+            int defaultChipsValue = 0;
+            bool isValue = int.TryParse(this.tbAdd.Text, out parsedValue);
+            if (!isValue)
             {
-                //elica Empty if statement
+                MessageBox.Show("This is a number only field");
+                this.tbAdd.Text = defaultChipsValue.ToString();
             }
             else
             {
-                this.humanPlayer.Chips += int.Parse(this.tbAdd.Text);
-                this.firstBot.Chips += int.Parse(this.tbAdd.Text);
-                this.secondbot.Chips += int.Parse(this.tbAdd.Text);
-                this.thirdbot.Chips += int.Parse(this.tbAdd.Text);
-                this.fourthBot.Chips += int.Parse(this.tbAdd.Text);
-                this.fifthBot.Chips += int.Parse(this.tbAdd.Text);
+                if (parsedValue < 0)
+                {
+                    MessageBox.Show("The value must be positive number.");
+                    this.tbAdd.Text = defaultChipsValue.ToString();
+                }
+                else
+                {
+                    this.humanPlayer.Chips += parsedValue;
+                    this.firstBot.Chips += parsedValue;
+                    this.secondBot.Chips += parsedValue;
+                    this.thirdBot.Chips += parsedValue;
+                    this.fourthBot.Chips += parsedValue;
+                    this.fifthBot.Chips += parsedValue;
+                }
+
             }
 
             this.textBoxChips.Text = "chips : " + this.humanPlayer.Chips.ToString();

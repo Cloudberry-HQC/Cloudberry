@@ -195,7 +195,7 @@
             this.IsPlayerTurn = false;
             Launcher.Poker.Raising = false;
         }
-
+        
         public void PlayerCall()
         {
             //  Form1.Raising = false;
