@@ -9,19 +9,14 @@
     {
         private const int NumberOfTableCard = 5;
 
-        private ICard[] cardsOnTable;
-
         public PokerTable()
         {
-            this.cardsOnTable = new ICard[NumberOfTableCard];
+            this.CardsOnTable = new ICard[NumberOfTableCard];
         }
 
         /// <summary>
         /// Array of cards that are on the table.
         /// </summary>
-        public ICard[] CardsOnTable
-        {
-            get { return this.cardsOnTable; }
-        }
+        public ICard[] CardsOnTable { get; }
     }
 }

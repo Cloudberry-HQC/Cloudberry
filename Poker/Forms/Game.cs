@@ -10,28 +10,13 @@
     using Core;
     using GlobalConstants;
     using Interfaces;
-    using Models.Card;
     using Models.Player;
     using Models.PokerManagement;
-    using Type = Type;
 
     public partial class Game : Form
     {
         //ProgressBar asd = new ProgressBar(); //elica: It is never used!!!
         //public int Nm;
-        private const int CountOfTheAvailableCardsInGame = 17;
-        private const int PlayerPanelCoordinateX = 580;
-        private const int PlayerPanelCoordinateY = 480;
-        private const int FirstBotPanelCoordinateX = 15;
-        private const int FirstBotPanelCoordinateY = 420;
-        private const int SecondBotPanelCoordinateX = 75;
-        private const int SecondBotPanelCoordinateY = 65;
-        private const int ThirdBotPanelCoordinateX = 590;
-        private const int ThirdBotPanelCoordinateY = 25;
-        private const int FourthBotPanelCoordinateX = 1115;
-        private const int FourthBotPanelCoordinateY = 65;
-        private const int FifthBotPanelCoordinateX = 1160;
-        private const int FifthBotPanelCoordinateY = 420;
         private readonly IPlayer humanPlayer = new Human(GlobalConstants.HumanPlayerName);
         private readonly IPlayer firstBot = new Bot(GlobalConstants.FirstBotPlayerName);
         private readonly IPlayer secondBot = new Bot(GlobalConstants.SecondbotPlayerName);
@@ -45,8 +30,6 @@
         // private readonly CardHandler cardHandler = new CardHandler();
 
         //private const int InitialValueOfChips = 10000;
-        private const int DefaultValueOfBigBlind = 500;
-        private const int DefaultValueOfSmallBlind = 250;
         //private Panel player.Panel = new Panel();
         //private Panel firstBot.Panel = new Panel();
         //private Panel secondBot.Panel = new Panel();
@@ -124,13 +107,13 @@
         private int end = 4;
         private int maxLeft = 6;
 
-        private int last = 123;
+        private int last;
         private int raisedTurn = 1;
 
-        private readonly List<bool?> inactivePlayers = new List<bool?>();
+        private readonly List<bool?> inactivePlayers;
         //   private readonly List<Type> Win = new List<Type>();
         //  private readonly List<string> CheckWinners = new List<string>();
-        private readonly List<int> ints = new List<int>();
+        private readonly List<int> ints;
 
         //private bool PlayerFoldTturn;
         //private bool Playerturn = true;
@@ -142,21 +125,29 @@
             GlobalConstants.PlayingCardsWithPngExtension,
             SearchOption.TopDirectoryOnly);
 
-        private readonly int[] availableCardsInGame = new int[17];
-        private readonly Image[] cardsImageDeck = new Image[52];
-        private readonly PictureBox[] cardsHolder = new PictureBox[52];
-        private readonly Timer timer = new Timer();
-        private readonly Timer Updates = new Timer();
+        private readonly int[] availableCardsInGame;
+        private readonly Image[] cardsImageDeck;
+        private readonly PictureBox[] cardsHolder;
+        private readonly Timer timer;
+        private readonly Timer updates;
 
         private int t = 60;
         //private int globalShit;
-        private int defaultBigBlind = DefaultValueOfBigBlind;
-        private int defaultSmallBlind = DefaultValueOfSmallBlind;
+        private int defaultBigBlind = GlobalConstants.DefaultValueOfBigBlind;
+        private int defaultSmallBlind = GlobalConstants.DefaultValueOfSmallBlind;
         private int up = 10000000;
         private int turnCount;
 
         public Game()
         {
+            this.availableCardsInGame = new int[17];
+            this.cardsImageDeck = new Image[52];
+            this.cardsHolder = new PictureBox[52];
+            this.timer = new Timer();
+            this.updates = new Timer();
+            this.ints = new List<int>();
+            this.inactivePlayers = new List<bool?>();
+
             //inactivePlayers.Add(PlayerFoldTturn); inactivePlayers.Add(B1Fturn); inactivePlayers.Add(B2Fturn); inactivePlayers.Add(B3Fturn); inactivePlayers.Add(B4Fturn); inactivePlayers.Add(B5Fturn);
             this.dataBase.Players[0] = this.humanPlayer;
             this.dataBase.Players[1] = this.firstBot;
@@ -176,7 +167,7 @@
             this.call = this.defaultBigBlind;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Updates.Start();
+            this.updates.Start();
             this.InitializeComponent();
             this.width = this.Width;
             this.height = this.Height;
@@ -198,8 +189,8 @@
 
             this.timer.Interval = 1 * 1 * 1000;
             this.timer.Tick += this.Timer_Tick;
-            this.Updates.Interval = 1 * 1 * 100;
-            this.Updates.Tick += this.Update_Tick;
+            this.updates.Interval = 1 * 1 * 100;
+            this.updates.Tick += this.Update_Tick;
             //this.textBoxBigBlind.Visible = true;     //elica: repeating..next few line they become false!!
             //this.textBoxSmallBlind.Visible = true;
             //this.buttonBigBlind.Visible = true;     
@@ -306,8 +297,8 @@
             this.MinimizeBox = false;
             bool check = false;
             Bitmap backImage = new Bitmap(GlobalConstants.PlayingCardsBackPath);
-            int horizontal = PlayerPanelCoordinateX;
-            int vertical = PlayerPanelCoordinateY;
+            int horizontal = GlobalConstants.PlayerPanelCoordinateX;
+            int vertical = GlobalConstants.PlayerPanelCoordinateY;
             Random random = new Random();
 
             
@@ -319,7 +310,7 @@
                 this.ImgLocation[countOfCards - 1] = pathToCard;
             }
 
-            for (int cardsInGame = 0; cardsInGame < CountOfTheAvailableCardsInGame; cardsInGame++)
+            for (int cardsInGame = 0; cardsInGame < GlobalConstants.CountOfTheAvailableCardsInGame; cardsInGame++)
             {
                 this.cardsImageDeck[cardsInGame] = Image.FromFile(this.ImgLocation[cardsInGame]);
                 var charsToRemove = new string[]
@@ -405,29 +396,29 @@
                                 switch (i)
                                 {
                                     case 1:
-                                        horizontal = FirstBotPanelCoordinateX;
-                                        vertical = FirstBotPanelCoordinateY;
+                                        horizontal = GlobalConstants.FirstBotPanelCoordinateX;
+                                        vertical = GlobalConstants.FirstBotPanelCoordinateY;
 
                                         break;
                                     case 2:
-                                        horizontal = SecondBotPanelCoordinateX;
-                                        vertical = SecondBotPanelCoordinateY;
+                                        horizontal = GlobalConstants.SecondBotPanelCoordinateX;
+                                        vertical = GlobalConstants.SecondBotPanelCoordinateY;
 
                                         break;
                                     case 3:
-                                        horizontal = ThirdBotPanelCoordinateX;
-                                        vertical = ThirdBotPanelCoordinateY;
+                                        horizontal = GlobalConstants.ThirdBotPanelCoordinateX;
+                                        vertical = GlobalConstants.ThirdBotPanelCoordinateY;
 
                                         break;
                                     case 4:
-                                        horizontal = FourthBotPanelCoordinateX;
-                                        vertical = FourthBotPanelCoordinateY;
+                                        horizontal = GlobalConstants.FourthBotPanelCoordinateX;
+                                        vertical = GlobalConstants.FourthBotPanelCoordinateY;
 
                                         break;
 
                                     case 5:
-                                        horizontal = FifthBotPanelCoordinateX;
-                                        vertical = FifthBotPanelCoordinateY;
+                                        horizontal = GlobalConstants.FifthBotPanelCoordinateX;
+                                        vertical = GlobalConstants.FifthBotPanelCoordinateY;
 
                                         break;
                                 }
@@ -2397,12 +2388,12 @@
                 {
                     AddChips addChips = new AddChips();
                     addChips.ShowDialog();
-                    if (addChips.amountOfChips != 0)
+                    if (addChips.AmountOfChips != 0)
                     {
-                        this.humanPlayer.Chips = addChips.amountOfChips;
+                        this.humanPlayer.Chips = addChips.AmountOfChips;
                         for (int i = 1; i < this.dataBase.Players.Length; i++)
                         {
-                            this.dataBase.Players[i].Chips += addChips.amountOfChips;
+                            this.dataBase.Players[i].Chips += addChips.AmountOfChips;
                         }
                         //this.firstBotChips += f2.a;
                         //this.secondbotChips += f2.a;
@@ -2548,7 +2539,6 @@
                 }
             }
         }
-
         /// <summary>
         /// Checks for players who haven't folded or made an all in.
         /// If all players have made an all in, waits for the final round and determines winners.
@@ -2838,14 +2828,14 @@
             {
                 AddChips addChips = new AddChips();
                 addChips.ShowDialog();
-                if (addChips.amountOfChips != 0)
+                if (addChips.AmountOfChips != 0)
                 {
-                    this.humanPlayer.Chips = addChips.amountOfChips;
-                    this.firstBot.Chips += addChips.amountOfChips;
-                    this.secondBot.Chips += addChips.amountOfChips;
-                    this.thirdBot.Chips += addChips.amountOfChips;
-                    this.fourthBot.Chips += addChips.amountOfChips;
-                    this.fifthBot.Chips += addChips.amountOfChips;
+                    this.humanPlayer.Chips = addChips.AmountOfChips;
+                    this.firstBot.Chips += addChips.AmountOfChips;
+                    this.secondBot.Chips += addChips.AmountOfChips;
+                    this.thirdBot.Chips += addChips.AmountOfChips;
+                    this.fourthBot.Chips += addChips.AmountOfChips;
+                    this.fifthBot.Chips += addChips.AmountOfChips;
                     this.humanPlayer.FoldTurn = false;
                     this.humanPlayer.IsPlayerTurn = true;
                     this.buttonRaise.Enabled = true;
@@ -3387,10 +3377,7 @@
         //        player.IsPlayerTurn = true;
         //    }
         //}
-
-        #region UI
-
-        /// <summary>
+       /// <summary>
         /// Checks if human player's time is expired.
         /// If the player time is expired it is considered "Fold".
         /// </summary>
@@ -3785,8 +3772,6 @@
             this.width = this.Width;
             this.height = this.Height;
         }
-
-        #endregion
 
     }
 }

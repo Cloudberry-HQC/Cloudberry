@@ -9,15 +9,15 @@
     /// </summary>
     public partial class AddChips : Form
     {
-        public int amountOfChips;
-
         public AddChips()
         {
             FontFamily fontFamily = new FontFamily("Arial");
-            InitializeComponent();
+            this.InitializeComponent();
             this.ControlBox = false;
             this.label1.BorderStyle = BorderStyle.FixedSingle;
         }
+
+        public int AmountOfChips { get; set; }
 
         /// <summary>
         /// Method is executed when the button for adding chips was clicked.
@@ -32,15 +32,15 @@
                 MessageBox.Show("The maximium chips you can add is 100000000");
                 return;
             }
+
             if (!int.TryParse(this.textBox1.Text, out parsedValue))
             {
                 MessageBox.Show("This is a number only field");
                 return;
-
             }
             else if (int.TryParse(this.textBox1.Text, out parsedValue) && int.Parse(this.textBox1.Text) <= 100000000)
             {
-                this.amountOfChips = int.Parse(this.textBox1.Text);
+                this.AmountOfChips = int.Parse(this.textBox1.Text);
                 this.Close();
             }
         }
@@ -55,7 +55,8 @@
             var message = "Are you sure?";
             var title = "Quit";
             var result = MessageBox.Show(
-            message,title,
+            message,
+            title,
             MessageBoxButtons.YesNo, 
             MessageBoxIcon.Question);
             switch (result)

@@ -74,7 +74,6 @@
     <Compile Include="Models\PokerManagement\CardHandler.cs" />
     <Compile Include="Models\PokerManagement\PokerTable.cs" />
     <Compile Include="Models\PokerManagement\Rules.cs" />
-    <Compile Include="ProgressBars.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Type.cs" />
     <EmbeddedResource Include="AddChips.resx">

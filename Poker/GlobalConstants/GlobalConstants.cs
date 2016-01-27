@@ -53,5 +53,43 @@
         public const string BigBlindMaxValueMessage = "The maximum of the Big Blind is 200 000";
 
         public const string SavedChangesMessage = "The changes have been saved ! They will become available the next hand you play. ";
+
+        public const int MinRandomNumberForPairHandCall = 10;
+        public const int MaxRandomNumberForPairHandCall = 16;
+        public const int MinRandomNumberForPairHandRaise = 10;
+        public const int MaxRandomNumberForPairHandRaise = 13;
+        public const int MinRandomNumberForTwoPair = 6;
+        public const int MaxRandomNumberForTwoPair = 11;
+        public const int MinRandomNumberForThreeOfKindRaise = 4;
+        public const int MaxRandomNumberForThreeOfKindRaise = 8;
+        public const int MinRandomNumberForStraightRaise = 3;
+        public const int MaxRandomNumberForStraightRaise = 8;
+        public const int MinRandomNumberForFlushRaise = 3;
+        public const int MaxRandomNumberForFlushRaise = 7;
+        public const int MinRandomNumberForFullHouseRaise = 2;
+        public const int MaxRandomNumberForFullHouseRaise = 6;
+        public const int MinRandomNumberForFourOfKindRaise = 2;
+        public const int MaxRandomNumberForFourOfKindRaise = 5;
+        public const int MinRandomNumberForStraightFlushRaise = 1;
+        public const int MaxRandomNumberForStraightFlushRaise = 3;
+
+        public const int FactorForCalculatingThePower = 100;
+        public const int NumberOfCards = 2;
+        public const int DefaultValueOfBigBlind = 500;
+        public const int DefaultValueOfSmallBlind = 250;
+
+        public const int CountOfTheAvailableCardsInGame = 17;
+        public const int PlayerPanelCoordinateX = 580;
+        public const int PlayerPanelCoordinateY = 480;
+        public const int FirstBotPanelCoordinateX = 15;
+        public const int FirstBotPanelCoordinateY = 420;
+        public const int SecondBotPanelCoordinateX = 75;
+        public const int SecondBotPanelCoordinateY = 65;
+        public const int ThirdBotPanelCoordinateX = 590;
+        public const int ThirdBotPanelCoordinateY = 25;
+        public const int FourthBotPanelCoordinateX = 1115;
+        public const int FourthBotPanelCoordinateY = 65;
+        public const int FifthBotPanelCoordinateX = 1160;
+        public const int FifthBotPanelCoordinateY = 420;
     }
 }

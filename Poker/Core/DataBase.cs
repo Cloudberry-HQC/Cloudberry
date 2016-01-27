@@ -1,7 +1,6 @@
 ﻿namespace Poker.Core
 {
     using Interfaces;
-    using Models.Player;
     using Models.PokerManagement;
 
     /// <summary>
@@ -10,28 +9,22 @@
     /// </summary>
     public class Database
     {
-        private static Database instance = null;
-        private readonly IPlayer[] players = new Player[6];
-        private PokerTable table;
+        private static Database instance;
 
         private Database()
         {
-
+            this.Players = new IPlayer[6];
         }
 
         /// <summary>
         /// Array with all players in game.
         /// </summary>
-        public IPlayer[] Players { get { return this.players; } }
+        public IPlayer[] Players { get; }
 
         /// <summary>
         /// A propery for table that holds the cards on table.
         /// </summary>
-        public PokerTable Table
-        {
-            get { return this.table; }
-            set { this.table = value; }
-        }
+        public PokerTable Table { get; set; }
 
         /// <summary>
         /// A property for database.

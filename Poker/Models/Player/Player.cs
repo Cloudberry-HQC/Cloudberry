@@ -3,6 +3,7 @@
     using System;
     using System.Drawing;
     using System.Windows.Forms;
+    using GlobalConstants;
     using Interfaces;
 
     /// <summary>
@@ -10,25 +11,12 @@
     /// </summary>
     public abstract class Player : IPlayer
     {
-        private const int NumberOfCards = 2;
-        private Panel panel;
         private int chips;
-        private double power;
-        private double current = -1;
-        private bool foldTturn;
-        private bool turn = true;
-        private string name;
-        private bool hasPlayerFolded;
-        private bool isPlayerTurn;
-        private int call;
-        private int raise;
-        private Label status;
         //private int[] catds=new int[2];
-        private ICard[] playerCards;
 
         protected Player(string name)
         {
-            this.panel = new Panel
+            this.Panel = new Panel
             {
                 BackColor = Color.DarkBlue,
                 Height = 150,
@@ -37,47 +25,20 @@
             };
             this.chips = 10000;
             this.Name = name;
-            
+            this.Current = -1;
             this.Status = new Label();
-            this.playerCards = new ICard[NumberOfCards];
+            this.PlayerCards = new ICard[GlobalConstants.NumberOfCards];
         }
 
-        public ICard[] PlayerCards
-        {
-            get { return this.playerCards; }
-            set { this.playerCards = value; }
-        }
+        public ICard[] PlayerCards { get; set; }
 
-        public bool IsPlayerTurn
-        {
-            get { return this.isPlayerTurn; }
-            set { this.isPlayerTurn = value; }
-        }
-        public Label Status
-        {
-            get
-            {
-                return this.status;
-            }
-            set
-            {
-                this.status = value;
-            }
-        }
+        public bool IsPlayerTurn { get; set; }
 
-        public string Name
-        {
+        public Label Status { get; set; }
 
-            get { return this.name; }
-            set { this.name = value; }
-        }
-        public Panel Panel
-        {
-            get
-            {
-                return this.panel;
-            }
-        }
+        public string Name { get; set; }
+
+        public Panel Panel { get; }
 
         public int Chips
         {
@@ -95,103 +56,31 @@
             }
         }
 
-        public double Power
-        {
-            get
-            {
-                return this.power;
-            }
-            set
-            {
-                this.power = value;
-            }
-        }
+        public double Power { get; set; }
 
-        public double Current
-        {
-            get
-            {
-                return this.current;
-            }
-            set
-            {
-                this.current = value;
-            }
-        }
+        public double Current { get; set; }
 
-        public bool Turn
-        {
-            get
-            {
-                return this.turn;
-            }
-            set
-            {
-                this.turn = value;
-            }
-        }
+        public bool Turn { get; set; } = true;
 
-        public bool FoldTurn
-        {
-            get
-            {
-                return this.foldTturn;
-            }
-            set
-            {
-                this.foldTturn = value;
-            }
-        }
+        public bool FoldTurn { get; set; }
 
-        public bool HasPlayerFolded
-        {
-            get
-            {
-                return this.hasPlayerFolded;
-            }
-            set
-            {
-                this.hasPlayerFolded = value;
-            }
-        }
+        public bool HasPlayerFolded { get; set; }
 
-        public int Call
-        {
-            get
-            {
-                return this.call;
+        public int Call { get; set; }
 
-            }
-            set
-            {
-                this.call = value;
-            }
-        }
-
-        public int Raise
-        {
-            get
-            {
-                return this.raise;
-
-            }
-            set
-            {
-                this.raise = value;
-            }
-        }
+        public int Raise { get; set; }
 
         public void PlayerFold()
         {
             Launcher.Poker.Raising = false;
-            this.Status.Text = "Fold";
+            this.Status.Text = GlobalConstants.FoldMessage;
             this.IsPlayerTurn = false;
             this.FoldTurn = true;
         }
 
         public void PlayerCheck()
         {
-            this.Status.Text = "Check";
+            this.Status.Text = GlobalConstants.CheckMessage;
             this.IsPlayerTurn = false;
             Launcher.Poker.Raising = false;
         }
@@ -201,8 +90,8 @@
             //  Form1.Raising = false;
             this.IsPlayerTurn = false;
             this.Chips -= Launcher.Poker.CallValue;
-            this.Status.Text = "Call " + Launcher.Poker.CallValue;
-            Launcher.Poker.TextBoxPot.Text = (int.Parse(Launcher.Poker.TextBoxPot.Text) + call).ToString();
+            this.Status.Text = GlobalConstants.CallMessage + " " + Launcher.Poker.CallValue;
+            Launcher.Poker.TextBoxPot.Text = (int.Parse(Launcher.Poker.TextBoxPot.Text) + this.Call).ToString();
             Launcher.Poker.Raising = false;
         }
 
@@ -210,7 +99,7 @@
         {
            // Launcher.Poker.Raise *= 2;
             this.Chips -= Convert.ToInt32(Launcher.Poker.Raise);
-            this.Status.Text = "Raise " + Launcher.Poker.Raise;
+            this.Status.Text = GlobalConstants.RaiseMessage + " " + Launcher.Poker.Raise;
             Launcher.Poker.TextBoxPot.Text = (int.Parse(Launcher.Poker.TextBoxPot.Text) + Convert.ToInt32(Launcher.Poker.Raise)).ToString();
             Launcher.Poker.CallValue = Convert.ToInt32(Launcher.Poker.Raise);
             Launcher.Poker.Raising = true;

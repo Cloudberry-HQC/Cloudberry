@@ -1,6 +1,7 @@
 ﻿namespace Poker.Models.PokerManagement
 {
     using System;
+    using GlobalConstants;
     using Interfaces;
 
     /// <summary>
@@ -8,24 +9,6 @@
     /// </summary>
     public class AiMenager
     {
-        private const int MinRandomNumberForPairHandCall = 10;
-        private const int MaxRandomNumberForPairHandCall = 16;
-        private const int MinRandomNumberForPairHandRaise = 10;
-        private const int MaxRandomNumberForPairHandRaise = 13;
-        private const int MinRandomNumberForTwoPair = 6;
-        private const int MaxRandomNumberForTwoPair = 11;
-        private const int MinRandomNumberForThreeOfKindRaise = 4;
-        private const int MaxRandomNumberForThreeOfKindRaise = 8;
-        private const int MinRandomNumberForStraightRaise = 3;
-        private const int MaxRandomNumberForStraightRaise = 8;
-        private const int MinRandomNumberForFlushRaise = 3;
-        private const int MaxRandomNumberForFlushRaise = 7;
-        private const int MinRandomNumberForFullHouseRaise = 2;
-        private const int MaxRandomNumberForFullHouseRaise = 6;
-        private const int MinRandomNumberForFourOfKindRaise = 2;
-        private const int MaxRandomNumberForFourOfKindRaise = 5;
-        private const int MinRandomNumberForStraightFlushRaise = 1;
-        private const int MaxRandomNumberForStraightFlushRaise = 3;
         //private static Random random = new Random();
 
         /// <summary>
@@ -91,7 +74,6 @@
             {
                 Launcher.Poker.CardsHolder[player.PlayerCards[0].NumberInGame].Visible = false;
                 Launcher.Poker.CardsHolder[player.PlayerCards[1].NumberInGame].Visible = false;
-
             }
         }
 
@@ -111,8 +93,8 @@
         private static void PairHand(IPlayer player)
         {
             Random rPair = new Random();
-            int randomNumberForPairHandCall = rPair.Next(MinRandomNumberForPairHandCall, MaxRandomNumberForPairHandCall);
-            int randomNumberForPairHandRaise = rPair.Next(MinRandomNumberForPairHandRaise, MaxRandomNumberForPairHandRaise);
+            int randomNumberForPairHandCall = rPair.Next(GlobalConstants.MinRandomNumberForPairHandCall, GlobalConstants.MaxRandomNumberForPairHandCall);
+            int randomNumberForPairHandRaise = rPair.Next(GlobalConstants.MinRandomNumberForPairHandRaise, GlobalConstants.MaxRandomNumberForPairHandRaise);
             if (player.Power <= 199 && player.Power >= 140)
             {
                 PH(player, randomNumberForPairHandCall, 6, randomNumberForPairHandRaise);
@@ -133,8 +115,8 @@
         private static void TwoPair(IPlayer player)
         {
             Random rPair = new Random();
-            int randomNumberForTwoPairCall = rPair.Next(MinRandomNumberForTwoPair, MaxRandomNumberForTwoPair);
-            int randomNumberForTwoPairRaise = rPair.Next(MinRandomNumberForTwoPair, MaxRandomNumberForTwoPair);
+            int randomNumberForTwoPairCall = rPair.Next(GlobalConstants.MinRandomNumberForTwoPair, GlobalConstants.MaxRandomNumberForTwoPair);
+            int randomNumberForTwoPairRaise = rPair.Next(GlobalConstants.MinRandomNumberForTwoPair, GlobalConstants.MaxRandomNumberForTwoPair);
             if (player.Power <= 290 && player.Power >= 246)
             {
                 PH(player, randomNumberForTwoPairCall, 3, randomNumberForTwoPairRaise);
@@ -156,7 +138,7 @@
         {
             Random tk = new Random();
             //int threeOfKindCall = random.Next(3, 7);
-            int randomNumberForThreeOfKindRaise = tk.Next(MinRandomNumberForThreeOfKindRaise, MaxRandomNumberForThreeOfKindRaise);
+            int randomNumberForThreeOfKindRaise = tk.Next(GlobalConstants.MinRandomNumberForThreeOfKindRaise, GlobalConstants.MaxRandomNumberForThreeOfKindRaise);
             if (player.Power <= 390 && player.Power >= 330)
             {
                 Smooth(player, randomNumberForThreeOfKindRaise);
@@ -178,7 +160,7 @@
         {
             Random str = new Random();
             //int straightCall = random.Next(3, 6);
-            int randomNumberForStraightRaise = str.Next(MinRandomNumberForStraightRaise, MaxRandomNumberForStraightRaise);
+            int randomNumberForStraightRaise = str.Next(GlobalConstants.MinRandomNumberForStraightRaise, GlobalConstants.MaxRandomNumberForStraightRaise);
             if (player.Power <= 480 && player.Power >= 410)
             {
                 Smooth(player, randomNumberForStraightRaise);
@@ -200,7 +182,7 @@
         {
             Random fsh = new Random();
             //int flushCall = random.Next(2, 6);
-            int randomNumberForFlushRaise = fsh.Next(MinRandomNumberForFlushRaise, MaxRandomNumberForFlushRaise);
+            int randomNumberForFlushRaise = fsh.Next(GlobalConstants.MinRandomNumberForFlushRaise, GlobalConstants.MaxRandomNumberForFlushRaise);
             Smooth(player, randomNumberForFlushRaise);
         }
 
@@ -209,7 +191,7 @@
         {
             Random flh = new Random();
             //int fullHouseCall = random.Next(1, 5);
-            int randomNumberForFullHouseRaise = flh.Next(MinRandomNumberForFullHouseRaise, MaxRandomNumberForFullHouseRaise);
+            int randomNumberForFullHouseRaise = flh.Next(GlobalConstants.MinRandomNumberForFullHouseRaise, GlobalConstants.MaxRandomNumberForFullHouseRaise);
             if (player.Power <= 626 && player.Power >= 620)
             {
                 Smooth(player, randomNumberForFullHouseRaise);
@@ -226,7 +208,7 @@
         {
             Random fk = new Random();
             //int fourOfKindCall = random.Next(1, 4);
-            int randomNumberForFourOfKindRaise = fk.Next(MinRandomNumberForFourOfKindRaise, MaxRandomNumberForFourOfKindRaise);
+            int randomNumberForFourOfKindRaise = fk.Next(GlobalConstants.MinRandomNumberForFourOfKindRaise, GlobalConstants.MaxRandomNumberForFourOfKindRaise);
             if (player.Power <= 752 && player.Power >= 704)
             {
                 Smooth(player, randomNumberForFourOfKindRaise);
@@ -238,8 +220,7 @@
         {
             Random sf = new Random();
             //int straightFlushCall = random.Next(1, 3);
-            int randomNumberForStraightFlushRaise = sf.Next(MinRandomNumberForStraightFlushRaise,
-                                                                MaxRandomNumberForStraightFlushRaise);
+            int randomNumberForStraightFlushRaise = sf.Next(GlobalConstants.MinRandomNumberForStraightFlushRaise, GlobalConstants.MaxRandomNumberForStraightFlushRaise);
             if (player.Power <= 913 && player.Power >= 804)
             {
                 Smooth(player, randomNumberForStraightFlushRaise);
@@ -464,7 +445,6 @@
                         player.Chips = 0;
                         player.Status.Text = "Call " + player.Chips;
                         Launcher.Poker.TextBoxPot.Text = (int.Parse(Launcher.Poker.TextBoxPot.Text) + player.Chips).ToString();
-
                     }
                 }
                 else
