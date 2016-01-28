@@ -24,11 +24,11 @@
 
         List<string> CheckWinners { get; set; }
 
-        Type Sorted { get; set; }
+        Hand Sorted { get; set; }
 
         double Type { get; set; }
 
-        List<Type> Win { get; set; }
+        List<Hand> Win { get; set; }
 
         int Winners { get; set; }
       

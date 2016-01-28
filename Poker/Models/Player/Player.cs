@@ -13,8 +13,7 @@
     public abstract class Player : IPlayer
     {
         private int chips;
-        //private int[] catds=new int[2];
-
+        
         protected Player(string name)
         {
             this.Panel = new Panel
@@ -87,8 +86,7 @@
         }
         
         public void PlayerCall()
-        {
-            //  Form1.Raising = false;
+        {     
             this.IsPlayerTurn = false;
             this.Chips -= Launcher.Poker.CallValue;
             this.Status.Text = GlobalConstants.CallMessage + " " + Launcher.Poker.CallValue;
@@ -97,8 +95,7 @@
         }
 
         public void PlayerRaised()
-        {
-           // Launcher.Poker.Raise *= 2;
+        {   
             this.Chips -= Convert.ToInt32(Launcher.Poker.Raise);
             this.Status.Text = GlobalConstants.RaiseMessage + " " + Launcher.Poker.Raise;
             Launcher.Poker.TextBoxPot.Text = (int.Parse(Launcher.Poker.TextBoxPot.Text) + Convert.ToInt32(Launcher.Poker.Raise)).ToString();

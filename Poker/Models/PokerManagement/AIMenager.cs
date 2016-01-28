@@ -10,8 +10,7 @@
     /// </summary>
     public class AiMenager
     {
-        //private static Random random = new Random();
-
+       
         /// <summary>
         /// Checks the hands of the bots. According to the strength of the hand, the bot makes a decision how to play.
         /// </summary>
@@ -138,19 +137,18 @@
         private static void ThreeOfAKind(IPlayer player)
         {
             Random tk = new Random();
-            //int threeOfKindCall = random.Next(3, 7);
             int randomNumberForThreeOfKindRaise = tk.Next(GlobalConstants.MinRandomNumberForThreeOfKindRaise, GlobalConstants.MaxRandomNumberForThreeOfKindRaise);
             if (player.Power <= 390 && player.Power >= 330)
             {
                 Smooth(player, randomNumberForThreeOfKindRaise);
             }
 
-            if (player.Power <= 327 && player.Power >= 321)//10  8
+            if (player.Power <= 327 && player.Power >= 321)
             {
                 Smooth(player, randomNumberForThreeOfKindRaise);
             }
 
-            if (player.Power < 321 && player.Power >= 303)//7 2
+            if (player.Power < 321 && player.Power >= 303)
             {
                 Smooth(player, randomNumberForThreeOfKindRaise);
             }
@@ -159,15 +157,14 @@
         //If the hand is Straight
         private static void Straight(IPlayer player)
         {
-            Random str = new Random();
-            //int straightCall = random.Next(3, 6);
-            int randomNumberForStraightRaise = str.Next(GlobalConstants.MinRandomNumberForStraightRaise, GlobalConstants.MaxRandomNumberForStraightRaise);
+            Random randomStraight = new Random();
+            int randomNumberForStraightRaise = randomStraight.Next(GlobalConstants.MinRandomNumberForStraightRaise, GlobalConstants.MaxRandomNumberForStraightRaise);
             if (player.Power <= 480 && player.Power >= 410)
             {
                 Smooth(player, randomNumberForStraightRaise);
             }
 
-            if (player.Power <= 409 && player.Power >= 407)//10  8
+            if (player.Power <= 409 && player.Power >= 407)
             {
                 Smooth(player, randomNumberForStraightRaise);
             }
@@ -181,18 +178,16 @@
         //If the hand is Flush
         private static void Flush(IPlayer player)
         {
-            Random fsh = new Random();
-            //int flushCall = random.Next(2, 6);
-            int randomNumberForFlushRaise = fsh.Next(GlobalConstants.MinRandomNumberForFlushRaise, GlobalConstants.MaxRandomNumberForFlushRaise);
+            Random randomFlush = new Random();
+            int randomNumberForFlushRaise = randomFlush.Next(GlobalConstants.MinRandomNumberForFlushRaise, GlobalConstants.MaxRandomNumberForFlushRaise);
             Smooth(player, randomNumberForFlushRaise);
         }
 
         //If the hand is Full House
         private static void FullHouse(IPlayer player)
         {
-            Random flh = new Random();
-            //int fullHouseCall = random.Next(1, 5);
-            int randomNumberForFullHouseRaise = flh.Next(GlobalConstants.MinRandomNumberForFullHouseRaise, GlobalConstants.MaxRandomNumberForFullHouseRaise);
+            Random randomFullHouse = new Random();
+            int randomNumberForFullHouseRaise = randomFullHouse.Next(GlobalConstants.MinRandomNumberForFullHouseRaise, GlobalConstants.MaxRandomNumberForFullHouseRaise);
             if (player.Power <= 626 && player.Power >= 620)
             {
                 Smooth(player, randomNumberForFullHouseRaise);
@@ -207,9 +202,8 @@
         //If the hand is Four of a kind
         private static void FourOfAKind(IPlayer player)
         {
-            Random fk = new Random();
-            //int fourOfKindCall = random.Next(1, 4);
-            int randomNumberForFourOfKindRaise = fk.Next(GlobalConstants.MinRandomNumberForFourOfKindRaise, GlobalConstants.MaxRandomNumberForFourOfKindRaise);
+            Random randomFourOfKind = new Random();
+            int randomNumberForFourOfKindRaise = randomFourOfKind.Next(GlobalConstants.MinRandomNumberForFourOfKindRaise, GlobalConstants.MaxRandomNumberForFourOfKindRaise);
             if (player.Power <= 752 && player.Power >= 704)
             {
                 Smooth(player, randomNumberForFourOfKindRaise);
@@ -219,9 +213,8 @@
         //If the hand is Straight Flush
         private static void StraightFlush(IPlayer player)
         {
-            Random sf = new Random();
-            //int straightFlushCall = random.Next(1, 3);
-            int randomNumberForStraightFlushRaise = sf.Next(GlobalConstants.MinRandomNumberForStraightFlushRaise, GlobalConstants.MaxRandomNumberForStraightFlushRaise);
+            Random randomStraightFlush = new Random();
+            int randomNumberForStraightFlushRaise = randomStraightFlush.Next(GlobalConstants.MinRandomNumberForStraightFlushRaise, GlobalConstants.MaxRandomNumberForStraightFlushRaise);
             if (player.Power <= 913 && player.Power >= 804)
             {
                 Smooth(player, randomNumberForStraightFlushRaise);
@@ -274,7 +267,7 @@
 
             if (rnd == 3)
             {
-                //TODO elica: Added check for callvalue=0 
+                
                 if (Launcher.Poker.CallValue <= 0)
                 {
                     player.PlayerCheck();
@@ -424,8 +417,6 @@
         //Choice maker for bots with a hand three of a kind or higher
         private static void Smooth(IPlayer player, int n)
         {
-            //Random rand = new Random();
-            //int rnd = rand.Next(1, 3);
             if (Launcher.Poker.CallValue <= 0)
             {
                 player.PlayerCheck();

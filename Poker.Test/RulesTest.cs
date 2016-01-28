@@ -1,21 +1,20 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Poker.Core;
-using Poker.Forms;
-using Poker.Interfaces;
-using Poker.Models.Card;
-using Poker.Models.Player;
-using Poker.Models.PokerManagement;
-
-namespace Poker.Test
+﻿namespace Poker.Test
 {
     using Enums;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Poker.Core;
+    using Poker.Forms;
+    using Poker.Interfaces;
+    using Poker.Models.Card;
+    using Poker.Models.Player;
+    using Poker.Models.PokerManagement;
 
 
     [TestClass]
     public class RulesTest
     {
 
-        private Database db = Database.Instace;
+        private Database dataBase = Database.Instace;
 
         private PokerTable table = new PokerTable();
 
@@ -34,7 +33,7 @@ namespace Poker.Test
             this.table.CardsOnTable[3] = new Card(22);
             this.table.CardsOnTable[4] = new Card(42);
 
-            this.db.Table = this.table;
+            this.dataBase.Table = this.table;
             rules.CheckForHand(player);
             Assert.AreEqual(TypeOfTheHand.HighCard, player.HandFactor, "Player.HandFactor not correct");
             Assert.AreEqual(13, player.Power, "Player.Power not correct");
@@ -58,7 +57,7 @@ namespace Poker.Test
             this.table.CardsOnTable[2] = new Card(12);
             this.table.CardsOnTable[3] = new Card(22);
             this.table.CardsOnTable[4] = new Card(42);
-            this.db.Table = this.table;
+            this.dataBase.Table = this.table;
             rules.CheckForHand(player1);
             Assert.AreEqual(TypeOfTheHand.Pair, player1.HandFactor, "Player.HandFactor not correct");
             Assert.AreEqual(148, player1.Power, "Player.Power not correct");
@@ -80,7 +79,7 @@ namespace Poker.Test
             this.table.CardsOnTable[2] = new Card(51);
             this.table.CardsOnTable[3] = new Card(22);
             this.table.CardsOnTable[4] = new Card(42);
-            this.db.Table = this.table;
+            this.dataBase.Table = this.table;
             rules.CheckForHand(player1);
             Assert.AreEqual(TypeOfTheHand.Pair, player1.HandFactor, "Player.HandFactor not correct");
             Assert.AreEqual(149, player1.Power, "Player.Power not correct");
@@ -102,7 +101,7 @@ namespace Poker.Test
             this.table.CardsOnTable[2] = new Card(51);
             this.table.CardsOnTable[3] = new Card(22);
             this.table.CardsOnTable[4] = new Card(42);
-            this.db.Table = this.table;
+            this.dataBase.Table = this.table;
             rules.CheckForHand(player1);
             Assert.AreEqual(TypeOfTheHand.TwoPairs, player1.HandFactor, "Player.HandFactor not correct");
             Assert.AreEqual(234, player1.Power, "Player.Power not correct");
@@ -124,7 +123,7 @@ namespace Poker.Test
             this.table.CardsOnTable[2] = new Card(51);
             this.table.CardsOnTable[3] = new Card(22);
             this.table.CardsOnTable[4] = new Card(50);
-            this.db.Table = this.table;
+            this.dataBase.Table = this.table;
             rules.CheckForHand(player1);
             Assert.AreEqual(TypeOfTheHand.PairTable, player1.HandFactor, "Player.HandFactor not correct");
             Assert.AreEqual(15, player1.Power, "Player.Power not correct");
@@ -146,7 +145,7 @@ namespace Poker.Test
             this.table.CardsOnTable[2] = new Card(46);
             this.table.CardsOnTable[3] = new Card(27);
             this.table.CardsOnTable[4] = new Card(24);
-            this.db.Table = this.table;
+            this.dataBase.Table = this.table;
             rules.CheckForHand(player1);
             Assert.AreEqual(TypeOfTheHand.ThreeOfAKind, player1.HandFactor, "Player.HandFactor not correct");
             Assert.AreEqual(318, player1.Power, "Player.Power not correct");
@@ -168,7 +167,7 @@ namespace Poker.Test
             this.table.CardsOnTable[2] = new Card(23);
             this.table.CardsOnTable[3] = new Card(46);
             this.table.CardsOnTable[4] = new Card(42);
-            this.db.Table = this.table;
+            this.dataBase.Table = this.table;
             rules.CheckForHand(player1);
             Assert.AreEqual(TypeOfTheHand.ThreeOfAKind, player1.HandFactor, "Player.HandFactor not correct");
             Assert.AreEqual(315, player1.Power, "Player.Power not correct");
@@ -190,7 +189,7 @@ namespace Poker.Test
             this.table.CardsOnTable[2] = new Card(43);
             this.table.CardsOnTable[3] = new Card(20);
             this.table.CardsOnTable[4] = new Card(10);
-            this.db.Table = this.table;
+            this.dataBase.Table = this.table;
             rules.CheckForHand(player1);
             Assert.AreEqual(TypeOfTheHand.ThreeOfAKind, player1.HandFactor, "Player.HandFactor not correct");
             Assert.AreEqual(330, player1.Power, "Player.Power not correct");
@@ -211,7 +210,7 @@ namespace Poker.Test
             this.table.CardsOnTable[2] = new Card(46);
             this.table.CardsOnTable[3] = new Card(47);
             this.table.CardsOnTable[4] = new Card(10);
-            this.db.Table = this.table;
+            this.dataBase.Table = this.table;
             rules.CheckForHand(player1);
 
             Assert.AreEqual(TypeOfTheHand.FourOfAKind, player1.HandFactor, "Player.HandFactor not correct");
@@ -233,7 +232,7 @@ namespace Poker.Test
             this.table.CardsOnTable[2] = new Card(29);
             this.table.CardsOnTable[3] = new Card(30);
             this.table.CardsOnTable[4] = new Card(31);
-            this.db.Table = this.table;
+            this.dataBase.Table = this.table;
             rules.CheckForHand(player1);
 
             Assert.AreEqual(TypeOfTheHand.FourOfAKind, player1.HandFactor, "Player.HandFactor not correct");
@@ -255,7 +254,7 @@ namespace Poker.Test
             this.table.CardsOnTable[2] = new Card(2);
             this.table.CardsOnTable[3] = new Card(30);
             this.table.CardsOnTable[4] = new Card(3);
-            this.db.Table = this.table;
+            this.dataBase.Table = this.table;
             rules.CheckForHand(player1);
 
             Assert.AreEqual(TypeOfTheHand.FourOfAKind, player1.HandFactor, "Player.HandFactor not correct");
@@ -277,7 +276,7 @@ namespace Poker.Test
             this.table.CardsOnTable[2] = new Card(47);
             this.table.CardsOnTable[3] = new Card(51);
             this.table.CardsOnTable[4] = new Card(3);
-            this.db.Table = this.table;
+            this.dataBase.Table = this.table;
             rules.CheckForHand(player1);
 
             Assert.AreEqual(TypeOfTheHand.RoyalFlush, player1.HandFactor, "Player.HandFactor not correct");
@@ -299,7 +298,7 @@ namespace Poker.Test
             this.table.CardsOnTable[2] = new Card(10);
             this.table.CardsOnTable[3] = new Card(14);
             this.table.CardsOnTable[4] = new Card(22);
-            this.db.Table = this.table;
+            this.dataBase.Table = this.table;
             rules.CheckForHand(player1);
 
             Assert.AreEqual(TypeOfTheHand.StraightFlush, player1.HandFactor, "Player.HandFactor not correct");
@@ -321,7 +320,7 @@ namespace Poker.Test
             this.table.CardsOnTable[2] = new Card(4);
             this.table.CardsOnTable[3] = new Card(8);
             this.table.CardsOnTable[4] = new Card(46);
-            this.db.Table = this.table;
+            this.dataBase.Table = this.table;
             rules.CheckForHand(player1);
 
             Assert.AreEqual(TypeOfTheHand.StraightFlush, player1.HandFactor, "Player.HandFactor not correct");
@@ -343,7 +342,7 @@ namespace Poker.Test
             this.table.CardsOnTable[2] = new Card(4);
             this.table.CardsOnTable[3] = new Card(8);
             this.table.CardsOnTable[4] = new Card(20);
-            this.db.Table = this.table;
+            this.dataBase.Table = this.table;
             rules.CheckForHand(player1);
 
             Assert.AreEqual(TypeOfTheHand.StraightFlush, player1.HandFactor, "Player.HandFactor not correct");
@@ -365,7 +364,7 @@ namespace Poker.Test
             this.table.CardsOnTable[2] = new Card(21);
             this.table.CardsOnTable[3] = new Card(29);
             this.table.CardsOnTable[4] = new Card(25);
-            this.db.Table = this.table;
+            this.dataBase.Table = this.table;
             rules.CheckForHand(player1);
 
             Assert.AreEqual(TypeOfTheHand.StraightFlush, player1.HandFactor, "Player.HandFactor not correct");
