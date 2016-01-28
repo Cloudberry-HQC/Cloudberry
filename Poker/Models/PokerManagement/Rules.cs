@@ -144,59 +144,65 @@
             TakePot();
         }
 
+        /// <summary>
+        /// Method that shows the best hand of each remaining player
+        /// </summary>
+        /// <param name="player">Current player</param>
         public void ShowHands(IPlayer player)
         {
-            if (player.Current == -1)
+            if (player.HandFactor == TypeOfTheHand.HighCard)
             {
                 MessageBox.Show(player.Name + " High Card ");
             }
 
-            if (player.Current == 1 || player.Current == 0)
+            if (player.HandFactor == TypeOfTheHand.Pair || player.HandFactor == TypeOfTheHand.PairTable)
             {
                 MessageBox.Show(player.Name + " Pair ");
             }
 
-            if (player.Current == 2)
+            if (player.HandFactor == TypeOfTheHand.TwoPairs)
             {
                 MessageBox.Show(player.Name + " Two Pair ");
             }
 
-            if (player.Current == 3)
+            if (player.HandFactor == TypeOfTheHand.ThreeOfAKind)
             {
                 MessageBox.Show(player.Name + " Three of a Kind ");
             }
 
-            if (player.Current == 4)
+            if (player.HandFactor == TypeOfTheHand.Straight)
             {
                 MessageBox.Show(player.Name + " Straight ");
             }
 
-            if (player.Current == 5 || player.Current == 5.5)
+            if (player.HandFactor == TypeOfTheHand.Flush)
             {
                 MessageBox.Show(player.Name + " Flush ");
             }
 
-            if (player.Current == 6)
+            if (player.HandFactor == TypeOfTheHand.FullHouse)
             {
                 MessageBox.Show(player.Name + " Full House ");
             }
 
-            if (player.Current == 7)
+            if (player.HandFactor == TypeOfTheHand.FourOfAKind)
             {
                 MessageBox.Show(player.Name + " Four of a Kind ");
             }
 
-            if (player.Current == 8)
+            if (player.HandFactor == TypeOfTheHand.StraightFlush)
             {
                 MessageBox.Show(player.Name + " Straight Flush ");
             }
 
-            if (player.Current == 9)
+            if (player.HandFactor == TypeOfTheHand.RoyalFlush)
             {
                 MessageBox.Show(player.Name + " Royal Flush ! ");
             }
         }
-
+        /// <summary>
+        /// Method that distribute the pot between the winners
+        /// </summary>
         public void TakePot()
         {
             if (this.Winners > 1)
@@ -230,7 +236,6 @@
         /// Determines the winner.
         /// </summary>
         /// <param name="player">Current player.</param>
-        /// <param name="lastly">String parameter.</param>
         public void Winner(IPlayer player)
         {
             for (int j = 0; j <= 16; j++)
@@ -243,7 +248,7 @@
 
             }
 
-            if (player.Current == this.Sorted.HandFactor)
+            if (player.HandFactor == this.Sorted.HandFactor)
             {
                 if (player.Power == this.Sorted.Power)
                 {
@@ -289,7 +294,7 @@
                 .OrderBy(c => c.Value)
                 .ToArray();
 
-            if (player.Current >= -1)
+            if (player.HandFactor >= TypeOfTheHand.HighCard)
             {
 
                 if (distinctValueOfClubs.Length >= 5)
@@ -300,9 +305,9 @@
                     {
                         if (distinctValueOfClubs[i].Value - 4 == distinctValueOfClubs[i - 4].Value)
                         {
-                            player.Current = distinctValueOfClubs[i].Value == ValueOfCard.Ace ? 9 : 8;
+                            player.HandFactor = distinctValueOfClubs[i].Value == ValueOfCard.Ace ? TypeOfTheHand.RoyalFlush : TypeOfTheHand.StraightFlush;
 
-                            player.Power = (int)distinctValueOfClubs[i].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.Power = (int)distinctValueOfClubs[i].Value + (int) player.HandFactor * GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             break;
                         }
@@ -311,8 +316,8 @@
 
                     //if (distinctValueOfClubs[0].Value + 4 == distinctValueOfClubs[4].Value)
                     //{
-                    //    player.Current = 8;
-                    //    player.Power = (int)distinctValueOfClubs.Max(card => card.Value) + player.Current * FactorForCalculatingThePower;
+                    //    player.HandFactor = 8;
+                    //    player.Power = (int)distinctValueOfClubs.Max(card => card.Value) + player.HandFactor * FactorForCalculatingThePower;
                     //    this.Win.Add(new Type { Power = player.Power, HandFactor = 8 });
                     //    this.Sorted = this.Win
                     //        .OrderByDescending(op1 => op1.HandFactor)
@@ -326,8 +331,8 @@
                     //    distinctValueOfClubs[3].Value == ValueOfCard.King &&
                     //    distinctValueOfClubs[4].Value == ValueOfCard.Ace)
                     //{
-                    //    player.Current = 9;
-                    //    player.Power = (int)distinctValueOfClubs.Max(card => card.Value) + player.Current * FactorForCalculatingThePower;
+                    //    player.HandFactor = 9;
+                    //    player.Power = (int)distinctValueOfClubs.Max(card => card.Value) + player.HandFactor * FactorForCalculatingThePower;
                     //    this.Win.Add(new Type { Power = player.Power, HandFactor = 9 });
                     //    this.Sorted = this.Win
                     //        .OrderByDescending(op1 => op1.HandFactor)
@@ -341,8 +346,8 @@
                         distinctValueOfClubs[3].Value == ValueOfCard.Five &&
                         distinctValueOfClubs[4].Value == ValueOfCard.Ace)
                     {
-                        player.Current = 8;
-                        player.Power = (int)ValueOfCard.Five + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                        player.HandFactor = TypeOfTheHand.StraightFlush;
+                        player.Power = (int)ValueOfCard.Five + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                         this.AddHand(player);
                     }
 
@@ -356,9 +361,9 @@
                     {
                         if (distinctValueOfDiamonds[i].Value - 4 == distinctValueOfDiamonds[i - 4].Value)
                         {
-                            player.Current = distinctValueOfDiamonds[i].Value == ValueOfCard.Ace ? 9 : 8;
+                            player.HandFactor = distinctValueOfDiamonds[i].Value == ValueOfCard.Ace ? TypeOfTheHand.RoyalFlush : TypeOfTheHand.StraightFlush;
 
-                            player.Power = (int)distinctValueOfDiamonds[i].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.Power = (int)distinctValueOfDiamonds[i].Value + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             break;
                         }
@@ -366,8 +371,8 @@
 
                     //if (distinctValueOfDiamonds[0].Value + 4 == distinctValueOfDiamonds[4].Value)
                     //{
-                    //    player.Current = 8;
-                    //    player.Power = (int)distinctValueOfDiamonds.Max(card => card.Value) + player.Current * FactorForCalculatingThePower;
+                    //    player.HandFactor = 8;
+                    //    player.Power = (int)distinctValueOfDiamonds.Max(card => card.Value) + player.HandFactor * FactorForCalculatingThePower;
                     //    this.Win.Add(new Type { Power = player.Power, HandFactor = 8 });
                     //    this.Sorted = this.Win
                     //        .OrderByDescending(op1 => op1.HandFactor)
@@ -381,8 +386,8 @@
                     //    distinctValueOfDiamonds[3].Value == ValueOfCard.King &&
                     //    distinctValueOfDiamonds[4].Value == ValueOfCard.Ace)
                     //{
-                    //    player.Current = 9;
-                    //    player.Power = (int)distinctValueOfDiamonds.Max(card => card.Value) + player.Current * FactorForCalculatingThePower;
+                    //    player.HandFactor = 9;
+                    //    player.Power = (int)distinctValueOfDiamonds.Max(card => card.Value) + player.HandFactor * FactorForCalculatingThePower;
                     //    this.Win.Add(new Type { Power = player.Power, HandFactor = 9 });
                     //    this.Sorted = this.Win
                     //        .OrderByDescending(op1 => op1.HandFactor)
@@ -396,8 +401,8 @@
                         distinctValueOfDiamonds[3].Value == ValueOfCard.Five &&
                         distinctValueOfDiamonds[4].Value == ValueOfCard.Ace)
                     {
-                        player.Current = 8;
-                        player.Power = (int)ValueOfCard.Five + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                        player.HandFactor = TypeOfTheHand.StraightFlush;
+                        player.Power = (int)ValueOfCard.Five + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                         this.AddHand(player);
                     }
 
@@ -411,9 +416,9 @@
                     {
                         if (distinctValueOfHearts[i].Value - 4 == distinctValueOfHearts[i - 4].Value)
                         {
-                            player.Current = distinctValueOfHearts[i].Value == ValueOfCard.Ace ? 9 : 8;
+                            player.HandFactor = distinctValueOfHearts[i].Value == ValueOfCard.Ace ? TypeOfTheHand.RoyalFlush : TypeOfTheHand.StraightFlush;
 
-                            player.Power = (int)distinctValueOfHearts[i].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.Power = (int)distinctValueOfHearts[i].Value + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
 
                             break;
@@ -422,8 +427,8 @@
 
                     //if (distinctValueOfHearts[0].Value + 4 == distinctValueOfHearts[4].Value)
                     //{
-                    //    player.Current = 8;
-                    //    player.Power = (int)distinctValueOfHearts.Max(card => card.Value) + player.Current * FactorForCalculatingThePower;
+                    //    player.HandFactor = 8;
+                    //    player.Power = (int)distinctValueOfHearts.Max(card => card.Value) + player.HandFactor * FactorForCalculatingThePower;
                     //    this.Win.Add(new Type { Power = player.Power, HandFactor = 8 });
                     //    this.Sorted = this.Win
                     //        .OrderByDescending(op1 => op1.HandFactor)
@@ -437,8 +442,8 @@
                     //    distinctValueOfHearts[3].Value == ValueOfCard.King &&
                     //    distinctValueOfHearts[4].Value == ValueOfCard.Ace)
                     //{
-                    //    player.Current = 9;
-                    //    player.Power = (int)distinctValueOfHearts.Max(card => card.Value) + player.Current * FactorForCalculatingThePower;
+                    //    player.HandFactor = 9;
+                    //    player.Power = (int)distinctValueOfHearts.Max(card => card.Value) + player.HandFactor * FactorForCalculatingThePower;
                     //    this.Win.Add(new Type { Power = player.Power, HandFactor = 9 });
                     //    this.Sorted = this.Win
                     //        .OrderByDescending(op1 => op1.HandFactor)
@@ -452,8 +457,8 @@
                         distinctValueOfHearts[3].Value == ValueOfCard.Five &&
                         distinctValueOfHearts[4].Value == ValueOfCard.Ace)
                     {
-                        player.Current = 8;
-                        player.Power = (int)ValueOfCard.Five + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                        player.HandFactor = TypeOfTheHand.StraightFlush;
+                        player.Power = (int)ValueOfCard.Five + (int) player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                         this.AddHand(player);
                     }
                 }
@@ -466,9 +471,9 @@
                     {
                         if (distinctValueOfSpades[i].Value - 4 == distinctValueOfSpades[i - 4].Value)
                         {
-                            player.Current = distinctValueOfSpades[i].Value == ValueOfCard.Ace ? 9 : 8;
+                            player.HandFactor = distinctValueOfSpades[i].Value == ValueOfCard.Ace ? TypeOfTheHand.RoyalFlush : TypeOfTheHand.StraightFlush;
 
-                            player.Power = (int)distinctValueOfSpades[i].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.Power = (int)distinctValueOfSpades[i].Value + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             break;
                         }
@@ -476,8 +481,8 @@
 
                     //if (distinctValueOfSpades[0].Value + 4 == distinctValueOfSpades[4].Value)
                     //{
-                    //    player.Current = 8;
-                    //    player.Power = (int)distinctValueOfSpades.Max(card => card.Value) + player.Current * FactorForCalculatingThePower;
+                    //    player.HandFactor = 8;
+                    //    player.Power = (int)distinctValueOfSpades.Max(card => card.Value) + player.HandFactor * FactorForCalculatingThePower;
                     //    this.Win.Add(new Type { Power = player.Power, HandFactor = 8 });
                     //    this.Sorted = this.Win
                     //        .OrderByDescending(op1 => op1.HandFactor)
@@ -491,8 +496,8 @@
                     //    distinctValueOfSpades[3].Value == ValueOfCard.King &&
                     //    distinctValueOfSpades[4].Value == ValueOfCard.Ace)
                     //{
-                    //    player.Current = 9;
-                    //    player.Power = (int)distinctValueOfSpades.Max(card => card.Value) + player.Current * FactorForCalculatingThePower;
+                    //    player.HandFactor = 9;
+                    //    player.Power = (int)distinctValueOfSpades.Max(card => card.Value) + player.HandFactor * FactorForCalculatingThePower;
                     //    this.Win.Add(new Type { Power = player.Power, HandFactor = 9 });
                     //    this.Sorted = this.Win
                     //        .OrderByDescending(op1 => op1.HandFactor)
@@ -507,8 +512,8 @@
                         distinctValueOfSpades[3].Value == ValueOfCard.Five &&
                         distinctValueOfSpades[4].Value == ValueOfCard.Ace)
                     {
-                        player.Current = 8;
-                        player.Power = (int)ValueOfCard.Five + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                        player.HandFactor = TypeOfTheHand.StraightFlush;
+                        player.Power = (int)ValueOfCard.Five + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                         this.AddHand(player);
                     }
 
@@ -518,7 +523,7 @@
 
         private void AddHand(IPlayer player)
         {
-            this.Win.Add(new Type { Power = player.Power, HandFactor = player.Current });
+            this.Win.Add(new Type { Power = player.Power, HandFactor = player.HandFactor });
             this.Sorted = this.Win
                 .OrderByDescending(op1 => op1.HandFactor)
                 .ThenByDescending(op1 => op1.Power)
@@ -527,7 +532,7 @@
 
         private void CheckForFourOfAKind(IPlayer player, ICard[] allSevenCards)
         {
-            if (player.Current >= -1)
+            if (player.HandFactor >= TypeOfTheHand.HighCard)
             {
                 for (int j = 0; j <= 3; j++)
                 {
@@ -536,8 +541,8 @@
                         allSevenCards[j].Value == allSevenCards[j + 2].Value &&
                         allSevenCards[j].Value == allSevenCards[j + 3].Value)
                     {
-                        player.Current = 7;
-                        player.Power = (int)allSevenCards[j].Value * 4 + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                        player.HandFactor = TypeOfTheHand.FourOfAKind;
+                        player.Power = (int)allSevenCards[j].Value * 4 + (int) player.HandFactor * GlobalConstants.FactorForCalculatingThePower;
                         this.AddHand(player);
                     }
 
@@ -547,8 +552,8 @@
                     //    allSevenCards[j + 2].Value == ValueOfCard.Ace &&
                     //    allSevenCards[j + 3].Value == ValueOfCard.Ace)
                     //{
-                    //    player.Current = 7;
-                    //    player.Power = 13 * 4 + player.Current * 100;
+                    //    player.HandFactor = 7;
+                    //    player.Power = 13 * 4 + player.HandFactor * 100;
                     //    this.Win.Add(new Type { Power = player.Power, HandFactor = 7 });
                     //    this.Sorted = this.Win
                     //        .OrderByDescending(op1 => op1.HandFactor)
@@ -561,7 +566,7 @@
 
         private void CheckForFullHouse(IPlayer player, ref bool hasTrips, ICard[] allSevenCards)
         {
-            if (player.Current >= -1)
+            if (player.HandFactor >= TypeOfTheHand.HighCard)
             {
                 this.Type = player.Power;
                 //loops through value (rank) of cards 0-ace ... king-12
@@ -575,8 +580,8 @@
                         {
                             //if (equalCards.Max(card => card.Value) == ValueOfCard.Ace)
                             //{
-                            //    player.Current = 6;
-                            //    player.Power = 13 * 2 + player.Current * 100;
+                            //    player.HandFactor = 6;
+                            //    player.Power = 13 * 2 + player.HandFactor * 100;
                             //    this.Win.Add(new Type { Power = player.Power, HandFactor = 6 });
                             //    this.sorted = this.Win
                             //        .OrderByDescending(op1 => op1.HandFactor)
@@ -587,8 +592,8 @@
                             ////TODO to test this
                             //if (equalCards.Max(card => card.Value) != ValueOfCard.Ace)
                             //{
-                            //    player.Current = 6;
-                            //    player.Power = (int)equalCards.Max(card => card.Value) * 2 + player.Current * 100;
+                            //    player.HandFactor = 6;
+                            //    player.Power = (int)equalCards.Max(card => card.Value) * 2 + player.HandFactor * 100;
                             //    this.Win.Add(new Type { Power = player.Power, HandFactor = 6 });
                             //    this.sorted = this.Win
                             //        .OrderByDescending(op1 => op1.HandFactor)
@@ -597,8 +602,8 @@
                             //    break;
                             //}
 
-                            player.Current = 6;
-                            player.Power = (int)equalCards.Max(card => card.Value) * 2 + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.HandFactor = TypeOfTheHand.FullHouse;
+                            player.Power = (int)equalCards.Max(card => card.Value) * 2 + (int)player.HandFactor * GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             break;
                         }
@@ -621,7 +626,7 @@
                     }
                 }
 
-                if (player.Current != 6)
+                if (player.HandFactor != TypeOfTheHand.FullHouse)
                 {
                     player.Power = this.Type;
                 }
@@ -630,7 +635,7 @@
 
         private void CheckForFlush(IPlayer player, ref bool hasFlush)
         {
-            if (player.Current >= -1)
+            if (player.HandFactor >= TypeOfTheHand.HighCard)
             {
                 ICard[] clubs = Database.Instace.Table.CardsOnTable
                     .Where(card => card.Suit == SuitOfCard.Clubs).ToArray();
@@ -652,8 +657,8 @@
                         //If value of the first card in hand is bigger than the bigest value on table
                         if (player.PlayerCards[0].Value > clubs.Max(card => card.Value))
                         {
-                            player.Current = 5;
-                            player.Power = (int)player.PlayerCards[0].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.HandFactor = TypeOfTheHand.Flush;
+                            player.Power = (int)player.PlayerCards[0].Value + (int)player.HandFactor * GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             hasFlush = true;
                         }
@@ -661,8 +666,8 @@
                         //If value of the second card in hand is bigger than the bigest value on table
                         if (player.PlayerCards[1].Value > clubs.Max(card => card.Value))
                         {
-                            player.Current = 5;
-                            player.Power = (int)player.PlayerCards[1].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.HandFactor = TypeOfTheHand.Flush;
+                            player.Power = (int)player.PlayerCards[1].Value + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             hasFlush = true;
                         }
@@ -670,8 +675,8 @@
                         else if (player.PlayerCards[0].Value < clubs.Max(card => card.Value) &&
                                  player.PlayerCards[1].Value < clubs.Max(card => card.Value))
                         {
-                            player.Current = 5;
-                            player.Power = (int)clubs.Max(card => card.Value) + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.HandFactor = TypeOfTheHand.Flush;
+                            player.Power = (int)clubs.Max(card => card.Value) + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             hasFlush = true;
                         }
@@ -690,15 +695,15 @@
                         //if the first card in hand is bigger than the bigest on table
                         if (player.PlayerCards[0].Value > clubs.Max(card => card.Value))
                         {
-                            player.Current = 5;
-                            player.Power = (int)player.PlayerCards[0].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.HandFactor = TypeOfTheHand.Flush;
+                            player.Power = (int)player.PlayerCards[0].Value + (int) player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             hasFlush = true;
                         }
                         else
                         {
-                            player.Current = 5;
-                            player.Power = (int)clubs.Max(card => card.Value) + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.HandFactor = TypeOfTheHand.Flush;
+                            player.Power = (int)clubs.Max(card => card.Value) + (int) player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             hasFlush = true;
                         }
@@ -713,15 +718,15 @@
                         //If the second card is bigger than the bigest card on table
                         if (player.PlayerCards[1].Value > clubs.Max(card => card.Value))
                         {
-                            player.Current = 5;
-                            player.Power = (int)player.PlayerCards[1].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.HandFactor = TypeOfTheHand.Flush;
+                            player.Power = (int)player.PlayerCards[1].Value + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             hasFlush = true;
                         }
                         else
                         {
-                            player.Current = 5;
-                            player.Power = (int)clubs.Max(card => card.Value) + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.HandFactor = TypeOfTheHand.Flush;
+                            player.Power = (int)clubs.Max(card => card.Value) + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             hasFlush = true;
                         }
@@ -737,8 +742,8 @@
                     if (player.PlayerCards[0].Suit == clubs[0].Suit &&
                         player.PlayerCards[0].Value > clubs.Min(card => card.Value))
                     {
-                        player.Current = 5;
-                        player.Power = (int)player.PlayerCards[0].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                        player.HandFactor = TypeOfTheHand.Flush;
+                        player.Power = (int)player.PlayerCards[0].Value + (int) player.HandFactor * GlobalConstants.FactorForCalculatingThePower;
                         this.AddHand(player);
                         hasFlush = true;
                     }
@@ -747,8 +752,8 @@
                     if (player.PlayerCards[1].Suit == clubs[0].Suit &&
                         player.PlayerCards[1].Value > clubs.Min(card => card.Value))
                     {
-                        player.Current = 5;
-                        player.Power = (int)player.PlayerCards[1].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                        player.HandFactor = TypeOfTheHand.Flush;
+                        player.Power = (int)player.PlayerCards[1].Value + (int) player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                         this.AddHand(player);
                         hasFlush = true;
                     }
@@ -758,8 +763,8 @@
                     else if (player.PlayerCards[0].Value < clubs.Min(card => card.Value) &&
                              player.PlayerCards[1].Value < clubs.Min(card => card.Value))
                     {
-                        player.Current = 5;
-                        player.Power = (int)clubs.Max(card => card.Value) + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                        player.HandFactor = TypeOfTheHand.Flush;
+                        player.Power = (int)clubs.Max(card => card.Value) + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                         this.AddHand(player);
                         hasFlush = true;
                     }
@@ -774,24 +779,24 @@
 
                         if (player.PlayerCards[0].Value > diamonds.Max(card => card.Value))
                         {
-                            player.Current = 5;
-                            player.Power = (int)player.PlayerCards[0].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.HandFactor = TypeOfTheHand.Flush;
+                            player.Power = (int)player.PlayerCards[0].Value + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             hasFlush = true;
                         }
 
                         if (player.PlayerCards[1].Value > diamonds.Max(card => card.Value))
                         {
-                            player.Current = 5;
-                            player.Power = (int)player.PlayerCards[1].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.HandFactor = TypeOfTheHand.Flush;
+                            player.Power = (int)player.PlayerCards[1].Value + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             hasFlush = true;
                         }
                         else if (player.PlayerCards[0].Value < diamonds.Max(card => card.Value) &&
                                  player.PlayerCards[1].Value < diamonds.Max(card => card.Value))
                         {
-                            player.Current = 5;
-                            player.Power = (int)diamonds.Max(card => card.Value) + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.HandFactor = TypeOfTheHand.Flush;
+                            player.Power = (int)diamonds.Max(card => card.Value) + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             hasFlush = true;
                         }
@@ -806,15 +811,15 @@
 
                         if (player.PlayerCards[0].Value > diamonds.Max(card => card.Value))
                         {
-                            player.Current = 5;
-                            player.Power = (int)player.PlayerCards[0].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.HandFactor = TypeOfTheHand.Flush;
+                            player.Power = (int)player.PlayerCards[0].Value + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             hasFlush = true;
                         }
                         else
                         {
-                            player.Current = 5;
-                            player.Power = (int)diamonds.Max(card => card.Value) + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.HandFactor = TypeOfTheHand.Flush;
+                            player.Power = (int)diamonds.Max(card => card.Value) + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             hasFlush = true;
                         }
@@ -826,15 +831,15 @@
 
                         if (player.PlayerCards[1].Value > diamonds.Max(card => card.Value))
                         {
-                            player.Current = 5;
-                            player.Power = (int)player.PlayerCards[1].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.HandFactor = TypeOfTheHand.Flush;
+                            player.Power = (int)player.PlayerCards[1].Value + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             hasFlush = true;
                         }
                         else
                         {
-                            player.Current = 5;
-                            player.Power = (int)diamonds.Max(card => card.Value) + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.HandFactor = TypeOfTheHand.Flush;
+                            player.Power = (int)diamonds.Max(card => card.Value) + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             hasFlush = true;
                         }
@@ -847,8 +852,8 @@
                     if (player.PlayerCards[0].Suit == diamonds[0].Suit &&
                         player.PlayerCards[0].Value > diamonds.Min(card => card.Value))
                     {
-                        player.Current = 5;
-                        player.Power = (int)player.PlayerCards[0].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                        player.HandFactor = TypeOfTheHand.Flush;
+                        player.Power = (int)player.PlayerCards[0].Value + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                         this.AddHand(player);
                         hasFlush = true;
                     }
@@ -856,8 +861,8 @@
                     if (player.PlayerCards[1].Suit == diamonds[0].Suit &&
                         player.PlayerCards[1].Value > diamonds.Min(card => card.Value))
                     {
-                        player.Current = 5;
-                        player.Power = (int)player.PlayerCards[1].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                        player.HandFactor = TypeOfTheHand.Flush;
+                        player.Power = (int)player.PlayerCards[1].Value + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                         this.AddHand(player);
                         hasFlush = true;
                     }
@@ -865,8 +870,8 @@
                     else if (player.PlayerCards[0].Value < diamonds.Min(card => card.Value) &&
                              player.PlayerCards[1].Value < diamonds.Min(card => card.Value))
                     {
-                        player.Current = 5;
-                        player.Power = (int)diamonds.Max(card => card.Value) + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                        player.HandFactor = TypeOfTheHand.Flush;
+                        player.Power = (int)diamonds.Max(card => card.Value) + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                         this.AddHand(player);
                         hasFlush = true;
                     }
@@ -881,24 +886,24 @@
 
                         if (player.PlayerCards[0].Value > hearts.Max(card => card.Value))
                         {
-                            player.Current = 5;
-                            player.Power = (int)player.PlayerCards[0].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.HandFactor = TypeOfTheHand.Flush;
+                            player.Power = (int)player.PlayerCards[0].Value + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             hasFlush = true;
                         }
 
                         if (player.PlayerCards[1].Value > hearts.Max(card => card.Value))
                         {
-                            player.Current = 5;
-                            player.Power = (int)player.PlayerCards[1].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.HandFactor = TypeOfTheHand.Flush;
+                            player.Power = (int)player.PlayerCards[1].Value + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             hasFlush = true;
                         }
                         else if (player.PlayerCards[0].Value < hearts.Max(card => card.Value) &&
                                  player.PlayerCards[1].Value < hearts.Max(card => card.Value))
                         {
-                            player.Current = 5;
-                            player.Power = (int)hearts.Max(card => card.Value) + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.HandFactor = TypeOfTheHand.Flush;
+                            player.Power = (int)hearts.Max(card => card.Value) + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             hasFlush = true;
                         }
@@ -914,15 +919,15 @@
 
                         if (player.PlayerCards[0].Value > hearts.Max(card => card.Value))
                         {
-                            player.Current = 5;
-                            player.Power = (int)player.PlayerCards[0].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.HandFactor = TypeOfTheHand.Flush;
+                            player.Power = (int)player.PlayerCards[0].Value + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             hasFlush = true;
                         }
                         else
                         {
-                            player.Current = 5;
-                            player.Power = (int)hearts.Max(card => card.Value) + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.HandFactor = TypeOfTheHand.Flush;
+                            player.Power = (int)hearts.Max(card => card.Value) + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             hasFlush = true;
                         }
@@ -934,15 +939,15 @@
 
                         if (player.PlayerCards[1].Value > hearts.Max(card => card.Value))
                         {
-                            player.Current = 5;
-                            player.Power = (int)player.PlayerCards[1].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.HandFactor = TypeOfTheHand.Flush;
+                            player.Power = (int)player.PlayerCards[1].Value + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             hasFlush = true;
                         }
                         else
                         {
-                            player.Current = 5;
-                            player.Power = (int)hearts.Max(card => card.Value) + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.HandFactor = TypeOfTheHand.Flush;
+                            player.Power = (int)hearts.Max(card => card.Value) + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             hasFlush = true;
                         }
@@ -956,8 +961,8 @@
                     if (player.PlayerCards[0].Suit == hearts[0].Suit &&
                         player.PlayerCards[0].Value > hearts.Min(card => card.Value))
                     {
-                        player.Current = 5;
-                        player.Power = (int)player.PlayerCards[0].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                        player.HandFactor = TypeOfTheHand.Flush;
+                        player.Power = (int)player.PlayerCards[0].Value + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                         this.AddHand(player);
                         hasFlush = true;
                     }
@@ -965,8 +970,8 @@
                     if (player.PlayerCards[1].Suit == hearts[0].Suit &&
                         player.PlayerCards[1].Value > hearts.Min(card => card.Value))
                     {
-                        player.Current = 5;
-                        player.Power = (int)player.PlayerCards[1].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                        player.HandFactor = TypeOfTheHand.Flush;
+                        player.Power = (int)player.PlayerCards[1].Value + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                         this.AddHand(player);
                         hasFlush = true;
                     }
@@ -975,8 +980,8 @@
                     else if (player.PlayerCards[0].Value < hearts.Min(card => card.Value) &&
                              player.PlayerCards[1].Value < hearts.Min(card => card.Value))
                     {
-                        player.Current = 5;
-                        player.Power = (int)hearts.Max(card => card.Value) + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                        player.HandFactor = TypeOfTheHand.Flush;
+                        player.Power = (int)hearts.Max(card => card.Value) + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                         this.AddHand(player);
                         hasFlush = true;
                     }
@@ -992,16 +997,16 @@
 
                         if (player.PlayerCards[0].Value > spades.Max(card => card.Value))
                         {
-                            player.Current = 5;
-                            player.Power = (int)player.PlayerCards[0].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.HandFactor = TypeOfTheHand.Flush;
+                            player.Power = (int)player.PlayerCards[0].Value + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             hasFlush = true;
                         }
 
                         if (player.PlayerCards[1].Value > spades.Max(card => card.Value))
                         {
-                            player.Current = 5;
-                            player.Power = (int)player.PlayerCards[1].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.HandFactor = TypeOfTheHand.Flush;
+                            player.Power = (int)player.PlayerCards[1].Value + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             hasFlush = true;
                         }
@@ -1010,8 +1015,8 @@
                         else if (player.PlayerCards[0].Value < spades.Max(card => card.Value) &&
                                  player.PlayerCards[1].Value < spades.Max(card => card.Value))
                         {
-                            player.Current = 5;
-                            player.Power = (int)spades.Max(card => card.Value) + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.HandFactor = TypeOfTheHand.Flush;
+                            player.Power = (int)spades.Max(card => card.Value) + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             hasFlush = true;
                         }
@@ -1026,15 +1031,15 @@
 
                         if (player.PlayerCards[0].Value > spades.Max(card => card.Value))
                         {
-                            player.Current = 5;
-                            player.Power = (int)player.PlayerCards[0].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.HandFactor = TypeOfTheHand.Flush;
+                            player.Power = (int)player.PlayerCards[0].Value + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             hasFlush = true;
                         }
                         else
                         {
-                            player.Current = 5;
-                            player.Power = (int)spades.Max(card => card.Value) + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.HandFactor = TypeOfTheHand.Flush;
+                            player.Power = (int)spades.Max(card => card.Value) + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             hasFlush = true;
                         }
@@ -1047,15 +1052,15 @@
 
                         if (player.PlayerCards[1].Value > spades.Max(card => card.Value))
                         {
-                            player.Current = 5;
-                            player.Power = (int)player.PlayerCards[1].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.HandFactor = TypeOfTheHand.Flush;
+                            player.Power = (int)player.PlayerCards[1].Value + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             hasFlush = true;
                         }
                         else
                         {
-                            player.Current = 5;
-                            player.Power = (int)spades.Max(card => card.Value) + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                            player.HandFactor = TypeOfTheHand.Flush;
+                            player.Power = (int)spades.Max(card => card.Value) + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                             hasFlush = true;
                         }
@@ -1070,8 +1075,8 @@
                     if (player.PlayerCards[0].Suit == spades[0].Suit &&
                         player.PlayerCards[0].Value > spades.Min(card => card.Value))
                     {
-                        player.Current = 5;
-                        player.Power = (int)player.PlayerCards[0].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                        player.HandFactor = TypeOfTheHand.Flush;
+                        player.Power = (int)player.PlayerCards[0].Value + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                         this.AddHand(player);
                         hasFlush = true;
                     }
@@ -1079,8 +1084,8 @@
                     if (player.PlayerCards[1].Suit == spades[0].Suit &&
                         player.PlayerCards[1].Value > spades.Min(card => card.Value))
                     {
-                        player.Current = 5;
-                        player.Power = (int)player.PlayerCards[1].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                        player.HandFactor = TypeOfTheHand.Flush;
+                        player.Power = (int)player.PlayerCards[1].Value + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                         this.AddHand(player);
                         hasFlush = true;
                     }
@@ -1089,8 +1094,8 @@
                     else if (player.PlayerCards[0].Value < spades.Min(card => card.Value) &&
                              player.PlayerCards[1].Value < spades.Min(card => card.Value))
                     {
-                        player.Current = 5;
-                        player.Power = (int)spades.Max(card => card.Value) + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                        player.HandFactor = TypeOfTheHand.Flush;
+                        player.Power = (int)spades.Max(card => card.Value) + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                         this.AddHand(player);
                         hasFlush = true;
                     }
@@ -1103,16 +1108,16 @@
                     if (player.PlayerCards[0].Value == ValueOfCard.Ace &&
                         player.PlayerCards[0].Suit == clubs[0].Suit && hasFlush)
                     {
-                        player.Current = 5.5;
-                        player.Power = (int)ValueOfCard.Ace + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                        player.HandFactor = TypeOfTheHand.Flush;
+                        player.Power = (int)ValueOfCard.Ace + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                         this.AddHand(player);
                     }
 
                     if (player.PlayerCards[1].Value == ValueOfCard.Ace &&
                         player.PlayerCards[1].Suit == clubs[0].Suit && hasFlush)
                     {
-                        player.Current = 5.5;
-                        player.Power = (int)ValueOfCard.Ace + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                        player.HandFactor = TypeOfTheHand.Flush;
+                        player.Power = (int)ValueOfCard.Ace + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                         this.AddHand(player);
                     }
                 }
@@ -1123,16 +1128,16 @@
                     if (player.PlayerCards[0].Value == ValueOfCard.Ace &&
                         player.PlayerCards[0].Suit == diamonds[0].Suit && hasFlush)
                     {
-                        player.Current = 5.5;
-                        player.Power = (int)ValueOfCard.Ace + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                        player.HandFactor = TypeOfTheHand.Flush;
+                        player.Power = (int)ValueOfCard.Ace + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                         this.AddHand(player);
                     }
 
                     if (player.PlayerCards[1].Value == ValueOfCard.Ace &&
                         player.PlayerCards[1].Suit == diamonds[0].Suit && hasFlush)
                     {
-                        player.Current = 5.5;
-                        player.Power = (int)ValueOfCard.Ace + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                        player.HandFactor = TypeOfTheHand.Flush;
+                        player.Power = (int)ValueOfCard.Ace + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                         this.AddHand(player);
                     }
 
@@ -1144,16 +1149,16 @@
                     if (player.PlayerCards[0].Value == ValueOfCard.Ace &&
                         player.PlayerCards[0].Suit == hearts[0].Suit && hasFlush)
                     {
-                        player.Current = 5.5;
-                        player.Power = (int)ValueOfCard.Ace + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                        player.HandFactor = TypeOfTheHand.Flush;
+                        player.Power = (int)ValueOfCard.Ace + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                         this.AddHand(player);
                     }
 
                     if (player.PlayerCards[1].Value == ValueOfCard.Ace &&
                         player.PlayerCards[1].Suit == hearts[0].Suit && hasFlush)
                     {
-                        player.Current = 5.5;
-                        player.Power = (int)ValueOfCard.Ace + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                        player.HandFactor = TypeOfTheHand.Flush;
+                        player.Power = (int)ValueOfCard.Ace + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                         this.AddHand(player);
                     }
 
@@ -1165,16 +1170,16 @@
                     if (player.PlayerCards[0].Value == ValueOfCard.Ace &&
                         player.PlayerCards[0].Suit == spades[0].Suit && hasFlush)
                     {
-                        player.Current = 5.5;
-                        player.Power = (int)ValueOfCard.Ace + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                        player.HandFactor = TypeOfTheHand.Flush;
+                        player.Power = (int)ValueOfCard.Ace + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                         this.AddHand(player);
                     }
 
                     if (player.PlayerCards[1].Value == ValueOfCard.Ace &&
                         player.PlayerCards[1].Suit == spades[0].Suit && hasFlush)
                     {
-                        player.Current = 5.5;
-                        player.Power = (int)ValueOfCard.Ace + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                        player.HandFactor = TypeOfTheHand.Flush;
+                        player.Power = (int)ValueOfCard.Ace + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                         this.AddHand(player);
                     }
 
@@ -1184,7 +1189,7 @@
 
         private void CheckForStraight(IPlayer player, ICard[] allSevenCards)
         {
-            if (player.Current >= -1)
+            if (player.HandFactor >= TypeOfTheHand.HighCard)
             {
 
                 ICard[] distinctCards = allSevenCards.GroupBy(card => card.Value).Select(c => c.First()).ToArray();
@@ -1195,14 +1200,14 @@
                     {
                         //if ((int)distinctCards.Max(card => card.Value) - 4 == (int)distinctCards[j].Value)
                         //{
-                        player.Current = 4;
-                        player.Power = (int)distinctCards.Max(card => card.Value) + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                        player.HandFactor = TypeOfTheHand.Straight;
+                        player.Power = (int)distinctCards.Max(card => card.Value) + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                         this.AddHand(player);
                         //}
                         //else
                         //{
-                        //    player.Current = 4;
-                        //    player.Power = (int)distinctCards[j + 4].Value + player.Current * 100;
+                        //    player.HandFactor = 4;
+                        //    player.Power = (int)distinctCards[j + 4].Value + player.HandFactor * 100;
                         //    this.Win.Add(new Type { Power = player.Power, HandFactor = 4 });
                         //    this.Sorted = this.Win
                         //        .OrderByDescending(op1 => op1.HandFactor)
@@ -1217,8 +1222,8 @@
                         distinctCards[j + 3].Value == ValueOfCard.King &&
                         distinctCards[j + 4].Value == ValueOfCard.Ace)
                     {
-                        player.Current = 4;
-                        player.Power = (int)ValueOfCard.Ace + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                        player.HandFactor = TypeOfTheHand.Straight;
+                        player.Power = (int)ValueOfCard.Ace + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                         this.AddHand(player);
                     }
                     //TODO elica : here the ace is equal to zero and the max value of this hand is five
@@ -1228,8 +1233,8 @@
                         distinctCards[j + 3].Value == ValueOfCard.Five &&
                         distinctCards[j + 4].Value == ValueOfCard.Ace)
                     {
-                        player.Current = 4;
-                        player.Power = (int)ValueOfCard.Five + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                        player.HandFactor = TypeOfTheHand.Straight;
+                        player.Power = (int)ValueOfCard.Five + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                         this.AddHand(player);
                     }
                 }
@@ -1238,7 +1243,7 @@
 
         private void CheckForThreeOfAKind(IPlayer player, ICard[] allSevenCards)
         {
-            if (player.Current >= -1)
+            if (player.HandFactor >= TypeOfTheHand.HighCard)
             {
                 for (int j = 1; j <= 13; j++)
                 {
@@ -1248,8 +1253,8 @@
                         ////if the bigger card is ace
                         //if (equalCards.Max(card => card.Value) == ValueOfCard.Ace)
                         //{
-                        //    player.Current = 3;
-                        //    player.Power = 13 * 3 + player.Current * 100;
+                        //    player.HandFactor = 3;
+                        //    player.Power = 13 * 3 + player.HandFactor * 100;
                         //    this.Win.Add(new Type() { Power = player.Power, HandFactor = 3 });
                         //    this.Sorted = this.Win
                         //        .OrderByDescending(op => op.HandFactor)
@@ -1258,9 +1263,9 @@
                         //}
                         //else
                         //{
-                        player.Current = 3;
+                        player.HandFactor = TypeOfTheHand.ThreeOfAKind;
                         player.Power = (int)equalCards[0].Value + (int)equalCards[1].Value +
-                                       (int)equalCards[2].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                                       (int)equalCards[2].Value + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                         this.AddHand(player);
                         //}
                     }
@@ -1270,7 +1275,7 @@
 
         private void CheckForTwoPair(IPlayer player)
         {
-            if (player.Current >= -1)
+            if (player.HandFactor >= TypeOfTheHand.HighCard)
             {
                 bool firstPairFound = false;
                 for (int tableCard = 4; tableCard >= 0; tableCard--)
@@ -1298,27 +1303,27 @@
                                     {
                                         if (player.PlayerCards[0].Value == ValueOfCard.Ace)
                                         {
-                                            player.Current = 2;
+                                            player.HandFactor = TypeOfTheHand.TwoPairs;
                                             player.Power = (int)ValueOfCard.Ace * 4 + (int)player.PlayerCards[1].Value * 2 +
-                                                           player.Current *GlobalConstants.FactorForCalculatingThePower;
+                                                           (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                                             this.AddHand(player);
                                         }
 
                                         if (player.PlayerCards[1].Value == ValueOfCard.Ace)
                                         {
-                                            player.Current = 2;
+                                            player.HandFactor = TypeOfTheHand.TwoPairs;
                                             player.Power = (int)ValueOfCard.Ace * 4 + (int)player.PlayerCards[0].Value * 2 +
-                                                           player.Current *GlobalConstants.FactorForCalculatingThePower;
+                                                           (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                                             this.AddHand(player);
                                         }
 
                                         if (player.PlayerCards[1].Value != ValueOfCard.Ace &&
                                             player.PlayerCards[0].Value != ValueOfCard.Ace)
                                         {
-                                            player.Current = 2;
+                                            player.HandFactor = TypeOfTheHand.TwoPairs;
                                             player.Power = (int)player.PlayerCards[0].Value * 2 +
                                                            (int)player.PlayerCards[1].Value * 2 +
-                                                           player.Current *GlobalConstants.FactorForCalculatingThePower;
+                                                           (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                                             this.AddHand(player);
                                         }
 
@@ -1334,7 +1339,7 @@
 
         private void CheckForPairTwoPair(IPlayer player)
         {
-            if (player.Current >= -1)
+            if (player.HandFactor >= TypeOfTheHand.HighCard)
             {
                 bool firstPairFound = false;
                 bool secondPairFound = false;
@@ -1357,44 +1362,44 @@
                                 //Check if some of the cards on table are not equal to the values in hand of bot
                                 if (Database.Instace.Table.CardsOnTable[tableCard].Value != player.PlayerCards[0].Value &&
                                     Database.Instace.Table.CardsOnTable[tableCard].Value != player.PlayerCards[1].Value &&
-                                    player.Current == 1)
+                                    player.HandFactor == TypeOfTheHand.Pair)
                                 {
                                     if (!firstPairFound)
                                     {
                                         if (player.PlayerCards[1].Value == ValueOfCard.Ace)
                                         {
-                                            player.Current = 2;
+                                            player.HandFactor = TypeOfTheHand.TwoPairs;
                                             player.Power = (int)player.PlayerCards[0].Value * 2 + (int)ValueOfCard.Ace * 4 +
-                                                           player.Current *GlobalConstants.FactorForCalculatingThePower;
+                                                           (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                                             this.AddHand(player);
                                         }
 
                                         if (player.PlayerCards[0].Value == ValueOfCard.Ace)
                                         {
-                                            player.Current = 2;
+                                            player.HandFactor = TypeOfTheHand.TwoPairs;
                                             player.Power = (int)player.PlayerCards[1].Value * 2 + (int)ValueOfCard.Ace * 4 +
-                                                           player.Current *GlobalConstants.FactorForCalculatingThePower;
-                                            this.Win.Add(new Type() { Power = player.Power, HandFactor = 2 });
+                                                           (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
+                                            this.Win.Add(new Type() { Power = player.Power, HandFactor = TypeOfTheHand.TwoPairs });
                                             this.AddHand(player);
                                         }
 
                                         if (player.PlayerCards[1].Value != ValueOfCard.Ace)
                                         {
-                                            player.Current = 2;
+                                            player.HandFactor = TypeOfTheHand.TwoPairs;
                                             player.Power = (int)Database.Instace.Table.CardsOnTable[tableCard].Value *
                                                            2 +
                                                            (int)player.PlayerCards[1].Value * 2 +
-                                                           player.Current *GlobalConstants.FactorForCalculatingThePower;
+                                                           (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                                             this.AddHand(player);
                                         }
 
                                         if (player.PlayerCards[0].Value != ValueOfCard.Ace)
                                         {
-                                            player.Current = 2;
+                                            player.HandFactor = TypeOfTheHand.TwoPairs;
                                             player.Power = (int)Database.Instace.Table.CardsOnTable[tableCard].Value *
                                                            2 +
                                                            (int)player.PlayerCards[0].Value * 2 +
-                                                           player.Current *GlobalConstants.FactorForCalculatingThePower;
+                                                           (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                                             this.AddHand(player);
                                         }
 
@@ -1402,27 +1407,27 @@
                                     firstPairFound = true;
                                 }
 
-                                if (player.Current == -1)
+                                if (player.HandFactor == TypeOfTheHand.HighCard)
                                 {
                                     if (!secondPairFound)
                                     {
-                                        player.Current = 0;
+                                        player.HandFactor = 0;
                                         // Ckeck for bigger value of the card in hand of player
                                         if (player.PlayerCards[0].Value > player.PlayerCards[1].Value)
                                         {
-                                            player.Current = 0;
+                                            player.HandFactor = 0;
                                             player.Power =
                                                 (int)Database.Instace.Table.CardsOnTable[tableCard].Value +
-                                                (int)player.PlayerCards[0].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                                                (int)player.PlayerCards[0].Value + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                                             this.AddHand(player);
                                         }
 
                                         else
                                         {
-                                            player.Current = 0;
+                                            player.HandFactor = 0;
                                             player.Power =
                                                 (int)Database.Instace.Table.CardsOnTable[tableCard].Value +
-                                                (int)player.PlayerCards[1].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                                                (int)player.PlayerCards[1].Value + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                                             this.AddHand(player);
                                         }
 
@@ -1438,7 +1443,7 @@
 
         private void CheckForPairFromHand(IPlayer player)
         {
-            if (player.Current >= -1)
+            if (player.HandFactor >= TypeOfTheHand.HighCard)
             {
                 bool firstPairFound = false;
 
@@ -1447,8 +1452,8 @@
                 {
                     if (!firstPairFound)
                     {
-                        player.Current = 1;
-                        player.Power = (int)player.PlayerCards[1].Value * 4 + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                        player.HandFactor = TypeOfTheHand.Pair;
+                        player.Power = (int)player.PlayerCards[1].Value * 4 + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                         this.AddHand(player);
 
                     }
@@ -1464,9 +1469,9 @@
                         if (!firstPairFound)
                         {
 
-                            player.Current = 1;
+                            player.HandFactor = TypeOfTheHand.Pair;
                             player.Power = (int)player.PlayerCards[1].Value * 4 +
-                                           (int)player.PlayerCards[0].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                                           (int)player.PlayerCards[0].Value + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                         }
 
@@ -1478,9 +1483,9 @@
                     {
                         if (!firstPairFound)
                         {
-                            player.Current = 1;
+                            player.HandFactor = TypeOfTheHand.Pair;
                             player.Power = (int)Database.Instace.Table.CardsOnTable[tableCard].Value * 4 +
-                                           (int)player.PlayerCards[1].Value + player.Current *GlobalConstants.FactorForCalculatingThePower;
+                                           (int)player.PlayerCards[1].Value + (int)player.HandFactor *GlobalConstants.FactorForCalculatingThePower;
                             this.AddHand(player);
                         }
                         firstPairFound = true;
@@ -1492,22 +1497,20 @@
 
         private void CheckForHighCard(IPlayer player)
         {
-            if (player.Current == -1)
+            if (player.HandFactor == TypeOfTheHand.HighCard)
             {
 
                 //Check for bigger value from cards in hand
                 if (player.PlayerCards[0].Value > player.PlayerCards[1].Value)
                 {
-                    player.Current = -1;
-                    player.Power = (int)player.PlayerCards[0].Value;
-                    this.AddHand(player);
+                    player.Power = (int)player.PlayerCards[0].Value;                    
                 }
                 else
                 {
-                    player.Current = -1;
-                    player.Power = (int)player.PlayerCards[1].Value;
-                    this.AddHand(player);
+                    player.Power = (int)player.PlayerCards[1].Value;                   
                 }
+
+                this.AddHand(player);
             }
         }
     }

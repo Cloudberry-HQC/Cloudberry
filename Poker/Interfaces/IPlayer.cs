@@ -1,6 +1,7 @@
 ﻿namespace Poker.Interfaces
 {
     using System.Windows.Forms;
+    using Enums;
 
     /// <summary>
     /// An interface that represents any player in game.
@@ -45,7 +46,7 @@
         /// <summary>
         /// A factor that is used for determine the player's hand
         /// </summary>
-        double Current { get; set; }
+        TypeOfTheHand HandFactor { get; set; }
          
         bool Turn { get; set; }
 

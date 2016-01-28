@@ -12,7 +12,7 @@
         /// <summary>
         /// Gets the suit of the card.
         /// </summary>
-        /// <param name="cardAsNumber">Current value of the card as integer number.</param>
+        /// <param name="cardAsNumber">HandFactor value of the card as integer number.</param>
         /// <returns>Returns the suit of the card according to the input integer number.</returns>
         public static SuitOfCard GetSuit(int cardAsNumber)
         {
@@ -97,7 +97,7 @@
         /// <summary>
         /// Gets the card as object.
         /// </summary>
-        /// <param name="cardAsNumber">Current value of the card as integer number.</param>
+        /// <param name="cardAsNumber">HandFactor value of the card as integer number.</param>
         /// <returns>Returns a new card.</returns>
         public static ICard GetCard(int cardAsNumber)
         {

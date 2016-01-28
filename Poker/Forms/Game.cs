@@ -8,6 +8,7 @@
     using System.Threading.Tasks;
     using System.Windows.Forms;
     using Core;
+    using Enums;
     using GlobalConstants;
     using Interfaces;
     using Models.Player;
@@ -2421,7 +2422,7 @@
                     player.Call = 0;
                     player.Raise = 0;
                     player.Power = 0;
-                    player.Current = - 1;
+                    player.HandFactor = TypeOfTheHand.HighCard;
                 }
                 //this.humanPlayerCall = 0;
                 //this.firstBotCall = 0;
@@ -2741,7 +2742,7 @@
             this.raise = 0;
             foreach (var player in this.dataBase.Players)
             {
-                player.Current = - 1;
+                player.HandFactor = TypeOfTheHand.HighCard;
                 player.Call = 0;
                 player.Raise = 0;
                 player.FoldTurn = false;

@@ -3,6 +3,7 @@
     using System;
     using System.Drawing;
     using System.Windows.Forms;
+    using Enums;
     using GlobalConstants;
     using Interfaces;
 
@@ -25,7 +26,7 @@
             };
             this.chips = 10000;
             this.Name = name;
-            this.Current = -1;
+            this.HandFactor = TypeOfTheHand.HighCard;
             this.Status = new Label();
             this.PlayerCards = new ICard[GlobalConstants.NumberOfCards];
         }
@@ -58,7 +59,7 @@
 
         public double Power { get; set; }
 
-        public double Current { get; set; }
+        public TypeOfTheHand HandFactor { get; set; }
 
         public bool Turn { get; set; } = true;
 

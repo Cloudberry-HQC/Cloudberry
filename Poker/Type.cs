@@ -1,5 +1,7 @@
 ﻿namespace Poker
 {
+    using Enums;
+
     /// <summary>
     /// Class that holds the points and hand factor.
     /// </summary>
@@ -13,6 +15,6 @@
         /// <summary>
         /// Hand factor according to the current hand.
         /// </summary>
-        public double HandFactor { get; set; }
+        public TypeOfTheHand HandFactor { get; set; }
     }
 }

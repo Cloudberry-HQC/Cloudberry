@@ -12,14 +12,14 @@
         /// <summary>
         /// Determines the winner.
         /// </summary>
-        /// <param name="player">Current player.</param>
+        /// <param name="player">HandFactor player.</param>
         /// <param name="lastly">String parameter.</param>
         void Winner(IPlayer player);
         
         /// <summary>
         /// Checks the type of the player's hand
         /// </summary>
-        /// <param name="player">Current player.</param>
+        /// <param name="player">HandFactor player.</param>
         void CheckForHand(IPlayer player);
 
         List<string> CheckWinners { get; set; }

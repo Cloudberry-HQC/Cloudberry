@@ -1,6 +1,7 @@
 ﻿namespace Poker.Models.PokerManagement
 {
     using System;
+    using Enums;
     using GlobalConstants;
     using Interfaces;
 
@@ -14,57 +15,57 @@
         /// <summary>
         /// Checks the hands of the bots. According to the strength of the hand, the bot makes a decision how to play.
         /// </summary>
-        /// <param name="player">Current player</param>
+        /// <param name="player">HandFactor player</param>
         public static void CheckHand(IPlayer player)
         {
             if (!player.FoldTurn)
             {
-                if (player.Current == -1)
+                if (player.HandFactor == TypeOfTheHand.HighCard)
                 {
                     HighCard(player);
                 }
 
-                if (player.Current == 0)
+                if (player.HandFactor == TypeOfTheHand.PairTable)
                 {
                     PairTable(player);
                 }
 
-                if (player.Current == 1)
+                if (player.HandFactor == TypeOfTheHand.Pair)
                 {
                     PairHand(player);
                 }
 
-                if (player.Current == 2)
+                if (player.HandFactor == TypeOfTheHand.TwoPairs)
                 {
                     TwoPair(player);
                 }
 
-                if (player.Current == 3)
+                if (player.HandFactor == TypeOfTheHand.ThreeOfAKind)
                 {
                     ThreeOfAKind(player);
                 }
 
-                if (player.Current == 4)
+                if (player.HandFactor == TypeOfTheHand.Straight)
                 {
                     Straight(player);
                 }
 
-                if (player.Current == 5 || player.Current == 5.5)
+                if (player.HandFactor == TypeOfTheHand.Flush)
                 {
                     Flush(player);
                 }
 
-                if (player.Current == 6)
+                if (player.HandFactor == TypeOfTheHand.FullHouse)
                 {
                     FullHouse(player);
                 }
 
-                if (player.Current == 7)
+                if (player.HandFactor == TypeOfTheHand.FourOfAKind)
                 {
                     FourOfAKind(player);
                 }
 
-                if (player.Current == 8 || player.Current == 9)
+                if (player.HandFactor == TypeOfTheHand.StraightFlush || player.HandFactor == TypeOfTheHand.RoyalFlush)
                 {
                     StraightFlush(player);
                 }
