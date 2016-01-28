@@ -24,6 +24,14 @@
         private readonly IPlayer fifthBot = new Bot(GlobalConstants.FifthBotPlayerName);
         private readonly Database dataBase = Database.Instace;
         private readonly PokerTable table;
+        private readonly List<bool?> inactivePlayers;
+        private readonly List<int> ints;
+        private readonly int[] availableCardsInGame;
+        private readonly Image[] cardsImageDeck;
+        private readonly PictureBox[] cardsHolder;
+        private readonly Timer timer;
+        private readonly Timer updates;
+
         private IRules rules = new Rules();
         private int call = GlobalConstants.DefaultValueOfBigBlind;
         private int foldedPlayers = 5;
@@ -34,7 +42,6 @@
         private int height;
         private int width;
 
-
         private int flop = 1;
         private int turn = 2;
         private int river = 3;
@@ -44,18 +51,12 @@
         private int last;
         private int raisedTurn = 1;
 
-        private readonly List<bool?> inactivePlayers;
-        private readonly List<int> ints;
         private bool restart;
         private bool raising;
-        string[] ImgLocation = Directory.GetFiles(GlobalConstants.PlayingCardsDirectoryPath,
+        string[] imgLocation = Directory.GetFiles(GlobalConstants.PlayingCardsDirectoryPath,
            GlobalConstants.PlayingCardsWithPngExtension,
            SearchOption.TopDirectoryOnly);
-        private readonly int[] availableCardsInGame;
-        private readonly Image[] cardsImageDeck;
-        private readonly PictureBox[] cardsHolder;
-        private readonly Timer timer;
-        private readonly Timer updates;
+
         private int t = 60;
         private int defaultBigBlind = GlobalConstants.DefaultValueOfBigBlind;
         private int defaultSmallBlind = GlobalConstants.DefaultValueOfSmallBlind;
@@ -163,7 +164,6 @@
 
         public TextBox[] ChipsTextBoxes
         {
-
             get
             {
                 TextBox[] result =
@@ -190,6 +190,7 @@
             {
                 this.inactivePlayers.Add(this.dataBase.Players[i].FoldTurn);
             }
+
             this.buttonCall.Enabled = false;
             this.buttonRaise.Enabled = false;
             this.buttonFold.Enabled = false;
@@ -202,18 +203,17 @@
             int vertical = GlobalConstants.PlayerPanelCoordinateY;
             Random random = new Random();
 
-
-            for (int countOfCards = this.ImgLocation.Length; countOfCards > 0; countOfCards--)
+            for (int countOfCards = this.imgLocation.Length; countOfCards > 0; countOfCards--)
             {
                 int randomNumber = random.Next(countOfCards);
-                var pathToCard = this.ImgLocation[randomNumber];
-                this.ImgLocation[randomNumber] = this.ImgLocation[countOfCards - 1];
-                this.ImgLocation[countOfCards - 1] = pathToCard;
+                var pathToCard = this.imgLocation[randomNumber];
+                this.imgLocation[randomNumber] = this.imgLocation[countOfCards - 1];
+                this.imgLocation[countOfCards - 1] = pathToCard;
             }
 
             for (int cardsInGame = 0; cardsInGame < GlobalConstants.CountOfTheAvailableCardsInGame; cardsInGame++)
             {
-                this.cardsImageDeck[cardsInGame] = Image.FromFile(this.ImgLocation[cardsInGame]);
+                this.cardsImageDeck[cardsInGame] = Image.FromFile(this.imgLocation[cardsInGame]);
                 var charsToRemove = new string[]
                 {
                     GlobalConstants.PlayingCardsPath,
@@ -222,10 +222,10 @@
 
                 foreach (var c in charsToRemove)
                 {
-                    this.ImgLocation[cardsInGame] = this.ImgLocation[cardsInGame].Replace(c, string.Empty);
+                    this.imgLocation[cardsInGame] = this.imgLocation[cardsInGame].Replace(c, string.Empty);
                 }
 
-                this.availableCardsInGame[cardsInGame] = int.Parse(this.ImgLocation[cardsInGame]) - 1;
+                this.availableCardsInGame[cardsInGame] = int.Parse(this.imgLocation[cardsInGame]) - 1;
                 this.cardsHolder[cardsInGame] = new PictureBox();
                 this.cardsHolder[cardsInGame].SizeMode = PictureBoxSizeMode.StretchImage;
                 this.cardsHolder[cardsInGame].Height = 130;
@@ -234,32 +234,32 @@
                 this.cardsHolder[cardsInGame].Name = "pb" + cardsInGame.ToString();
                 await Task.Delay(200);
 
-                #region Throwing Cards
-
                 if (cardsInGame < 2)
+                {
                     if (cardsInGame < 2)
                     {
                         if (this.cardsHolder[0].Tag != null)
                         {
-                            this.cardsHolder[1].Tag = int.Parse(this.ImgLocation[1]) - 1;
-                            this.humanPlayer.PlayerCards[1] = CardHandler.GetCard((int)this.cardsHolder[1].Tag);
+                            this.cardsHolder[1].Tag = int.Parse(this.imgLocation[1]) - 1;
+                            this.humanPlayer.PlayerCards[1] = CardHandler.GetCard((int) this.cardsHolder[1].Tag);
                             this.humanPlayer.PlayerCards[1].NumberInGame = cardsInGame;
                         }
                         else
                         {
-                            this.cardsHolder[0].Tag = int.Parse(this.ImgLocation[0]) - 1;
-                            this.humanPlayer.PlayerCards[0] = CardHandler.GetCard((int)this.cardsHolder[0].Tag);
+                            this.cardsHolder[0].Tag = int.Parse(this.imgLocation[0]) - 1;
+                            this.humanPlayer.PlayerCards[0] = CardHandler.GetCard((int) this.cardsHolder[0].Tag);
                             this.humanPlayer.PlayerCards[0].NumberInGame = cardsInGame;
                         }
+
                         this.cardsHolder[cardsInGame].Image = this.cardsImageDeck[cardsInGame];
-                        this.cardsHolder[cardsInGame].Anchor = (AnchorStyles.Bottom);
+                        this.cardsHolder[cardsInGame].Anchor = AnchorStyles.Bottom;
                         this.cardsHolder[cardsInGame].Location = new Point(horizontal, vertical);
                         horizontal += this.cardsHolder[cardsInGame].Width;
                         this.Controls.Add(this.humanPlayer.Panel);
                         this.humanPlayer.Panel.Location = new Point(this.cardsHolder[0].Left - 10,
                             this.cardsHolder[0].Top - 10);
                     }
-
+                }
 
                 for (int i = 1; i < this.dataBase.Players.Length; i++)
                 {
@@ -271,18 +271,19 @@
                         {
                             if (this.cardsHolder[2 * i].Tag != null)
                             {
-                                this.cardsHolder[2 * i + 1].Tag = int.Parse(this.ImgLocation[2 * i + 1]) - 1;
+                                this.cardsHolder[2 * i + 1].Tag = int.Parse(this.imgLocation[2 * i + 1]) - 1;
                                 this.dataBase.Players[i].PlayerCards[1] =
                                     CardHandler.GetCard((int)this.cardsHolder[2 * i + 1].Tag);
                                 this.dataBase.Players[i].PlayerCards[1].NumberInGame = cardsInGame;
                             }
                             else
                             {
-                                this.cardsHolder[2 * i].Tag = int.Parse(this.ImgLocation[2 * i]) - 1;
+                                this.cardsHolder[2 * i].Tag = int.Parse(this.imgLocation[2 * i]) - 1;
                                 this.dataBase.Players[i].PlayerCards[0] =
                                     CardHandler.GetCard((int)this.cardsHolder[2 * i].Tag);
                                 this.dataBase.Players[i].PlayerCards[0].NumberInGame = cardsInGame;
                             }
+
                             if (!check)
                             {
                                 switch (i)
@@ -315,6 +316,7 @@
                                         break;
                                 }
                             }
+
                             check = true;
                             this.cardsHolder[cardsInGame].Anchor = (AnchorStyles.Top | AnchorStyles.Left);
                             this.cardsHolder[cardsInGame].Image = backImage;
@@ -339,35 +341,35 @@
 
                     if (cardsInGame == 12)
                     {
-                        this.cardsHolder[12].Tag = int.Parse(this.ImgLocation[12]) - 1;
+                        this.cardsHolder[12].Tag = int.Parse(this.imgLocation[12]) - 1;
                         this.table.CardsOnTable[0] = CardHandler.GetCard((int)this.cardsHolder[12].Tag);
                         this.table.CardsOnTable[0].NumberInGame = cardsInGame;
                     }
 
                     if (cardsInGame == 13)
                     {
-                        this.cardsHolder[13].Tag = int.Parse(this.ImgLocation[13]) - 1;
+                        this.cardsHolder[13].Tag = int.Parse(this.imgLocation[13]) - 1;
                         this.table.CardsOnTable[1] = CardHandler.GetCard((int)this.cardsHolder[13].Tag);
                         this.table.CardsOnTable[1].NumberInGame = cardsInGame;
                     }
 
                     if (cardsInGame == 14)
                     {
-                        this.cardsHolder[14].Tag = int.Parse(this.ImgLocation[14]) - 1;
+                        this.cardsHolder[14].Tag = int.Parse(this.imgLocation[14]) - 1;
                         this.table.CardsOnTable[2] = CardHandler.GetCard((int)this.cardsHolder[14].Tag);
                         this.table.CardsOnTable[2].NumberInGame = cardsInGame;
                     }
 
                     if (cardsInGame == 15)
                     {
-                        this.cardsHolder[15].Tag = int.Parse(this.ImgLocation[15]) - 1;
+                        this.cardsHolder[15].Tag = int.Parse(this.imgLocation[15]) - 1;
                         this.table.CardsOnTable[3] = CardHandler.GetCard((int)this.cardsHolder[15].Tag);
                         this.table.CardsOnTable[3].NumberInGame = cardsInGame;
                     }
 
                     if (cardsInGame == 16)
                     {
-                        this.cardsHolder[16].Tag = int.Parse(this.ImgLocation[16]) - 1;
+                        this.cardsHolder[16].Tag = int.Parse(this.imgLocation[16]) - 1;
                         this.table.CardsOnTable[4] = CardHandler.GetCard((int)this.cardsHolder[16].Tag);
                         this.table.CardsOnTable[4].NumberInGame = cardsInGame;
                     }
@@ -389,7 +391,6 @@
                     }
                 }
 
-                #endregion
                 for (int i = 1; i < this.dataBase.Players.Length; i++)
                 {
                     if (this.dataBase.Players[i].Chips <= 0)
@@ -796,7 +797,7 @@
                 this.last = 0;
                 this.call = this.defaultBigBlind;
                 this.raise = 0;
-                this.ImgLocation = Directory.GetFiles(
+                this.imgLocation = Directory.GetFiles(
                     GlobalConstants.PlayingCardsDirectoryPath,
                     GlobalConstants.PlayingCardsWithPngExtension,
                     SearchOption.TopDirectoryOnly);
@@ -1132,7 +1133,7 @@
                 }
             }
 
-            this.ImgLocation = Directory.GetFiles(GlobalConstants.PlayingCardsDirectoryPath,
+            this.imgLocation = Directory.GetFiles(GlobalConstants.PlayingCardsDirectoryPath,
                 GlobalConstants.PlayingCardsWithPngExtension,
                 SearchOption.TopDirectoryOnly);
             for (int os = 0; os < 17; os++)

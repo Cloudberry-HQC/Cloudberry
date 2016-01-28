@@ -38,6 +38,7 @@
                     instance = new Database();
                     return instance;
                 }
+
                 return instance;
             }
         }
