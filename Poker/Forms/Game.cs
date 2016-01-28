@@ -2363,7 +2363,7 @@
                         fixedLast = player.Name;
                         //Rules(player);
                         this.rules.CheckForHand(player);
-                        this.rules.Winner(player, fixedLast);
+                        this.rules.Winner(player);
                         player.FoldTurn = false;
                     }
                 }
@@ -2696,7 +2696,7 @@
 
             #region FiveOrLessLeft
 
-            if (countOfActivePlayers < 6 && countOfActivePlayers > 1 && this.rounds >= this.end)
+            if (countOfActivePlayers <= 6 && countOfActivePlayers > 1 && this.rounds >= this.end)
             {
                 await this.Finish(2);
             }

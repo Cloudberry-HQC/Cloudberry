@@ -18,3 +18,13 @@ C:\Users\Kolev\Desktop\Github\Cloudberry\Poker\obj\Debug\Poker.csproj.GenerateRe
 C:\Users\Kolev\Desktop\Github\Cloudberry\Poker\obj\Debug\Poker.exe
 C:\Users\Kolev\Desktop\Github\Cloudberry\Poker\obj\Debug\Poker.pdb
 C:\Users\Kolev\Desktop\Github\Cloudberry\Poker\obj\Debug\Poker.csprojResolveAssemblyReference.cache
+D:\SoftUni\Fundamentals Level\High-Quality Code\New folder\trunk\Poker\bin\Debug\Poker.exe.config
+D:\SoftUni\Fundamentals Level\High-Quality Code\New folder\trunk\Poker\obj\Debug\Poker.exe
+D:\SoftUni\Fundamentals Level\High-Quality Code\New folder\trunk\Poker\bin\Debug\Poker.exe
+D:\SoftUni\Fundamentals Level\High-Quality Code\New folder\trunk\Poker\bin\Debug\Poker.pdb
+D:\SoftUni\Fundamentals Level\High-Quality Code\New folder\trunk\Poker\obj\Debug\Poker.csprojResolveAssemblyReference.cache
+D:\SoftUni\Fundamentals Level\High-Quality Code\New folder\trunk\Poker\obj\Debug\Poker.AddChips.resources
+D:\SoftUni\Fundamentals Level\High-Quality Code\New folder\trunk\Poker\obj\Debug\Poker.Forms.Game.resources
+D:\SoftUni\Fundamentals Level\High-Quality Code\New folder\trunk\Poker\obj\Debug\Poker.Properties.Resources.resources
+D:\SoftUni\Fundamentals Level\High-Quality Code\New folder\trunk\Poker\obj\Debug\Poker.csproj.GenerateResource.Cache
+D:\SoftUni\Fundamentals Level\High-Quality Code\New folder\trunk\Poker\obj\Debug\Poker.pdb

@@ -91,7 +91,7 @@
             this.IsPlayerTurn = false;
             this.Chips -= Launcher.Poker.CallValue;
             this.Status.Text = GlobalConstants.CallMessage + " " + Launcher.Poker.CallValue;
-            Launcher.Poker.TextBoxPot.Text = (int.Parse(Launcher.Poker.TextBoxPot.Text) + this.Call).ToString();
+            Launcher.Poker.TextBoxPot.Text = (int.Parse(Launcher.Poker.TextBoxPot.Text) + Launcher.Poker.CallValue).ToString();
             Launcher.Poker.Raising = false;
         }
 

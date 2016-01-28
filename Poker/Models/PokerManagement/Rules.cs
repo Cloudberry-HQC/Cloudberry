@@ -126,11 +126,102 @@
 
             foreach (var player in Database.Instace.Players)
             {
-                if (!player.Status.Text.Contains("Fold"))
-                {
-                    var fixedLast = player.Name;
+                if (!player.HasPlayerFolded)
+                {                    
                     this.CheckForHand(player);
-                    this.Winner(player, fixedLast);
+                    this.ShowHands(player);                    
+                }
+            }
+
+            foreach (var player in Database.Instace.Players)
+            {
+                if (!player.HasPlayerFolded)
+                {
+                    this.Winner(player);
+                }
+            }
+
+            TakePot();
+        }
+
+        public void ShowHands(IPlayer player)
+        {
+            if (player.Current == -1)
+            {
+                MessageBox.Show(player.Name + " High Card ");
+            }
+
+            if (player.Current == 1 || player.Current == 0)
+            {
+                MessageBox.Show(player.Name + " Pair ");
+            }
+
+            if (player.Current == 2)
+            {
+                MessageBox.Show(player.Name + " Two Pair ");
+            }
+
+            if (player.Current == 3)
+            {
+                MessageBox.Show(player.Name + " Three of a Kind ");
+            }
+
+            if (player.Current == 4)
+            {
+                MessageBox.Show(player.Name + " Straight ");
+            }
+
+            if (player.Current == 5 || player.Current == 5.5)
+            {
+                MessageBox.Show(player.Name + " Flush ");
+            }
+
+            if (player.Current == 6)
+            {
+                MessageBox.Show(player.Name + " Full House ");
+            }
+
+            if (player.Current == 7)
+            {
+                MessageBox.Show(player.Name + " Four of a Kind ");
+            }
+
+            if (player.Current == 8)
+            {
+                MessageBox.Show(player.Name + " Straight Flush ");
+            }
+
+            if (player.Current == 9)
+            {
+                MessageBox.Show(player.Name + " Royal Flush ! ");
+            }
+        }
+
+        public void TakePot()
+        {
+            if (this.Winners > 1)
+            {
+                for (int i = 0; i < Database.Instace.Players.Length; i++)
+                {
+                    if (this.CheckWinners.Contains(Database.Instace.Players[i].Name))
+                    {
+                        Database.Instace.Players[i].Chips += int.Parse(Launcher.Poker.TextBoxPot.Text) / this.Winners;
+                        Launcher.Poker.ChipsTextBoxes[i].Text = Database.Instace.Players[i].Chips.ToString();
+                    }
+                }
+
+                //await Finish(1);
+            }
+
+            if (this.Winners == 1)
+            {
+                foreach (var item in Database.Instace.Players)
+                {
+                    if (this.CheckWinners.Contains(item.Name))
+                    {
+                        item.Chips += int.Parse(Launcher.Poker.TextBoxPot.Text);
+
+                    }
                 }
             }
         }
@@ -140,13 +231,8 @@
         /// </summary>
         /// <param name="player">Current player.</param>
         /// <param name="lastly">String parameter.</param>
-        public void Winner(IPlayer player, string lastly)
+        public void Winner(IPlayer player)
         {
-            if (lastly == " ")
-            {
-                lastly = Database.Instace.Players[5].Name;
-            }
-
             for (int j = 0; j <= 16; j++)
             {
                 //await Task.Delay(5);
@@ -165,84 +251,7 @@
                     this.CheckWinners.Add(player.Name);
 
                     //TODO if statement to switch
-                    if (player.Current == -1)
-                    {
-                        MessageBox.Show(player.Name + " High Card ");
-                    }
-
-                    if (player.Current == 1 || player.Current == 0)
-                    {
-                        MessageBox.Show(player.Name + " Pair ");
-                    }
-
-                    if (player.Current == 2)
-                    {
-                        MessageBox.Show(player.Name + " Two Pair ");
-                    }
-
-                    if (player.Current == 3)
-                    {
-                        MessageBox.Show(player.Name + " Three of a Kind ");
-                    }
-
-                    if (player.Current == 4)
-                    {
-                        MessageBox.Show(player.Name + " Straight ");
-                    }
-
-                    if (player.Current == 5 || player.Current == 5.5)
-                    {
-                        MessageBox.Show(player.Name + " Flush ");
-                    }
-
-                    if (player.Current == 6)
-                    {
-                        MessageBox.Show(player.Name + " Full House ");
-                    }
-
-                    if (player.Current == 7)
-                    {
-                        MessageBox.Show(player.Name + " Four of a Kind ");
-                    }
-
-                    if (player.Current == 8)
-                    {
-                        MessageBox.Show(player.Name + " Straight Flush ");
-                    }
-
-                    if (player.Current == 9)
-                    {
-                        MessageBox.Show(player.Name + " Royal Flush ! ");
-                    }
-                }
-            }
-
-            if (player.Name == lastly)//lastfixed
-            {
-                if (this.Winners > 1)
-                {
-                    for (int i = 0; i < Database.Instace.Players.Length; i++)
-                    {
-                        if (this.CheckWinners.Contains(Database.Instace.Players[i].Name))
-                        {
-                            Database.Instace.Players[i].Chips += int.Parse(Launcher.Poker.TextBoxPot.Text) / this.Winners;
-                            Launcher.Poker.ChipsTextBoxes[i].Text = Database.Instace.Players[i].Chips.ToString();
-                        }
-                    }
-
-                    //await Finish(1);
-                }
-
-                if (this.Winners == 1)
-                {
-                    foreach (var item in Database.Instace.Players)
-                    {
-                        if (this.CheckWinners.Contains(item.Name))
-                        {
-                            item.Chips += int.Parse(Launcher.Poker.TextBoxPot.Text);
-
-                        }
-                    }
+                    
                 }
             }
         }

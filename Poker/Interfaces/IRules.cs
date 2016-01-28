@@ -14,7 +14,7 @@
         /// </summary>
         /// <param name="player">Current player.</param>
         /// <param name="lastly">String parameter.</param>
-        void Winner(IPlayer player, string lastly);
+        void Winner(IPlayer player);
         
         /// <summary>
         /// Checks the type of the player's hand
